@@ -1,0 +1,4 @@
+configuration {
+    modi: "window,drun";
+	theme: "~/.config/rofi/themes/dt-dmenu.rasi";
+}
