@@ -78,7 +78,7 @@ bindsym {
     $mod+Shift+w exec background
     
     # open browser
-    $mod+c exec qutebrowser
+    $mod+w exec qutebrowser
 
     # color picker
     $mod+p grim -g "$(slurp -p)" -t ppm - | convert - -format '%[pixel:p{0,0}]' txt:- | tail -n 1 | cut -d ' ' -f 4 | wl-copy
@@ -139,8 +139,7 @@ bindsym {
     $mod+f fullscreen toggle
     
     # change container layout (stacked, tabbed, toggle split)
-    $mod+s layout stacking
-    $mod+w layout tabbed
+    $mod+s layout tabbed
     $mod+e layout toggle split
     
     # toggle tiling / floating
