@@ -1,0 +1,5 @@
+#!/bin/sh
+
+cd ~/Downloads/
+java -jar abe.jar unpack backup.ab backup.tar
+tar xvf backup.tar

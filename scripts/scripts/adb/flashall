@@ -1,0 +1,7 @@
+#!/bin/sh
+
+for i in *; do fastboot flash ${i%.*} $i; done
+if [ "$1" = "-w" ]; then
+  for i in {system,data,cache}; do fastboot erase $i; done
+fi
+

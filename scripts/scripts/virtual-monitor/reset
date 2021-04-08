@@ -1,0 +1,7 @@
+#!/bin/sh
+
+killall -q teams
+while pgrep -u $UID -x teams >/dev/null; do sleep 1; done
+xrandr --output eDP --primary --mode 1920x1080 --pos 0x0 --rotate normal --output HDMI-A-0 --off --output DisplayPort-0 --off
+feh --bg-scale ~/.local/share/backgrounds/cyber.png
+~/.config/polybar/launch.sh &>/dev/null

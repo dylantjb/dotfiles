@@ -1,0 +1,9 @@
+#!/bin/sh
+
+mkdir ~/.tmp 2>/dev/null || cd ~/.tmp && rm * 2>/dev/null
+mv ~/Downloads/*.pdf ~/.tmp/
+cd ~/.tmp
+find *.pdf -exec sh -c 'exec pdfunite "$@" tmp.pdf' sh {} +
+mkdir -p ~/Downloads/ISE/
+mv "tmp.pdf" ~/Downloads/ISE/"$1.pdf"
+rm -r ~/.tmp

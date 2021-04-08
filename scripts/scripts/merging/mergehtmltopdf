@@ -1,0 +1,9 @@
+#!/bin/sh
+
+mkdir ~/.tmp 2>/dev/null || cd ~/.tmp && rm * 2>/dev/null
+mv ~/Downloads/$1/*.html ~/.tmp/
+cd ~/.tmp
+libreoffice --headless --invisible --convert-to pdf *.html
+find *.pdf -exec sh -c 'exec pdfunite "$@" tmp.pdf' sh {} +
+mv tmp.pdf ~/Downloads/"$2.pdf"
+rm -r ~/.tmp

@@ -1,0 +1,3 @@
+swayprop() {
+    fish -c 'swayprop'
+}

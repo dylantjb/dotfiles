@@ -1,0 +1,5 @@
+#!/bin/sh
+
+export SWAYSOCK=/run/user/$(id -u)/sway-ipc.$(id -u).$(pgrep -x sway).sock
+
+swaymsg output '*' background $(find $HOME/Pictures/wallpapers/desktop -type f | shuf -n 1) fill
