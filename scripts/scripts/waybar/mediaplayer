@@ -1,4 +1,6 @@
 #!/usr/bin/env python3
+
+# A scripts from waybar (https://github.com/Alexays/Waybar)
 import argparse
 import logging
 import sys

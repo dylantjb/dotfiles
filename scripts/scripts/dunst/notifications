@@ -1,5 +1,7 @@
 #!/usr/bin/python
 
+# Inspired by dunst issue https://github.com/dunst-project/dunst/issues/645#issuecomment-774522304
+
 import os
 from sys import argv
 

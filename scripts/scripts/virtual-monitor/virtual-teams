@@ -1,6 +1,6 @@
 #!/bin/sh
 
-~/Scripts/virtual
+virtual
 
 xrandr --output eDP --mode 1920x1080 --pos 1920x0 --rotate normal --output HDMI-A-0 --off --output DisplayPort-0 --primary --mode 1920x1080_60.00 --pos 0x0 --rotate normal
 
@@ -10,4 +10,4 @@ sleep 6
 
 i3-msg workspace 10 >/dev/null
 xrandr --output eDP --primary --mode 1920x1080 --pos 1920x0 --rotate normal --output HDMI-A-0 --off --output DisplayPort-0 --mode 1920x1080_60.00 --pos 0x0 --rotate normal
-~/.config/polybar/launch.sh &>/dev/null
+i3-msg restart

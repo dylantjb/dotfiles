@@ -1,5 +1,8 @@
 #!/usr/bin/env python3
 # encoding:utf8
+
+# Edited to use bemenu (https://github.com/dylantjb/networkmanager_bemenu)
+
 """NetworkManager command line bemenu script.
 
 To add new connections or enable/disable networking requires policykit

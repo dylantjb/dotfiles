@@ -1,4 +1,7 @@
 #!/bin/sh
+
+# Inspired by https://bbs.archlinux.org/viewtopic.php?id=191555
+
 add_modeline() {
 	local modeline name
 	modeline="$(cvt "$2" "$3" "$4" | sed -n 's/.*Modeline "\([^" ]\+\)" \(.*\)/\1 \2/p')"

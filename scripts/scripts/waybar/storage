@@ -1,5 +1,7 @@
 #!/bin/sh
 
+# From https://github.com/luispabon/sway-dotfiles/blob/master/configs/waybar/modules/storage.sh commit 4cdf81e
+
 mount="/"
 warning=20
 critical=10
