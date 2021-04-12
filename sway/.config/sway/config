@@ -210,9 +210,7 @@ bindsym --locked {
 
     # adjusting backlight brightness
     XF86MonBrightnessUp   exec backlight up
-    
-    # This button blackens screen for some reason, look into kernel parameters
-    # XF86MonBrightnessDown exec backlight down
+    XF86MonBrightnessDown exec backlight down
 }
 #: }}}
 
