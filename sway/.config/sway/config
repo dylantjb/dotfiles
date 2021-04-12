@@ -25,6 +25,7 @@ exec_always {
 }
 
 exec {
+    redshift -l 51.5:0
     xrdb -load ~/.Xresources
     mylock safe-mode
 }
@@ -72,7 +73,7 @@ bindsym {
     $mod+Escape exec mylock
     
     # start power menu rofi
-    $mod+x exec rofi -show p -modi p:rofi-power-menu -width 20 -lines 5
+    $mod+Shift+q exec rofi -show p -modi p:rofi-power-menu -width 20 -lines 5
 
     # change background
     $mod+Shift+w exec background
@@ -102,10 +103,10 @@ bindsym {
     $mod+r exec $term -e ranger
     
     # screen shot
-    Print exec /usr/share/sway/scripts/grimshot save area
+    Print exec /usr/share/sway-git/scripts/grimshot save area
 
     # screen shot (whole screen)
-    Shift+Print exec /usr/share/sway/scripts/grimshot save screen
+    Shift+Print exec /usr/share/sway-git/scripts/grimshot save screen
     
     # start bemenu (a program launcher)
     $mod+d exec j4-dmenu-desktop --term=kitty --dmenu='bemenu -i -b -n -p "> " --fn "Hack Nerd Font 10" --tf "#3b84c0" --nf "#abb2bf" --nf "#282c34" --hf "#3b84c0" --nb "#1e2127" --nf "#abb2bf" --sf "#61afef" --sb "#5c6370"'
