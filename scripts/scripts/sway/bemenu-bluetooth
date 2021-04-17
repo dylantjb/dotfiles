@@ -281,7 +281,7 @@ show_menu() {
 }
 
 # bemenu command to pipe into, can add any options here
-bemenu_command='bemenu -i -b -n "> " --tf "#3b84c0" --nf "#abb2bf" --nf "#282c34" --hf "#3b84c0" --nb "#1e2127" --nf "#abb2bf" --sf "#61afef" --sb "#5c6370" -p '
+bemenu_command='bemenu -i -b -p '
 
 case "$1" in
     --status)

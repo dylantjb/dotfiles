@@ -19,3 +19,8 @@
 [user]
 	email = dthomasbarker@gmail.com
 	name = Dylan Barker
+[merge]
+	tool = vimdiff
+	conflictstyle = diff3
+[mergetool]
+	prompt = false

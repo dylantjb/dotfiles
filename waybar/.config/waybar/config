@@ -2,7 +2,15 @@
     "height": 26,
     "modules-left": ["custom/launcher", "custom/separator", "sway/workspaces", "custom/separator", "sway/window"],
     "modules-center": ["custom/media"],
-    "modules-right": ["custom/storage", "custom/separator", "backlight", "custom/separator", "battery", "custom/separator", "clock",  "custom/separator", "custom/notification", "tray"],
+    "modules-right": ["custom/storage", "custom/separator", "backlight", "custom/separator", "battery", "custom/separator", "clock", "tray"],
+
+    "custom/dwlbar": {
+        "format": " {}",
+        "return-type": "json",
+        "max-length": 75,
+        "escape": true,
+        "exec": "dwlbar 'eDP-1'"
+    },
     
     "sway/workspaces": {
         "smooth-scrolling-threshold": 1,

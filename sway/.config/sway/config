@@ -20,21 +20,19 @@ font pango:SF Pro Display
 exec_always {
     background
     ~/.config/waybar/waybar.sh
-    ! pgrep -x autotiling && autotiling
+    ! pgrep -x stacki3 && stacki3 45
     ! pgrep -x dunst && dunst
 }
 
 exec {
     redshift -l 51.5:0
-    xrdb -load ~/.Xresources
+    xrdb ~/.Xresources
     mylock safe-mode
 }
 #: }}}
 
 #: Gaps {{{
-smart_gaps on
-smart_borders on
-gaps inner 10
+gaps inner 6
 default_border pixel 2
 
 # use Mouse+$mod to drag floating windows
@@ -109,7 +107,7 @@ bindsym {
     Shift+Print exec /usr/share/sway-git/scripts/grimshot save screen
     
     # start bemenu (a program launcher)
-    $mod+d exec j4-dmenu-desktop --term=kitty --dmenu='bemenu -i -b -n -p "> " --fn "Hack Nerd Font 10" --tf "#3b84c0" --nf "#abb2bf" --nf "#282c34" --hf "#3b84c0" --nb "#1e2127" --nf "#abb2bf" --sf "#61afef" --sb "#5c6370"'
+    $mod+d exec j4-dmenu-desktop --no-generic --term=kitty --dmenu='bemenu -i -b -n -p "> " --fn "Hack Nerd Font 10" --tf "#3b84c0" --hf "#3b84c0" --nb "#1e2127" --nf "#abb2bf" --sf "#61afef" --sb "#5c6370"'
 
     # change focus
     $mod+h focus left
@@ -225,7 +223,6 @@ input type:keyboard {
 input type:touchpad {
     dwt                     enabled
     tap                     enabled
-    natural_scroll          enabled
     events                  disabled_on_external_mouse
     scroll_method           two_finger
     click_method            clickfinger

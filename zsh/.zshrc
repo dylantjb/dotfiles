@@ -70,7 +70,6 @@ export PATH=~/bin:~/.local/bin:$PATH
 export EDITOR='nvim' 
 export VISUAL='nvim'
 
-export ZSH_SYSTEM_CLIPBOARD_USE_WL_CLIPBOARD=1
 export FZF_DEFAULT_COMMAND='rg --files --hidden'
 export FZF_ALT_C_COMMAND='$FZF_DEFAULT_COMMAND'
 export TF_FORCE_GPU_ALLOW_GROWTH=true
@@ -97,6 +96,8 @@ alias y='yay -S'
 alias cat='ccat'
 alias grep='rg'
 alias degit='rm -rf .git*'
+alias dwlrc='nvim ~/projects/dwl/config.def.h'
+alias vimdiff='nvim -d'
 #: }}}
 
 #: Functions {{{

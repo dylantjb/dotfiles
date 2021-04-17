@@ -10,7 +10,7 @@ sound = os.getcwd() + "/Music/resources/%s.wav"
 
 if argv[1] not in blacklist:
     if os.path.exists(sound % argv[1]):
-        os.system("paplay '%s'" % sound % argv[1])
+        os.system("aplay '%s'" % sound % argv[1])
     else:
-        os.system("paplay %s" % sound % "alert")
+        os.system("aplay %s" % sound % "alert")
 

@@ -81,6 +81,7 @@ Movie mode:              No blanking, auto-lock or suspend" |
 
 case "$1" in
     "lock-now")
+        # #--- Wait for lock support for dwl ---# #
         grim -t jpeg $IMAGE
         convert $IMAGE -scale 10% -scale 1000% $IMAGE
         convert $IMAGE $ICON -gravity center -composite -matte $IMAGE
@@ -91,40 +92,40 @@ case "$1" in
     "safe-mode")
         pkill swayidle
         swayidle -w \
-                 timeout $TIMEOUT            "swaymsg 'output * dpms off'" \
-                 resume                      "swaymsg 'output * dpms on'" \
-                 timeout $(( TIMEOUT * 2 ))  "swaymsg 'output * dpms on'; $SELF lock-now" \
-                 timeout $(( TIMEOUT * 3 ))  "swaymsg 'output * dpms off'" \
-                 resume                      "swaymsg 'output * dpms on'" \
-                 timeout $(( TIMEOUT * 4 ))  "sudo systemctl suspend" \
-                 before-sleep                "$SELF lock-now" &
+            timeout $TIMEOUT            "wlr-randr --output eDP-1 --off" \
+            resume                      "wlr-randr --output eDP-1 --on" \
+            timeout $(( TIMEOUT * 2 ))  "wlr-randr --output eDP-1 --on; $SELF lock-now" \
+            timeout $(( TIMEOUT * 3 ))  "wlr-randr --output eDP-1 --off" \
+            resume                      "wlr-randr --output eDP-1 --on" \
+            timeout $(( TIMEOUT * 4 ))  "sudo systemctl suspend" \
+            before-sleep                "$SELF lock-now" &
         ;;
         
     "at-home-mode")
         pkill swayidle
         swayidle -w \
-                 timeout $TIMEOUT  "swaymsg 'output * dpms off'" \
-                 resume            "swaymsg 'output * dpms on'" \
-                 before-sleep      "$SELF lock-now" \
-                 after-resume      "$SELF safe-mode" &
+            timeout $TIMEOUT  "wlr-randr --output eDP-1 --off" \
+            resume            "wlr-randr --output eDP-1 --on" \
+            before-sleep      "$SELF lock-now" \
+            after-resume      "$SELF safe-mode" &
         ;;
 
     "download-mode")
         pkill swayidle
         swayidle -w \
-                 timeout $TIMEOUT            "swaymsg 'output * dpms off'" \
-                 resume                      "swaymsg 'output * dpms on'" \
-                 timeout $(( TIMEOUT * 2 ))  "swaymsg 'output * dpms on'; $SELF lock-now" \
-                 timeout $(( TIMEOUT * 3 ))  "swaymsg 'output * dpms off'" \
-                 resume                      "swaymsg 'output * dpms on'" \
-                 before-sleep                "$SELF lock-now" &
+            timeout $TIMEOUT            "wlr-randr --output eDP-1 --off" \
+            resume                      "wlr-randr --output eDP-1 --on" \
+            timeout $(( TIMEOUT * 2 ))  "wlr-randr --output eDP-1 --on; $SELF lock-now" \
+            timeout $(( TIMEOUT * 3 ))  "wlr-randr --output eDP-1 --off" \
+            resume                      "wlr-randr --output eDP-1 --on" \
+            before-sleep                "$SELF lock-now" &
         ;;
 
     "movie-mode")
         pkill swayidle
         swayidle -w \
-                 before-sleep "$SELF lock-now" \
-                 after-resume "$SELF safe-mode" &
+            before-sleep "$SELF lock-now" \
+            after-resume "$SELF safe-mode" &
         ;;
 
 esac
