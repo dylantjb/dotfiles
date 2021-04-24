@@ -23,4 +23,4 @@ export XDG_SESSION_TYPE=wayland
 export XDG_CURRENT_DESKTOP=sway
 export XDG_SCREENSHOTS_DIR=~/Pictures/screenshots
 
-redshift -l 51.5:0; sway
+redshift -l 51.5:0; sway > ~/.sway.log
