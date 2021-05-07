@@ -1,0 +1,10 @@
+#!/bin/sh
+
+setxkbmap gb
+xrdb -merge ~/.Xresources
+davmail ~/.local/share/davmail/davmail.properties &
+background
+picom -b
+unclutter &
+redshift -l 51.5:0 &
+xautolock -detectsleep -time 20 -corners 00+- -locker "slock" -killtime 20 -killer "sudo systemctl suspend" & 

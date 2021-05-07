@@ -1,8 +1,10 @@
+import os
 import dracula.draw
+from qutebrowser.api import interceptor
 
 config.load_autoconfig(False)
 
-# ui
+# ui {{{
 dracula.draw.blood(c, {'spacing': {'vertical': 3, 'horizontal': 8}})
 
 c.colors.webpage.preferred_color_scheme = "dark"
@@ -12,49 +14,50 @@ c.statusbar.widgets = ["progress", "keypress", "url", "history"]
 c.scrolling.bar = "always"
 c.tabs.title.format = "{index}: {audio}{current_title}"
 c.tabs.title.format_pinned = "{index}: {audio}{current_title}"
+# }}}
 
-# general
+# general {{{
 c.auto_save.session = True
 c.content.default_encoding = "utf-8"
 c.content.javascript.can_access_clipboard = True
 c.content.notifications.enabled = True  # notifications aren't supported now anyway
 c.content.pdfjs = True
-c.editor.command = ["$TERMINAL", "kak", "-e", "exec {line}g{column0}l", "{}"]
+c.editor.command = [
+    os.environ["TERMINAL"], "-e", os.environ["EDITOR"], "-f", "{file}", "-c",
+    "normal {line}G{column0}1"
+]
 c.fileselect.handler = "external"
-c.fileselect.single_file.command = ["$TERMINAL", "nnn", "-p", "{}"]
-c.fileselect.multiple_files.command = ["$TERMINAL", "nnn", "-p", "{}"]
+c.fileselect.folder.command = [
+    os.environ["TERMINAL"], "-e", "ranger", "--choosedir={}"
+]
+c.fileselect.single_file.command = [
+    os.environ["TERMINAL"], "-e", "ranger", "--choosefile={}"
+]
+c.fileselect.multiple_files.command = [
+    os.environ["TERMINAL"], "-e", "ranger", "--choosefiles={}"
+]
 c.downloads.location.prompt = False
 c.input.insert_mode.auto_load = True
 c.spellcheck.languages = ["en-GB"]
 c.tabs.last_close = "close"
 c.tabs.mousewheel_switching = False
 c.qt.args += [
-    "enable-gpu-rasterization", "blink-settings=preferredColorScheme=1",
+    "enable-gpu-rasterization", "ignore-gpu-blocklist",
+    "enable-accelerated-video-decode", "blink-settings=preferredColorScheme=1",
     "blink-settings=darkMode=4"
 ]
+# }}}
 
-# privacy
+# privacy {{{
 c.content.cookies.accept = "no-3rdparty"
 c.content.webrtc_ip_handling_policy = "default-public-interface-only"
 c.content.site_specific_quirks.enabled = False
-c.content.headers.user_agent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.114 Safari/537.36"
+c.content.headers.user_agent = "Mozilla/5.0 (X11; Linux x86_64; rv:57.0) Gecko/20100101 Firefox/57.0"
+# }}}
 
-# urls
-# c.url.searchengines = {
-#     "DEFAULT": "https://google.com/search?q={}",
-#     "?": "https://google.com/search?q={}",
-# }
-# c.url.default_page = "~/.config/qutebrowser/blank.html"
-# c.url.start_pages = ["~/.config/qutebrowser/blank.html"]
-
-# per-domain settings
+# per-domain settings {{{
 config.set("content.register_protocol_handler", True,
            "*://calendar.google.com")
-
-config.set("content.media.audio_video_capture", True, "*://app.wire.com")
-config.set("content.media.audio_capture", True, "*://app.wire.com")
-config.set("content.media.video_capture", True, "*://app.wire.com")
-config.set("content.desktop_capture", True, "*://app.wire.com")
 
 config.set("content.register_protocol_handler", True,
            "*://teams.microsoft.com")
@@ -64,29 +67,46 @@ config.set("content.media.audio_capture", True, "*://teams.microsoft.com")
 config.set("content.media.video_capture", True, "*://teams.microsoft.com")
 config.set("content.desktop_capture", True, "*://teams.microsoft.com")
 
-config.bind('e', 'spawn mpv {url}')
-config.bind('E', 'hint links spawn mpv --force-window yes {hint-url}')
-
 # MS Teams: setting to root domain due to https://bugreports.qt.io/browse/QTBUG-90231
 config.set("content.cookies.accept", "all", "*://microsoft.com")
+# }}}
 
-# keys
-bindings = {
-    ",m": "spawn --userscript view_in_mpv",
-    ",M": "hint links spawn mpv {hint-url}",
-    ",p":
-    "spawn --userscript qute-pass --username-target secret --username-pattern 'user: (.+)' --dmenu-invocation 'dmenu -p credentials'",
-    ",P":
-    "spawn --userscript qute-pass --username-target secret --username-pattern 'user: (.+)' --dmenu-invocation 'dmenu -p password' --password-only",
-    ",b": "config-cycle colors.webpage.bg '#32302f' 'white'",
-    "<Ctrl-Shift-J>": "tab-move +",
-    "<Ctrl-Shift-K>": "tab-move -",
-    "M": "nop",
-    "co": "nop",
-    "<Shift-Escape>": "fake-key <Escape>",
-    "o": "set-cmd-text -s :open -s",
-    "O": "set-cmd-text -s :open -t -s",
+# keys {{{
+c.bindings.commands = {
+    'normal': {
+        ",m": "spawn --userscript view_in_mpv",
+        ",M": "hint links spawn mpv {hint-url}",
+        # ",p":
+        # "spawn --userscript qute-pass --dmenu-invocation 'dmenu -p credentials'",
+        # ",P":
+        # "spawn --userscript qute-pass --dmenu-invocation 'dmenu -p password' --password-only",
+        ",b": "config-cycle colors.webpage.bg '#32302f' 'white'",
+        ",o": "spawn --userscript qute-pass --otp",
+        ",E": "hint links edit-text",
+        ",e": "edit-text",
+        "<Ctrl-Shift-J>": "tab-move +",
+        "<Ctrl-Shift-K>": "tab-move -",
+        "<Shift-Escape>": "fake-key <Escape>",
+        "o": "set-cmd-text -s :open -s",
+        "O": "set-cmd-text -s :open -t -s"
+    },
+    'insert': {
+        "<Ctrl-W>": "tab-close",
+        "<Escape>": "mode-leave ;; jseval -q document.activeElement.blur()"
+    }
 }
 
-for key, bind in bindings.items():
-    config.bind(key, bind)
+# }}}
+
+
+# youtube adblock {{{
+def filter_yt(info: interceptor.Request):
+    """Block the given request if necessary."""
+    url = info.request_url
+    if (url.host() == "www.youtube.com" and url.path() == "/get_video_info"
+            and "&adformat=" in url.query()):
+        info.block()
+
+
+interceptor.register(filter_yt)
+# }}}

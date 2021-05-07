@@ -17,8 +17,6 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
-typeset -g POWERLEVEL9K_INSTANT_PROMPT=quiet
-
 # Added by Zinit's installer
 if [[ ! -f $HOME/.zinit/bin/zinit.zsh ]]; then
     print -P "%F{33}▓▒░ %F{220}Installing %F{33}DHARMA%F{220} Initiative Plugin Manager (%F{33}zdharma/zinit%F{220})…%f"
@@ -50,13 +48,24 @@ zinit wait lucid for \
     atload"!_zsh_autosuggest_start" \
        zsh-users/zsh-autosuggestions
 
+zinit light zsh-users/zsh-history-substring-search
+
+zinit ice silent wait"0"
+zinit light Aloxaf/fzf-tab
+
 zinit ice wait"0" lucid pick"zsh-system-clipboard.zsh"
 zinit light kutsan/zsh-system-clipboard
 
 zinit ice wait"2" lucid as"program" pick"bin/git-dsf"
 zinit light zdharma/zsh-diff-so-fancy
 
-zinit light zsh-users/zsh-history-substring-search
+zinit ice wait"2" silent
+zinit light MichaelAquilina/zsh-autoswitch-virtualenv
+
+# zinit ice from"gh-r" as"program" bpick"*appimage*" ver"nightly" mv"nvim* -> nvim" pick"nvim"
+# zinit light neovim/neovim
+
+source ~/.fzf.zsh
 #: }}}
 
 #: Exports {{{
@@ -88,15 +97,19 @@ zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
 alias lg='lazygit'
 alias v="nvim ."
 # alias f="nvim $(which fzf)"
-alias cfg="nvim ~/.config/sway/config"
+alias cfg="ranger ~/.config"
 alias zrc='nvim ~/.zshrc'
-alias ls='exa --color=always --group-directories-first'
-alias upgrade='sudo pacman -Sy && sudo powerpill -Su && paru -Su'
-alias y='yay -S'
+alias ls="exa --color=always --group-directories-first"
+alias upgrade="sudo pacman -Sy && sudo powerpill -Su && yay -Su"
+alias debloat="sudo pacman -Rsn "$(pacman -Qdtq)""
+alias updatenvim="zinit delete neovim/neovim; zsh"
+alias r='ranger'
+alias y='yay -Sy'
 alias cat='ccat'
 alias grep='rg'
 alias degit='rm -rf .git*'
-alias dwlrc='nvim ~/projects/dwl/config.def.h'
+alias dwlrc='nvim ~/.config/dwl/config.def.h'
+alias dwmrc='nvim ~/.config/dwm/config.def.h'
 alias vimdiff='nvim -d'
 #: }}}
 
@@ -107,7 +120,7 @@ done
 #: }}}
 
 #: History {{{
-[ -z "$HISTFILE" ] && HISTFILE="$HOME/.zsh_history"
+[ -z "$HISTFILE" ] && HISTFILE="$HOME/.cache/zsh/zhistory"
 HISTSIZE=50000
 SAVEHIST=10000
 
@@ -123,4 +136,3 @@ setopt share_history          # share command history data
 bindkey -M vicmd 'k' history-substring-search-up
 bindkey -M vicmd 'j' history-substring-search-down
 #: }}}
-

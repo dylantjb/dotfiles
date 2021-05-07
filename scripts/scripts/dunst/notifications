@@ -5,8 +5,8 @@
 import os
 from sys import argv
 
-blacklist = ["Spotify", "dunstify"]
-sound = os.getcwd() + "/Music/resources/%s.wav"
+blacklist = ["Spotify", "dunstify", "brave-browser"]
+sound = os.getcwd() + "/.config/dunst/sounds/%s.wav"
 
 if argv[1] not in blacklist:
     if os.path.exists(sound % argv[1]):

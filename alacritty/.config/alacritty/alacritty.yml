@@ -2,53 +2,52 @@
 colors:
   # Default colors
   primary:
-    background: "#1E1E1E"
-    # background: "#2E3440"
-    foreground: "#D8DEE9"
+    background: "#282c34"
+    foreground: "#abb2bf"
 
   # Normal colors
   normal:
-    black: "#3B4252"
-    red: "#D54646"
-    green: "#003d32"
-    yellow: "#D7BA7D"
-    blue: "#005296"
-    magenta: "#C586C0"
-    cyan: "#29B8DB"
+    black: "#282c34"
+    red: "#e06c76"
+    green: "#98c379"
+    yellow: "#e5c07b"
+    blue: "#61afef"
+    magenta: "#c678dd"
+    cyan: "#56b6c2"
     white: "#abb2bf"
 
   # Bright colors
   bright:
-    black: "#3B4252"
-    red: "#D54646"
-    green: "#23D18B"
-    yellow: "#D7BA7D"
-    blue: "#569CD6"
-    magenta: "#C586C0"
-    cyan: "#29B8DB"
-    white: "#ECEFF4"
+    black: "#5c6370"
+    red: "#be5045"
+    green: "#7a9f60"
+    yellow: "#d19a66"
+    blue: "#3b84c0"
+    magenta: "#9a52af"
+    cyan: "#3c909b"
+    white: "#828997"
 
-background_opacity: 0.4
+background_opacity: 0.95
 
 font:
   # The normal (roman) font face to use.
   normal:
-    family: Hack
+    family: JetBrainsMono Nerd Font
     # Style can be specified to pick a specific face.
     style: Regular
 
   # The bold font face
   bold:
-    family: Hack
+    family: JetBrainsMono Nerd Font
     # Style can be specified to pick a specific face.
-    # style: Bold
+    style: Bold
 
   # The italic font face
   italic:
-    family: Hack
+    family: JetBrainsMono Nerd Font
     # Style can be specified to pick a specific face.
-    # style: Italic
-  size: 8.5
+    style: Italic
+  size: 12
 
   offset:
     x: 0

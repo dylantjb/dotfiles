@@ -1,6 +1,6 @@
 ## dotfiles
 
-A repository full of my linux adventure from Manjaro to Arch Linux on KDE, i3, and Sway mostly for restoring on migration or for anyone to steal!
+A repository full of my Linux adventure from Manjaro to Arch Linux on KDE, i3, and Sway mostly for restoring on migration or for anyone to steal!
 
 <br/>
 

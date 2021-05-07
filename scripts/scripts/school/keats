@@ -1,0 +1,11 @@
+#!/bin/sh
+
+cd ~/repos/keats_downloader
+
+source ~/.virtualenvs/keats_downloader/bin/activate
+
+python 1_list_videos.py
+python 2_check_exists.py
+python 3_save.py
+
+onedrive --synchronize

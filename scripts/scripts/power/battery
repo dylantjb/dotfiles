@@ -1,10 +1,10 @@
 #!/bin/sh
 
-export XDG_RUNTIME_DIR=/run/user/$(id -u)
 export DISPLAY=:0
+export XDG_RUNTIME_DIR=/run/user/$(id -u)
 
-status=`udevadm info --path=/sys/class/power_supply/BAT0 | sed -n -e 's/^.*POWER_SUPPLY_STATUS=//p'`
-capacity=`udevadm info --path=/sys/class/power_supply/BAT0 | sed -n -e 's/^.*POWER_SUPPLY_CAPACITY=//p'`
+status=`cat /sys/class/power_supply/BAT?/status`
+capacity=`cat /sys/class/power_supply/BAT?/capacity`
 
 if [ $status = Discharging ]; then
 	if [ $capacity -lt 5 ]; then
@@ -12,7 +12,7 @@ if [ $status = Discharging ]; then
 		sudo systemctl hibernate
 	elif [ $capacity -lt 20 ]; then
 		logger "Low battery threshold"
-		! pgrep -x swaynag && swaynag -m 'Low Battery!'
+		dunstify -u critical "Low Battery!"
 	fi
 fi
 
