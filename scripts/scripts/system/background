@@ -1,7 +1,8 @@
 #!/bin/sh
 
-if [[ -z $SWAYSOCK ]]; then
-    export SWAYSOCK=/run/user/$(id -u)/sway-ipc.$(id -u).$(pgrep -x sway).sock
-fi
+export DISPLAY=:0
 
-swaymsg output '*' background $(find $HOME/Pictures/wallpapers/desktop -type f | shuf -n 1) fill
+# cd /tmp
+# wget 'https://source.unsplash.com/random/1920x1080?sig=${'RANDOM'} -o background && IMG=/tmp/background || 
+    IMG="$(find $HOME/Pictures/wallpapers/desktop -type f -not -path '*/\.git/*' | shuf -n 1)"
+feh --bg-scale "$IMG"
