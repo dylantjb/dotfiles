@@ -1,6 +1,6 @@
 syncbin() {
     local dir="${1:-$HOME/scripts}"
-    [ -z $1 ] && { rm -r ~/bin; mkdir bin }
+    [ -z $1 ] && { rm -r ~/bin; mkdir ~/bin }
 
     for i in $dir/*; do
         ! [ -d "$i" ] && {
