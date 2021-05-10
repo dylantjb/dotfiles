@@ -5,8 +5,10 @@
 import os
 from sys import argv
 
-blacklist = ["Spotify", "dunstify", "brave-browser"]
+blacklist = ["Spotify", "dunstify", "Brave"] 
 sound = os.getcwd() + "/.config/dunst/sounds/%s.wav"
+
+os.system('echo "%s" > notify-send.log' % (argv[0] + argv[1] + argv[2]))
 
 if argv[1] not in blacklist:
     if os.path.exists(sound % argv[1]):

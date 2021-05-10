@@ -62,3 +62,5 @@ case $1 in
     send_notification
     ;;
 esac
+
+pgrep -x dwmblocks && kill -44 $(pidof dwmblocks)

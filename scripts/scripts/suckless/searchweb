@@ -9,8 +9,8 @@ LAUNCHER="dmenu -l 5 -i -p "
 localBROWSER="$BROWSER "
 [ -n "$*" ] && localBROWSER="$*"
 [ -z "${DISPLAY}" ] && localBROWSER="w3m "
-if [ -f "$HOME/.config/qutebrowser/quickmarks" ]; then
-	choice=$( (echo "🦆" && cat ~/.config/qutebrowser/quickmarks) | $LAUNCHER"Search:") || exit 1
+if [ -f "$HOME/.config/BraveSoftware/Brave-Browser/Default/Bookmarks" ]; then
+	choice=$( (echo "🦆" && cat ~/.config/BraveSoftware/Brave-Browser/Default/Bookmarks) | $LAUNCHER"Search:") || exit 1
 else
 	choice=$(echo "🦆" | $LAUNCHER -i -p "Search DuckDuckGo:") || exit 1
 fi
