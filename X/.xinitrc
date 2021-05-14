@@ -17,7 +17,7 @@ fi
 #: Exports {{{
 export DISPLAY=:0
 export BROWSER=brave
-export TERMINAL=/usr/local/bin/st
+export TERMINAL=st
 export QT_QPA_PLATFORMTHEME=qt5ct
 export _JAVA_AWT_WM_NONREPARENTING=1
 export XDG_SCREENSHOTS_DIR=~/Pictures/screenshots/

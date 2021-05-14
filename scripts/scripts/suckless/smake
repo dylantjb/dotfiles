@@ -1,7 +1,5 @@
 #!/bin/sh
 
-cd /home/dylan/.config/$1
-
-mv config.h config.h.bak
-cp config.def.h config.h
-make install clean
+cd $(mktemp -d)
+mv ~/repos/$1/PKGBUILD .
+makepkg -si

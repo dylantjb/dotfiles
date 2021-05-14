@@ -1,6 +1,7 @@
 #!/bin/sh
 
 setxkbmap gb
+sxhkd &
 xmousepasteblock
 xrdb -merge ~/.Xresources
 davmail ~/.local/share/davmail/davmail.properties &

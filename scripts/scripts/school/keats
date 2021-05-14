@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 
-cd ~/repos/keats_downloader
+cd ~/repos/personal/keats-downloader
 
-source ~/.virtualenvs/keats_downloader/bin/activate
+source ~/.virtualenvs/keats-downloader/bin/activate
 
 python 1_list_videos.py
 python 2_check_exists.py

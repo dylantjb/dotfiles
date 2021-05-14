@@ -1,3 +1,4 @@
+# vim:fileencoding=utf-8:ft=conf:foldmethod=marker
 import os
 import dracula.draw
 from qutebrowser.api import interceptor
@@ -28,13 +29,13 @@ c.editor.command = [
 ]
 c.fileselect.handler = "external"
 c.fileselect.folder.command = [
-    os.environ["TERMINAL"], "-e", "ranger", "--choosedir={}"
+    os.environ["TERMINAL"], "-e", "lf", "-selection-path", "{}"
 ]
 c.fileselect.single_file.command = [
-    os.environ["TERMINAL"], "-e", "ranger", "--choosefile={}"
+    os.environ["TERMINAL"], "-e", "lf", "-selection-path", "{}"
 ]
 c.fileselect.multiple_files.command = [
-    os.environ["TERMINAL"], "-e", "ranger", "--choosefiles={}"
+    os.environ["TERMINAL"], "-e", "lf", "-selection-path", "{}"
 ]
 c.downloads.location.prompt = False
 c.input.insert_mode.auto_load = True
@@ -97,7 +98,6 @@ c.bindings.commands = {
 }
 
 # }}}
-
 
 # youtube adblock {{{
 def filter_yt(info: interceptor.Request):

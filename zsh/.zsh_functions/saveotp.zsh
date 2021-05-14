@@ -1,3 +1,4 @@
 saveotp() {
-     xclip -selection clipboard -t image/png -o > /tmp/qrcode.png && zbarimg -q --raw /tmp/qrcode.png | pass otp append $1
+    otp=$(mktemp) && xclip -selection clipboard -t image/png -o > "$otp"
+    zbarimg -q --raw "$otp" | pass otp append $1
 }
