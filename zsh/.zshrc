@@ -75,7 +75,7 @@ export HISTORY_SUBSTRING_SEARCH_HIGHLIGHT_FOUND=''
 
 export zle_highlight=('paste:none')
 
-export PATH=~/bin:~/.local/bin:$PATH
+export PATH=~/bin:~/.local/bin:~/.emacs.d/bin:$PATH
 export EDITOR='nvim' 
 export VISUAL='nvim'
 
@@ -94,21 +94,28 @@ zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
 # }}}
 
 #: Aliases {{{
-alias lg='lazygit'
-alias v="nvim ."
-alias cfg="lf ~/.config"
-alias zrc='nvim ~/.zshrc'
-alias ls="exa --color=always --group-directories-first"
 alias upgrade="sudo pacman -Sy && sudo powerpill -Su && yay -Su"
-alias debloat="sudo pacman -Rsn $(pacman -Qdtq | tr '\r\n' ' ')"
-alias r='ranger'
-alias y='yay -Sy'
-alias cat='ccat'
-alias grep='rg'
-alias degit='rm -rf .git*'
-alias dwlrc='nvim ~/.config/dwl/config.def.h'
-alias dwmrc='nvim ~/.config/dwm/config.def.h'
-alias vimdiff='nvim -d'
+alias debloat="sudo pacman -Rns $(pacman -Qdtq | tr '\r\n' ' ')"
+alias emacs="/usr/bin/emacs -nw"
+alias degit="rm -rf .git*"
+alias vimdiff="nvim -d"
+alias y="yay -Sy"
+alias yr="yay -Rns"
+
+alias zrc="nvim ~/.zshrc"
+alias nvimrc="nvim ~/.config/doom-nvim/doomrc"
+alias slockrc="nvim ~/repos/slock/config.h"
+alias blockrc="nvim ~/repos/dwmblocks/config.h"
+alias dwlrc="nvim ~/repos/dwl/config.h"
+alias dwmrc="nvim ~/repos/dwm/config.h"
+alias dmenurc="nvim ~/repos/dmenu/config.h"
+alias strc="nvim ~/repos/st/config.h"
+
+alias lg='lazygit'
+alias ls="exa --color=always --group-directories-first"
+alias cat="ccat"
+alias grep="rg"
+
 #: }}}
 
 #: Functions {{{

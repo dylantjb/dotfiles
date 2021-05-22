@@ -1,5 +1,5 @@
 #!/bin/sh
 
 cd $(mktemp -d)
-mv ~/repos/$1/PKGBUILD .
+cp ~/repos/$1/PKGBUILD .
 makepkg -si
