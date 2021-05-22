@@ -1,6 +1,5 @@
 {
   "vscode-neovim.neovimExecutablePaths.linux": "/usr/bin/nvim",
-  "vscode-neovim.neovimInitVimPaths.darwin": "$HOME/.config/LunarVim/vimscript/lv-vscode/init.vim",
   "vscode-neovim.neovimInitVimPaths.linux": "$HOME/.config/LunarVim/vimscript/lv-vscode/init.vim",
   "whichkey.sortOrder": "alphabetically",
   "whichkey.delay": 0,
@@ -989,9 +988,8 @@
     "**/.settings": true,
     "**/.factorypath": true
   },
-  "terminal.external.osxExec": "iTerm.app",
-  "leetcode.workspaceFolder": "/Users/dylan/Projects/leetcode",
-  "leetcode.defaultLanguage": "javascript",
+  "leetcode.workspaceFolder": "$HOME/repos/leetcode",
+  "leetcode.defaultLanguage": "python",
   "leetcode.hint.configWebviewMarkdown": false,
   "leetcode.hint.commentDescription": false,
   "window.menuBarVisibility": "compact",
@@ -1000,7 +998,7 @@
   "python.formatting.provider": "black",
   "python.insidersChannel": "off",
   "terminal.integrated.shell.linux": "/bin/zsh",
-  "terminal.external.linuxExec": "/usr/bin/kitty",
+  "terminal.external.linuxExec": "/usr/bin/st",
   "code-runner.executorMap": {
     "python": "$pythonPath $fileName",
     "java": "cd $dir && javac $fileName && java $fileNameWithoutExt",
