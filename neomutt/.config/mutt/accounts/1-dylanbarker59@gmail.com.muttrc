@@ -18,7 +18,7 @@ bind index gg first-entry
 unmailboxes *
 unalternates *
 unset signature
-macro index o "<shell-escape>mbsync dylanbarker59@gmail.com<enter>" "run mbsync to sync dylanbarker59@gmail.com"
+macro index o "<shell-escape>mw -y dylanbarker59@gmail.com<enter>" "run mbsync to sync dylanbarker59@gmail.com"
 
 mailboxes "=INBOX" "=[Gmail]/Starred" "=[Gmail]/Sent Mail" "=[Gmail]/Drafts" "=[Gmail]/Bin"
 named-mailboxes Junk "=[Gmail]/Spam"

@@ -23,9 +23,6 @@ set multiple-cursors
 
 " Map leader to space
 let mapleader = " "
-
-" Display default vim actions
-let g:WhichKey_ShowVimActions = "true"
 # }}}
 
 # unimpaired mappings {{{
@@ -172,7 +169,7 @@ nmap <leader>f\ :action FindInPath<cr>
 # }}}
 
 # inspection {{{ 
-let g:WhichKeyDesc_inspection = "<leader>i +inspection"
+let g:WhichKeyDesc_inspection   = "<leader>i +inspection"
 let g:WhichKeyDesc_inspection_i = "<leader>ii Inspect code"
 let g:WhichKeyDesc_inspection_x = "<leader>ix Go to next error"
 let g:WhichKeyDesc_inspection_X = "<leader>iX Go to previous error"

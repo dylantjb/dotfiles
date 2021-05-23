@@ -1,12 +1,6 @@
 #!/bin/zsh
 # vim:fileencoding=utf-8:ft=conf:foldmethod=marker
 
-export CASE_SENSITIVE='true'
-export POWERLEVEL9K_SHORTEN_STRATEGY=truncate_to_last
-export HISTORY_SUBSTRING_SEARCH_HIGHLIGHT_FOUND=''
-
-export zle_highlight=('paste:none')
-
 export FZF_DEFAULT_OPTS="--layout=reverse --height 40%"
 # export TF_FORCE_GPU_ALLOW_GROWTH=true
 export MANPAGER='nvim +Man!'
@@ -20,11 +14,10 @@ export TERMINAL=st
 export QT_QPA_PLATFORMTHEME=qt5ct
 export INFINALITY_FT="ultimate5"
 export _JAVA_AWT_WM_NONREPARENTING=1
-export XDG_SCREENSHOTS_DIR=~/Pictures/screenshots/
 export IDEA_JDK=/usr/lib/jvm/jdk-jetbrains
 
 # Default programs {{{
-export PATH="$PATH:$HOME/bin:$HOME/.emacs.d/bin:${$(find ~/.local/bin -type d -printf %p:)%%:}"
+export PATH="$PATH:${$(find ~/.local/bin -type d -printf %p:)%%:}"
 export EDITOR='nvim' 
 export VISUAL='nvim'
 # }}}
@@ -32,10 +25,11 @@ export VISUAL='nvim'
 # Home cleanup {{{
 export XDG_CONFIG_HOME="$HOME/.config"
 export XDG_DATA_HOME="$HOME/.local/share"
+export XDG_SCREENSHOTS_DIR="$HOME/Pictures/screenshots"
 export XDG_CACHE_HOME="$HOME/.cache"
 
 export XINITRC="${XDG_CONFIG_HOME:-$HOME/.config}/x11/xinitrc"
-export XAUTHORITY="$XDG_RUNTIME_DIR/Xauthority"
+# export XAUTHORITY="$XDG_RUNTIME_DIR/Xauthority"
 export NOTMUCH_CONFIG="${XDG_CONFIG_HOME:-$HOME/.config}/notmuch-config"
 export GTK2_RC_FILES="${XDG_CONFIG_HOME:-$HOME/.config}/gtk-2.0/gtkrc-2.0"
 export LESSHISTFILE="-"

@@ -8,16 +8,6 @@ if [ -f "${XDG_CONFIG_HOME:-$HOME/.config}/x11/xprofile" ]; then
 	. "${XDG_CONFIG_HOME:-$HOME/.config}/x11/xprofile"
 fi
 
-export DISPLAY=:0
-export BROWSER=brave
-export TERMINAL=st
-export QT_QPA_PLATFORMTHEME=qt5ct
-export INFINALITY_FT="ultimate5"
-export _JAVA_AWT_WM_NONREPARENTING=1
-export XDG_SCREENSHOTS_DIR=~/Pictures/screenshots/
-export IDEA_JDK=/usr/lib/jvm/jdk-jetbrains
-#: }}}
-
 while true; do
     ssh-agent dwm 2> ~/.local/share/dwm/dwm.log
 done

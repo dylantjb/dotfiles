@@ -12,8 +12,8 @@
   <property name="zoomStep" value="10.00000000"/>
   <property name="zoomStepScroll" value="2.00000000"/>
   <property name="displayDpi" value="72"/>
-  <property name="mainWndWidth" value="1041"/>
-  <property name="mainWndHeight" value="1045"/>
+  <property name="mainWndWidth" value="851"/>
+  <property name="mainWndHeight" value="517"/>
   <property name="maximized" value="false"/>
   <property name="showToolbar" value="true"/>
   <property name="showSidebar" value="false"/>
@@ -76,8 +76,8 @@
   <property name="pageTemplate" value="xoj/template&#10;copyLastPageSettings=true&#10;size=595.275591x841.889764&#10;backgroundType=lined&#10;backgroundColor=#ffffff&#10;"/>
   <property name="sizeUnit" value=""/>
   <property name="audioFolder" value="file:///home/dylan/Music/recordings"/>
-  <property name="audioInputDevice" value="-1"/>
-  <property name="audioOutputDevice" value="-1"/>
+  <property name="audioInputDevice" value="6"/>
+  <property name="audioOutputDevice" value="6"/>
   <property name="audioSampleRate" value="44100.00000000"/>
   <property name="audioGain" value="1.00000000"/>
   <property name="defaultSeekTime" value="5"/>
