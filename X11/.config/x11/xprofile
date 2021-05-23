@@ -3,7 +3,7 @@
 setxkbmap gb
 sxhkd &
 xmousepasteblock
-xrdb -merge ~/.Xresources
+xrdb -merge ~/.config/x11/xresources
 davmail ~/.local/share/davmail/davmail.properties &
 background
 picom -b

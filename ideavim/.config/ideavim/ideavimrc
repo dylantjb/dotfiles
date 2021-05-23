@@ -1,0 +1,221 @@
+# vim:fileencoding=utf-8:ft=conf:foldmethod=marker
+# vim:ft=vim
+
+# options {{{
+" File settings
+set ignorecase
+set smartcase
+set notimeout
+set scrolloff=3 " 3 lines above/below cursor when scrolling
+
+" Emulated Plugins
+set surround
+set which-key
+
+" Copy to system clipboard as well
+set clipboard+=unnamedplus,unnamed
+
+" Use Idea to join lines smartly
+set ideajoin
+
+" Multiple cursors support
+set multiple-cursors
+
+" Map leader to space
+let mapleader = " "
+
+" Display default vim actions
+let g:WhichKey_ShowVimActions = "true"
+# }}}
+
+# unimpaired mappings {{{
+nnoremap [<space> O<esc>j
+nnoremap ]<space> o<esc>k
+nnoremap [q :action PreviousOccurence<cr>
+nnoremap ]q :action NextOccurence<cr>
+nnoremap [m :action MethodUp<cr>
+nnoremap ]m :action MethodDown<cr>
+nnoremap [c :action VcsShowPrevChangeMarker<cr>
+nnoremap ]c :action VcsShowNextChangeMarker<cr>
+
+" Tabs
+nnoremap [b :action PreviousTab<cr>
+nnoremap ]b :action NextTab<cr>
+
+" Moving lines
+nmap [e :action MoveLineUp<cr>
+nmap ]e :action MoveLineDown<cr>
+
+" Moving statements
+nmap [s :action MoveStatementUp<cr>
+nmap ]s :action MoveStatementDown<cr>
+# }}}
+
+# splits {{{
+let g:WhichKeyDesc_splits   = "<leader>s +splits"
+let g:WhichKeyDesc_splits_n = "<leader>so Next splitter"
+let g:WhichKeyDesc_splits_p = "<leader>sp Prev splitter"
+let g:WhichKeyDesc_splits_h = "<leader>ss Split horizontally"
+let g:WhichKeyDesc_splits_v = "<leader>sv Split vertically"
+let g:WhichKeyDesc_splits_c = "<leader>sc Unsplit"
+let g:WhichKeyDesc_splits_C = "<leader>sC Unsplit all"
+let g:WhichKeyDesc_splits_d = "<leader>sd Open editor in opposite tab group"
+let g:WhichKeyDesc_splits_e = "<leader>se Vim file previous"
+
+nmap <leader>so :action NextSplitter<cr>
+nmap <leader>sp :action PrevSplitter<cr>
+nmap <leader>ss :action SplitHorizontally<cr>
+nmap <leader>sv :action SplitVertically<cr>
+nmap <leader>sc :action Unsplit<cr>
+nmap <leader>sC :action UnsplitAll<cr>
+nmap <leader>sd :action OpenEditorInOppositeTabGroup<cr>
+nmap <leader>se :action VimFilePrevious<cr>
+# }}}
+
+# navigation {{{
+let g:WhichKeyDesc_navigation   = "<leader>n +navigation"
+let g:WhichKeyDesc_navigation_h = "<leader>nh Back"
+let g:WhichKeyDesc_navigation_l = "<leader>nl Forward"
+let g:WhichKeyDesc_navigation_L = "<leader>nL Recent locations"
+let g:WhichKeyDesc_navigation_g = "<leader>ng Go to declaration"
+let g:WhichKeyDesc_navigation_u = "<leader>nu Find usages"
+let g:WhichKeyDesc_navigation_f = "<leader>nf Go to file"
+let g:WhichKeyDesc_navigation_c = "<leader>nc Go to class"
+let g:WhichKeyDesc_navigation_s = "<leader>ns Go to symbol"
+let g:WhichKeyDesc_navigation_z = "<leader>n; File structure popup"
+let g:WhichKeyDesc_navigation_M = "<leader>nM Structure tool window"
+let g:WhichKeyDesc_navigation_i = "<leader>ni Go to implementation"
+let g:WhichKeyDesc_navigation_I = "<leader>nI Select in"
+let g:WhichKeyDesc_navigation_e = "<leader>ne Recent files"
+let g:WhichKeyDesc_navigation_t = "<leader>nt Go to test"
+let g:WhichKeyDesc_navigation_p = "<leader>np Jump to last window"
+let g:WhichKeyDesc_navigation_b = "<leader>nb Show bookmarks"
+let g:WhichKeyDesc_navigation_q = "<leader>nq Close content"
+let g:WhichKeyDesc_navigation_Q = "<leader>nQ Reopen closed tab"
+
+nmap <leader>nh :action Back<cr>
+nmap <leader>nl :action Forward<cr>
+nmap <leader>nL :action RecentLocations<cr>
+nmap <leader>ng :action GotoDeclaration<cr>
+nmap <leader>nu :action FindUsages<cr>
+nmap <leader>nf :action GotoFile<cr>
+nmap <leader>nc :action GotoClass<cr>
+nmap <leader>ns :action GotoSymbol<cr>
+nmap <leader>n; :action FileStructurePopup<cr>
+nmap <leader>nM :action ActivateStructureToolWindow<cr>
+nmap <leader>ni :action GotoImplementation<cr>
+nmap <leader>nI :action SelectIn<cr>
+nmap <leader>ne :action RecentFiles<cr>
+nmap <leader>nt :action GotoTest<cr>
+nmap <leader>np :action JumpToLastWindow<cr>
+nmap <leader>nb :action ShowBookmarks<cr>
+nmap <leader>nq :action CloseContent<cr>
+nmap <leader>nQ :action ReopenClosedTab<cr>
+# }}}
+
+# execute {{{
+let g:WhichKeyDesc_execute   = "<leader>e +execute"
+let g:WhichKeyDesc_execute_c = "<leader>ec Compile dirty"
+let g:WhichKeyDesc_execute_r = "<leader>er Run"
+let g:WhichKeyDesc_execute_R = "<leader>eR Run anything"
+let g:WhichKeyDesc_execute_b = "<leader>eb Debug"
+let g:WhichKeyDesc_execute_C = "<leader>eC Run class"
+let g:WhichKeyDesc_execute_d = "<leader>ed Debug class"
+let g:WhichKeyDesc_execute_t = "<leader>et Rerun tests"
+let g:WhichKeyDesc_execute_T = "<leader>eT Rerun failed tests"
+
+nmap <leader>ec :action CompileDirty<cr>
+nmap <leader>er :action Run<cr>
+nmap <leader>eR :action RunAnything<cr>
+nmap <leader>eb :action Debug<cr>
+nmap <leader>eC :action RunClass<cr>
+nmap <leader>ed :action DebugClass<cr>
+nmap <leader>et :action RerunTests<cr>                                         
+nmap <leader>eT :action RerunFailedTests<cr>
+# }}}
+
+# git {{{
+let g:WhichKeyDesc_git   = "<leader>g +git"
+let g:WhichKeyDesc_git_y = "<leader>gy Show local changes"
+let g:WhichKeyDesc_git_p = "<leader>gp Quick action list"
+let g:WhichKeyDesc_git_a = "<leader>ga Annotate"
+let g:WhichKeyDesc_git_l = "<leader>gl Show log"
+let g:WhichKeyDesc_git_d = "<leader>gd Compare last version"
+
+nmap <leader>gy :action Vcs.Show.Local.Changes<cr>                          
+nmap <leader>gp :action Vcs.QuickListPopupAction<cr>
+nmap <leader>ga :action Annotate<cr>
+nmap <leader>gl :action Vcs.Show.Log<cr>
+nmap <leader>gd :action Compare.LastVersion<cr>
+" nmap <leader>gr :action Git.ResolveConflicts<cr>                          
+# }}}
+
+# refactor {{{
+let g:WhichKeyDesc_refactor   = "<leader>r +refactor"
+let g:WhichKeyDesc_refactor_r = "<leader>rr Rename element"
+let g:WhichKeyDesc_refactor_g = "<leader>rg Generate"
+let g:WhichKeyDesc_refactor_i = "<leader>ri Optimize imports"
+
+vmap T :action Refactorings.QuickListPopupAction<cr>
+nmap <leader>rr :action RenameElement<cr>
+nmap <leader>rg :action Generate<cr>
+nmap <leader>rI :action OptimizeImports<cr>
+# }}}
+
+# find {{{
+let g:WhichKeyDesc_find   = "<leader>f +find"
+let g:WhichKeyDesc_find_f = "<leader>f/ Find"
+let g:WhichKeyDesc_find_p = "<leader>f\ Find in path"
+
+nmap <leader>f/ :action Find<cr>
+nmap <leader>f\ :action FindInPath<cr>
+# }}}
+
+# inspection {{{ 
+let g:WhichKeyDesc_inspection = "<leader>i +inspection"
+let g:WhichKeyDesc_inspection_i = "<leader>ii Inspect code"
+let g:WhichKeyDesc_inspection_x = "<leader>ix Go to next error"
+let g:WhichKeyDesc_inspection_X = "<leader>iX Go to previous error"
+let g:WhichKeyDesc_inspection_d = "<leader>id Show error description"
+
+nmap <leader>ii :action InspectCode<cr>
+nmap <leader>ix :action GotoNextError<cr>
+nmap <leader>iX :action GotoPreviousError<cr>
+nmap <leader>id :action ShowErrorDescription<cr>
+# }}}
+
+# misc leader keys {{{
+" nmap <leader>a :action Switcher<cr>
+let g:WhichKeyDesc_recentfiles = "<leader>a Recents"
+nmap <leader>a :action RecentChangedFiles<cr>
+
+" Terminal
+let g:WhichKeyDesc_terminal = "<leader>t Terminal"
+nmap <leader>t :action ActivateTerminalToolWindow<cr>                          
+# }}}
+
+# misc {{{ 
+" IdeaVim uses 'a' for alt instead of Vim's 'm'
+nmap <a-j> 15gj
+nmap <a-k> 15gk
+
+" Use Q for formatting the current paragraph (or visual selection)
+vmap Q gq
+nmap Q gqap
+
+" These create newlines like o and O but stay in normal mode
+nmap zj o<Esc>k
+nmap zk O<Esc>j
+
+" Won't work in visual mode (with vmap) for some reason.
+" Use default map of <c-/> for that.
+nmap gcc :action CommentByLineComment<cr>
+
+" key bindings for quickly moving between windows
+" h left, l right, k up, j down
+" nmap <leader>h <c-w>h
+" nmap <leader>l <c-w>l
+" nmap <leader>k <c-w>k
+" nmap <leader>j <c-w>j
+# }}}
+

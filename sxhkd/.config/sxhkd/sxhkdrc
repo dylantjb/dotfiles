@@ -1,0 +1,5 @@
+button11
+    xdotool key ctrl+minus
+
+button12
+    xdotool key ctrl+shift+plus

@@ -20,7 +20,8 @@ unalternates *
 unset signature
 macro index o "<shell-escape>mbsync dthomasbarker@gmail.com<enter>" "run mbsync to sync dthomasbarker@gmail.com"
 
-mailboxes "=INBOX" "=[Gmail]/Starred" "=[Gmail]/Drafts" "=[Gmail]/Sent Mail" "=[Gmail]/Spam" "=[Gmail]/Bin"
+mailboxes "=INBOX" "=[Gmail]/Starred" "=[Gmail]/Sent Mail" "=[Gmail]/Drafts" "=[Gmail]/Bin"
+named-mailboxes Junk "=[Gmail]/Spam"
 
 set spoolfile = "+INBOX"
 macro index,pager gi "<change-folder>=INBOX<enter>" "go to inbox"
@@ -41,12 +42,12 @@ macro index,pager gd "<change-folder>=[Gmail]/Drafts<enter>" "go to drafts"
 macro index,pager Md ";<save-message>=[Gmail]/Drafts<enter>" "move mail to drafts"
 macro index,pager Cd ";<copy-message>=[Gmail]/Drafts<enter>" "copy mail to drafts"
 
-macro index,pager gj "<change-folder>=[Gmail]/Spam<enter>" "go to spam"
-macro index,pager Mj ";<save-message>=[Gmail]/Spam<enter>" "move mail to spam"
-macro index,pager Cj ";<copy-message>=[Gmail]/Spam<enter>" "copy mail to spam"
-
 set trash = "+[Gmail]/Bin"
 macro index,pager gb "<change-folder>=[Gmail]/Bin<enter>" "go to bin"
 macro index,pager Mb ";<save-message>=[Gmail]/Bin<enter>" "move mail to bin"
 macro index,pager Cb ";<copy-message>=[Gmail]/Bin<enter>" "copy mail to bin"
+
+macro index,pager gj "<change-folder>=[Gmail]/Spam<enter>" "go to junk"
+macro index,pager Mj ";<save-message>=[Gmail]/Spam<enter>" "move mail to junk"
+macro index,pager Cj ";<copy-message>=[Gmail]/Spam<enter>" "copy mail to junk"
 

@@ -1,11 +1,9 @@
-#!/usr/bin/env bash
+#!/bin/sh
 
-cd ~/repos/personal/keats-downloader
+. ~/.virtualenvs/keats-downloader/bin/activate
 
-source ~/.virtualenvs/keats-downloader/bin/activate
+cd ~/repos/keats-downloader
 
 python 1_list_videos.py
 python 2_check_exists.py
 python 3_save.py
-
-onedrive --synchronize
