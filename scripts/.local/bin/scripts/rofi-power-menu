@@ -38,7 +38,7 @@ icons[shutdown]="\uf011"
 icons[cancel]="\u00d7"
 
 declare -A actions
-actions[logout]="killall xinitrc"
+actions[logout]="killall sx"
 actions[suspend]="sudo systemctl suspend"
 actions[hibernate]="sudo systemctl hibernate"
 actions[reboot]="sudo reboot"

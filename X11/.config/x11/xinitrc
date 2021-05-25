@@ -12,4 +12,4 @@ while true; do
     ssh-agent dwm 2> ~/.local/share/dwm/dwm.log
 done
 
-logout
+# logout

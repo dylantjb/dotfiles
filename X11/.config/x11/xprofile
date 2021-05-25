@@ -2,6 +2,7 @@
 
 setxkbmap gb
 sxhkd &
+xset r rate 300 50
 xmousepasteblock
 xrdb -merge ~/.config/x11/xresources
 davmail ~/.local/share/davmail/davmail.properties &

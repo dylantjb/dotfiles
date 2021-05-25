@@ -1,6 +1,6 @@
 #!/bin/sh
 
-export DISPLAY=:0
+export DISPLAY=:1
 
 # cd /tmp
 # wget 'https://source.unsplash.com/random/1920x1080?sig=${'RANDOM'} -o background && IMG=/tmp/background || 
