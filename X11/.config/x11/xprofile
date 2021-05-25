@@ -2,7 +2,7 @@
 
 setxkbmap gb
 sxhkd &
-xset r rate 300 50
+dunst &
 xmousepasteblock
 xrdb -merge ~/.config/x11/xresources
 davmail ~/.local/share/davmail/davmail.properties &
@@ -10,6 +10,7 @@ background
 picom -b
 unclutter &
 redshift -l 51.5:0 &
+xset r rate 300 50
 xset s 1200
-bluetoothctl on
+bluetoothctl power on
 xautolock -detectsleep -time 20 -corners 00+- -locker "slock" -killtime 20 -killer "sudo systemctl suspend" & 

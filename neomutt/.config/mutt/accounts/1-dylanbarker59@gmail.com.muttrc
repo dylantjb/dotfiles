@@ -8,7 +8,7 @@ set folder = "/home/dylan/.local/share/mail/dylanbarker59@gmail.com"
 set header_cache = /home/dylan/.cache/mutt-wizard/dylanbarker59@gmail.com/headers
 set message_cachedir = /home/dylan/.cache/mutt-wizard/dylanbarker59@gmail.com/bodies
 set mbox_type = Maildir
-
+set query_command = "abook --datafile "$XDG_DATA_HOME"/abook/addressbook --mutt-query '%s'"
 
 bind index,pager gg noop
 bind index,pager g noop
@@ -19,6 +19,7 @@ unmailboxes *
 unalternates *
 unset signature
 macro index o "<shell-escape>mw -y dylanbarker59@gmail.com<enter>" "run mbsync to sync dylanbarker59@gmail.com"
+macro index,pager a "<enter-command>set my_pipe_decode=\$pipe_decode pipe_decode<return><pipe-message>abook --datafile "$XDG_DATA_HOME"/abook/addressbook --add-email<return><enter-command>set pipe_decode=\$my_pipe_decode; unset my_pipe_decode<return>" "add the sender address to abook"
 
 mailboxes "=INBOX" "=[Gmail]/Starred" "=[Gmail]/Sent Mail" "=[Gmail]/Drafts" "=[Gmail]/Bin"
 named-mailboxes Junk "=[Gmail]/Spam"
