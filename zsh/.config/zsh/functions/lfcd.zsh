@@ -8,4 +8,3 @@ lfcd () {
     fi
 }
 alias lf="lfcd"
-bindkey -s '^o' 'lf\n'
