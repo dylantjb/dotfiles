@@ -1,8 +1,6 @@
 #!/bin/zsh
 # vim:fileencoding=utf-8:ft=conf:foldmethod=marker
 
-rm -r ~/.gnupg # find out what is creating this
-
 export FZF_DEFAULT_OPTS="--layout=reverse --height 40%"
 # export TF_FORCE_GPU_ALLOW_GROWTH=true
 export MANPAGER='nvim +Man!'
