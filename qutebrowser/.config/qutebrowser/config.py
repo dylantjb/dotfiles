@@ -76,7 +76,8 @@ config.set("content.cookies.accept", "all", "*://microsoft.com")
 c.bindings.commands = {
     'normal': {
         ",m": "spawn --userscript view_in_mpv",
-        ",M": "hint links spawn mpv {hint-url}",
+        ",M": "hint links spawn umpv {hint-url}",
+        ";m": "hint --rapid links spawn umpv {hint-url}",
         # ",p":
         # "spawn --userscript qute-pass --dmenu-invocation 'dmenu -p credentials'",
         # ",P":

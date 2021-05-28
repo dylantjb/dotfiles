@@ -9,6 +9,8 @@ blacklist = ["Spotify", "dunstify", "Brave"]
 severity = ["CRITICAL"]
 sound = os.getcwd() + "/.config/dunst/sounds/%s.wav"
 
+# os.system("notify-send %s" % argv[1])
+
 if argv[1] not in blacklist or argv[5] in severity:
     if os.path.exists(sound % argv[1]):
         os.system("aplay '%s'" % sound % argv[1])

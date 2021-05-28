@@ -1,6 +1,6 @@
 #!/bin/sh
 
-background
+wallpaper
 setxkbmap gb
 xrdb -merge ~/.config/x11/xresources
 picom -b

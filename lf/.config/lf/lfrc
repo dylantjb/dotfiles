@@ -5,6 +5,7 @@ set cleaner ~/.config/lf/cleaner
 set previewer ~/.config/lf/preview
 set drawbox true
 set icons
+set hidden true
 
 # cmds/functions
 cmd open ${{
@@ -144,12 +145,11 @@ map U unselect
 # Movement
 map gus cd /run/media/sda1
 
-map gp. cd ~/Pictures
-map gw. cd ~/Pictures/wallpapers
-map gwr cd ~/Pictures/resources
-map gws cd ~/Pictures/screenshots
-map gww cd ~/Pictures/wallpapers/desktop
-map gwm cd ~/Pictures/wallpapers/android
+map gp. cd  ~/Pictures
+map gpr cd  ~/Pictures/resources
+map gps cd  ~/Pictures/screenshots
+map gpwd cd ~/Pictures/wallpapers/desktop
+map gpwa cd ~/Pictures/wallpapers/android
 
 map gd cd ~/Documents
 
@@ -161,8 +161,10 @@ map gr. cd ~/repos
 map grd cd ~/repos/dotfiles
 map grw cd ~/repos/website
 
-map gc cd ~/.config
-map gl cd ~/.local
-map gE cd /etc
+map gc cd  ~/.config
+map gl. cd  ~/.local
+map gls cd ~/.local/share
+map glb cd ~/.local/bin
+map gE cd  /etc
 map gU. cd /usr
 map gUs cd /usr/share

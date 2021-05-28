@@ -9,7 +9,7 @@ if [ -f "${XDG_CONFIG_HOME:-$HOME/.config}/x11/xprofile" ]; then
 fi
 
 while true; do
-    ssh-agent dwm 2> ~/.local/share/dwm/dwm.log
+    dwm 2> ~/.local/share/dwm/dwm.log
 done
 
 # logout

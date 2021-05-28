@@ -2,4 +2,4 @@
 
 cd $(mktemp -d)
 cp ~/repos/$1/PKGBUILD .
-makepkg -si
+makepkg -si --noconfirm

@@ -109,7 +109,7 @@ alias dmenurc="nvim ~/repos/dmenu/config.h"
 alias strc="nvim ~/repos/st/config.h"
 
 alias lg='lazygit'
-alias ls="exa --color=always --group-directories-first"
+alias ls="exa -a --group-directories-first"
 alias cat="ccat"
 alias grep="rg"
 
