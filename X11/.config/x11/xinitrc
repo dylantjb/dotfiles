@@ -5,7 +5,7 @@
 # Executed by startx (run your window manager from here)
 
 if [ -f "${XDG_CONFIG_HOME:-$HOME/.config}/x11/xprofile" ]; then
-	. "${XDG_CONFIG_HOME:-$HOME/.config}/x11/xprofile"
+	. "${XDG_CONFIG_HOME:-$HOME/.config}/x11/xprofile" > /dev/null
 fi
 
 while true; do
