@@ -30,7 +30,7 @@ export XDG_SCREENSHOTS_DIR="$HOME/Pictures/screenshots"
 export XDG_CACHE_HOME="$HOME/.cache"
 
 export XINITRC="${XDG_CONFIG_HOME:-$HOME/.config}/x11/xinitrc"
-export XAUTHORITY="$XDG_RUNTIME_DIR/Xauthority"
+# export XAUTHORITY="$XDG_RUNTIME_DIR/Xauthority"
 export NOTMUCH_CONFIG="${XDG_CONFIG_HOME:-$HOME/.config}/notmuch/notmuchrc"
 export ANDROID_HOME="${XDG_CONFIG_HOME:-$HOME/.config}/android"
 export WORKON_HOME="${XDG_DATA_HOME:-$HOME/.local/share}/virtualenvs"
@@ -212,4 +212,4 @@ ex=:\
 "
 # }}}
 
-[ "$(tty)" = "/dev/tty1" ] && ! pgrep -x Xorg >/dev/null && exec sx sh "$XINITRC" 2> /dev/null
+[ "$(tty)" = "/dev/tty1" ] && ! pgrep -x Xorg >/dev/null && exec startx "$XINITRC" 2> /dev/null

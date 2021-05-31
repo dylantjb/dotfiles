@@ -7,7 +7,7 @@ Xft.hintstyle: hintslight
 Xft.lcdfilter: lcddefault
 Xft.rgba:      rgb
 
-*.alpha: 0.89
+! *.alpha: 0.89
 
 ! colors
 

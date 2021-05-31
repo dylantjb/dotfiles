@@ -1,6 +1,6 @@
 #!/bin/sh
 
-export DISPLAY=:1
+export DISPLAY=:0
 export XDG_RUNTIME_DIR=/run/user/$(id -u)
 
 status=`cat /sys/class/power_supply/BAT?/status`
