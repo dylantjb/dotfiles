@@ -8,9 +8,8 @@ xset r rate 300 50
 xset s 1200
 unclutter &
 redshift -l 51.5:0 &
-# sxhkd &
+sxhkd &
 bluetoothctl power on
 davmail ~/.config/davmail/dylan.properties &
 dunst &
-otd &
 xautolock -detectsleep -time 20 -corners 00+- -locker "slock" -killtime 20 -killer "sudo systemctl suspend" & 
