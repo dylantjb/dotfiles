@@ -91,14 +91,13 @@ zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
 # }}}
 
 #: Aliases {{{
-alias upgrade="sudo pacman -Sy && sudo powerpill -Su && yay -Su"
+alias upgrade="yay -Syyu"
 alias debloat="sudo pacman -Rns $(pacman -Qdtq | tr '\r\n' ' ')"
-alias emacs="/usr/bin/emacs -nw"
 alias degit="rm -rf .git*"
 alias vimdiff="nvim -d"
 alias y="yay -Sy"
-alias p="sudo pacman -Sy"
 alias yr="yay -Rns"
+alias p="sudo pacman -Sy"
 
 alias zrc="nvim ~/.config/zsh/.zshrc"
 alias nvimrc="nvim ~/.config/doom-nvim/doomrc"
@@ -113,7 +112,6 @@ alias lg='lazygit'
 alias ls="exa -a --group-directories-first"
 alias cat="ccat"
 alias grep="rg"
-
 #: }}}
 
 #: Functions {{{
