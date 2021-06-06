@@ -183,13 +183,13 @@
   # Red prompt symbol if the last command failed.
   typeset -g POWERLEVEL9K_PROMPT_CHAR_ERROR_{VIINS,VICMD,VIVIS,VIOWR}_FOREGROUND=196
   # Default prompt symbol.
-  typeset -g POWERLEVEL9K_PROMPT_CHAR_{OK,ERROR}_VIINS_CONTENT_EXPANSION='%B%{$fg[blue]%}[%{$fg[white]%}%\d%{$fg[red]%}@%{$fg[white]%}%\m%{$fg[blue]%}]%{$reset_color%}%  %{$fg[green]%}'
+  typeset -g POWERLEVEL9K_PROMPT_CHAR_{OK,ERROR}_VIINS_CONTENT_EXPANSION='%B%{$fg[blue]%}[%{$fg[white]%}%\d%{$fg[red]%}@%{$fg[white]%}%\a%{$fg[blue]%}]%{$reset_color%}%  %{$fg[green]%}'
   # Prompt symbol in command vi mode.
-  typeset -g POWERLEVEL9K_PROMPT_CHAR_{OK,ERROR}_VICMD_CONTENT_EXPANSION='%B%{$fg[blue]%}[%{$fg[white]%}%\d%{$fg[red]%}@%{$fg[white]%}%\m%{$fg[blue]%}]%{$reset_color%}%  %{$fg[green]%}'
+  typeset -g POWERLEVEL9K_PROMPT_CHAR_{OK,ERROR}_VICMD_CONTENT_EXPANSION='%B%{$fg[blue]%}[%{$fg[white]%}%\d%{$fg[red]%}@%{$fg[white]%}%\a%{$fg[blue]%}]%{$reset_color%}%  %{$fg[green]%}'
   # Prompt symbol in visual vi mode.
-  typeset -g POWERLEVEL9K_PROMPT_CHAR_{OK,ERROR}_VIVIS_CONTENT_EXPANSION='%B%{$fg[blue]%}[%{$fg[white]%}%\d%{$fg[red]%}@%{$fg[white]%}%\m%{$fg[blue]%}]%{$reset_color%}%  %{$fg[green]%}'
+  typeset -g POWERLEVEL9K_PROMPT_CHAR_{OK,ERROR}_VIVIS_CONTENT_EXPANSION='%B%{$fg[blue]%}[%{$fg[white]%}%\d%{$fg[red]%}@%{$fg[white]%}%\a%{$fg[blue]%}]%{$reset_color%}%  %{$fg[green]%}'
   # Prompt symbol in overwrite vi mode.
-  typeset -g POWERLEVEL9K_PROMPT_CHAR_{OK,ERROR}_VIOWR_CONTENT_EXPANSION='%B%{$fg[blue]%}[%{$fg[white]%}%\d%{$fg[red]%}@%{$fg[white]%}%\m%{$fg[blue]%}]%{$reset_color%}%  %{$fg[green]%}'
+  typeset -g POWERLEVEL9K_PROMPT_CHAR_{OK,ERROR}_VIOWR_CONTENT_EXPANSION='%B%{$fg[blue]%}[%{$fg[white]%}%\d%{$fg[red]%}@%{$fg[white]%}%\a%{$fg[blue]%}]%{$reset_color%}%  %{$fg[green]%}'
   typeset -g POWERLEVEL9K_PROMPT_CHAR_OVERWRITE_STATE=true
   # No line terminator if prompt_char is the last segment.
   typeset -g POWERLEVEL9K_PROMPT_CHAR_LEFT_PROMPT_LAST_SEGMENT_END_SYMBOL=''

@@ -26,7 +26,7 @@ export IDEA_JDK=/usr/lib/jvm/jdk-jetbrains
 # Home cleanup {{{
 export XDG_CONFIG_HOME="$HOME/.config"
 export XDG_DATA_HOME="$HOME/.local/share"
-export XDG_SCREENSHOTS_DIR="$HOME/Pictures/screenshots"
+export XDG_SCREENSHOTS_DIR="$HOME/pictures/screenshots"
 export XDG_CACHE_HOME="$HOME/.cache"
 
 export XINITRC="${XDG_CONFIG_HOME:-$HOME/.config}/x11/xinitrc"

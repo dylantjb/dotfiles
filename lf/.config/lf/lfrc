@@ -145,11 +145,11 @@ map U unselect
 # Movement
 map gu cd /media/sda1
 
-map gp. cd  ~/Pictures
-map gpr cd  ~/Pictures/resources
-map gps cd  ~/Pictures/screenshots
-map gpwd cd ~/Pictures/wallpapers/desktop
-map gpwa cd ~/Pictures/wallpapers/android
+map gp. cd  ~/pictures
+map gpr cd  ~/pictures/resources
+map gps cd  ~/pictures/screenshots
+map gpwd cd ~/pictures/wallpapers/desktop
+map gpwa cd ~/pictures/wallpapers/android
 
 map gd cd ~/Documents
 
