@@ -1,3 +1,6 @@
+
+
+
 IMAPStore dylanbarker59@gmail.com-remote
 Host imap.gmail.com
 Port 993
@@ -22,6 +25,7 @@ SyncState *
 MaxMessages 0
 ExpireUnread no
 # End profile
+
 
 IMAPStore dthomasbarker@gmail.com-remote
 Host imap.gmail.com
@@ -48,6 +52,7 @@ MaxMessages 0
 ExpireUnread no
 # End profile
 
+
 IMAPStore k20001430@kcl.ac.uk-remote
 Host 127.0.0.1
 Port 1143
@@ -55,6 +60,7 @@ User k20001430@kcl.ac.uk
 PassCmd "pass microsoftonline.com/k20001430@kcl.ac.uk"
 AuthMechs LOGIN
 SSLType None
+CertificateFile /etc/ssl/certs/ca-certificates.crt
 
 MaildirStore k20001430@kcl.ac.uk-local
 Subfolders Verbatim
@@ -65,7 +71,7 @@ Channel k20001430@kcl.ac.uk
 Expunge Both
 Far :k20001430@kcl.ac.uk-remote:
 Near :k20001430@kcl.ac.uk-local:
-Patterns *
+Patterns * !Archive !Clutter !"Conversation History" !"Social Activity Notifications" !"Unsent Messages" !"Sync Issues"
 Create Both
 SyncState *
 MaxMessages 0
