@@ -1,4 +1,4 @@
-# Use lf to switch directories and bind it to ctrl-o
+# Use lf to switch directories
 lfcd () {
     tmp="$(mktemp)"
     lf -last-dir-path="$tmp" "$@"

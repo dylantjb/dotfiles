@@ -1,6 +1,6 @@
 # vim: filetype=neomuttrc
 # muttrc file for account dthomasbarker@gmail.com
-set realname = "dthomasbarker"
+set realname = "Dylan Barker"
 set from = "dthomasbarker@gmail.com"
 set sendmail = "msmtp -a dthomasbarker@gmail.com"
 alias me dthomasbarker <dthomasbarker@gmail.com>

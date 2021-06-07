@@ -1,0 +1,8 @@
+#!/bin/sh
+
+[ "$(dunstctl is-paused)" = "false" ] && {
+    dunstify -i "/usr/share/icons/Papirus-Dark/48x48/status/notification-disabled.svg" \
+        "Notifications off" && sleep 5 && dunstctl close-all
+} || dunstify -i "/usr/share/icons/Papirus-Dark/48x48/apps/gnome-panel-notification-area.svg" "Notifications on"
+
+dunstctl set-paused toggle

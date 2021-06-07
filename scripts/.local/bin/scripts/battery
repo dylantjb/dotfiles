@@ -12,7 +12,7 @@ if [ $status = Discharging ]; then
 		sudo systemctl hibernate
 	elif [ $capacity -lt 20 ]; then
 		logger "Low battery threshold"
-		dunstify -u critical "Low Battery!"
+        dunstify -u critical -i "/usr/share/icons/Papirus-Dark/48x48/status/notification-battery-low.svg" "Low Battery!"
 	fi
 fi
 

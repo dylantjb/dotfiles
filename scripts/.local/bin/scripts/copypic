@@ -1,8 +1,0 @@
-#!/bin/sh
-
-PIC="$XDG_SCREENSHOTS_DIR/$(date "+%Y-%m-%d_%I-%M-%S").png"
-
-[ "$1" ] && scrot -sl style=solid,width=2,color="red" "$PIC" || 
-    scrot "$PIC"
-    
-xclip -selection clipboard -t image/png < "$PIC"

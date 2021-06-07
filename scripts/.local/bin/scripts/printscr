@@ -1,0 +1,8 @@
+#!/bin/sh
+
+PIC="$XDG_SCREENSHOTS_DIR/$(date "+%Y-%m-%d_%I-%M-%S").png"
+
+[ "$1" = "-s" ] && maim -Ds "$PIC" || maim -i $(xdotool getactivewindow) "$PIC" && 
+    convert "$PIC" -flatten -fuzz 1% -trim +repage "$PIC"
+
+xclip -selection clipboard -t image/png < "$PIC"
