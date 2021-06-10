@@ -4,6 +4,6 @@ blacklist=( "Spotify" "dunstify" "Brave" )
 sound="$HOME/.config/dunst/sounds/$DUNST_APP_NAME.wav"
 
 [[ ! " ${blacklist[@]} " =~ " $DUNST_APP_NAME " ]] || [[ "$DUNST_URGENCY" = "CRITICAL" ]] && {
-    aplay "$sound" || aplay ~/.config/dunst/sounds/alert.wav
+    aplay "$sound" 2>/dev/null || aplay ~/.config/dunst/sounds/alert.wav
 }
 

@@ -1,8 +1,11 @@
 #!/bin/sh
 
-[ "$(dunstctl is-paused)" = "false" ] && {
-    dunstify -i "/usr/share/icons/Papirus-Dark/48x48/status/notification-disabled.svg" \
-        "Notifications off" && sleep 5 && dunstctl close-all
-} || dunstify -i "/usr/share/icons/Papirus-Dark/48x48/apps/gnome-panel-notification-area.svg" "Notifications on"
+if [ "$(dunstctl is-paused)" = "false" ]; then
+    dunstify -i "/usr/share/icons/Papirus-Dark/48x48/status/notification-disabled.svg" "Notifications off" && 
+        sleep 5 && dunstctl close-all && [ "pgrep -x safeeyes" ] && safeeyes -d
+else 
+    dunstify -i "/usr/share/icons/Papirus-Dark/48x48/apps/gnome-panel-notification-area.svg" "Notifications on" &&
+        [ "pgrep -x safeeyes" ] && safeeyes -e
+fi
 
 dunstctl set-paused toggle
