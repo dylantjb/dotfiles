@@ -88,6 +88,9 @@ source /usr/share/fzf/completion.zsh
 
 #: COLORS {{{1
 zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
+zstyle ':completion:*:*:kill:*' menu yes select
+zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#)*=0=01;31'
+zstyle ':completion:*:*:kill:*:processes' command 'ps xo pid,user:10,cmd | ack-grep -v "sshd:|-zsh$"'
 # }}}
 
 #: Aliases {{{
@@ -97,6 +100,7 @@ alias degit="rm -rf .git*"
 alias vimdiff="nvim -d"
 alias stowit="stow -vt ~"
 alias unstow="stow -Dvt ~"
+alias darkmode="xrdb ~/.config/x11/xresources && xdotool key Shift_L+Super_L+Delete"
 alias y="yay -Sy"
 alias yr="yay -Rns"
 alias p="sudo pacman -Sy"
