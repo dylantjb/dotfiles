@@ -27,8 +27,6 @@ colors:
     cyan: "#3c909b"
     white: "#828997"
 
-background_opacity: 0.95
-
 font:
   # The normal (roman) font face to use.
   normal:
@@ -75,11 +73,10 @@ window:
   save_to_clipboard: true
   live_config_reload: true
 key_bindings:
-  - { key: V, mods: Control|Shift, action: Paste }
-  - { key: C, mods: Control|Shift, action: Copy }
-  - { key: Key0, mods: Control, action: ResetFontSize }
-  - { key: Equals, mods: Control, action: IncreaseFontSize }
-  # - { key: Add, mods: Control, action: IncreaseFontSize }
-  # - { key: Subtract, mods: Control, action: DecreaseFontSize }
-  - { key: Minus, mods: Control, action: DecreaseFontSize }
-  - { key: N, mods: Control, action: SpawnNewInstance }
+  - { key: V, mods: Alt,       action: Paste }
+  - { key: C, mods: Alt,       action: Copy }
+  - { key: J, mods: Alt,       action: ScrollLineDown }
+  - { key: K, mods: Alt,       action: ScrollLineUp }
+  - { key: J, mods: Shift|Alt, action: DecreaseFontSize }
+  - { key: K, mods: Shift|Alt, action: IncreaseFontSize }
+  - { key: H, mods: Shift|Alt, action: ResetFontSize }
