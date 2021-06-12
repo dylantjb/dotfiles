@@ -80,3 +80,4 @@ key_bindings:
   - { key: J, mods: Shift|Alt, action: DecreaseFontSize }
   - { key: K, mods: Shift|Alt, action: IncreaseFontSize }
   - { key: H, mods: Shift|Alt, action: ResetFontSize }
+
