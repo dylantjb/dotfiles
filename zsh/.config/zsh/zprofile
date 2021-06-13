@@ -8,11 +8,11 @@ export FZF_DEFAULT_OPTS="--layout=reverse --height 40%"
 
 # Default programs {{{
 export PATH="$PATH:${$(find ~/.local/bin -type d,l -printf %p:)%%:}"
-export EDITOR='nvim' 
-export VISUAL='nvim'
+EDITOR='nvim' VISUAL='nvim'; export EDITOR VISUAL
+
 
 # export DISPLAY=:0
-export BROWSER=brave
+export BROWSER=brave-launcher
 export TERMINAL=st
 export QT_QPA_PLATFORMTHEME=gtk2
 export AWT_TOOLKIT="MToolkit wmname LG3D"

@@ -12,5 +12,5 @@ sxhkd &
 bluetoothctl power on
 davmail ~/.config/davmail/dylan.properties &
 dunst &
-xautolock -detectsleep -time 20 -corners 00+- -locker "slock" -killtime 20 -killer "sudo systemctl suspend" & 
+xautolock -notify 1 -notifier "notify-toggle" -detectsleep -time 20 -corners 00+- -locker "sleeper" -killtime 20 -killer "sleeper -s" &
 safeeyes &

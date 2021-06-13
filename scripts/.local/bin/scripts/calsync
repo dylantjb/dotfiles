@@ -1,2 +1,0 @@
-#!/bin/sh
-CALCURSE_CALDAV_PASSWORD=$(pass TheGoodCloud/dylanbarker59@gmail.com) calcurse-caldav --init=two-way $1

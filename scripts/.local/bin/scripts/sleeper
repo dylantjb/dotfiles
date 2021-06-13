@@ -1,0 +1,3 @@
+#!/bin/sh
+
+[ -z "$1"] && notify-toggle && slock || sudo systemctl suspend && notify-toggle
