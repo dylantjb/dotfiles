@@ -1,11 +1,11 @@
 #!/bin/sh
 
 wallpaper
-setxkbmap gb
 xrdb -merge ~/.config/x11/xresources
 picom -b
-xset r rate 300 50
-xset s 1200
+setxkbmap gb
+xset s noblank
+xset s off
 unclutter &
 redshift -l 51.5:0 &
 sxhkd &
@@ -13,4 +13,6 @@ bluetoothctl power on
 davmail ~/.config/davmail/dylan.properties &
 dunst &
 xautolock -notify 1 -notifier "notify-toggle" -detectsleep -time 20 -corners 00+- -locker "sleeper" -killtime 20 -killer "sleeper -s" &
+mpd
 safeeyes &
+

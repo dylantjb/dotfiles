@@ -10,17 +10,20 @@
 
 #: Plugins {{{
 # Enable cd abbreviations
-setopt auto_cd
+setopt auto_cd extendedglob nomatch menucomplete
+
+stty stop undef
+zle_highlight=('paste:none')
+autoload -Uz compinit colors
+compinit && colors
 
 # Enable Powerlevel10k instant prompt
-autoload -U colors && colors
 if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
 export CASE_SENSITIVE='true'
 export HISTORY_SUBSTRING_SEARCH_HIGHLIGHT_FOUND=''
-export zle_highlight=('paste:none')
 
 export ZINITDIR="${XDG_CONFIG_HOME:-$HOME/.config}/zinit"
 
@@ -83,7 +86,6 @@ export AUTOSWITCH_VIRTUAL_ENV_DIR="$WORKON_HOME"
 # zinit light neovim/neovim
 
 source /usr/share/fzf/completion.zsh
-# source /usr/share/fzf/key-bindings.zsh
 #: }}}
 
 #: COLORS {{{1
@@ -100,13 +102,18 @@ alias degit="rm -rf .git*"
 alias vimdiff="nvim -d"
 alias stowit="stow -vt ~"
 alias unstow="stow -Dvt ~"
-alias darkmode="xrdb ~/.config/x11/xresources && xdotool key Shift_L+Super_L+Delete"
+alias darkmode="xrdb "$XDG_CONFIG_HOME/x11/xresources" && xdotool key Shift_L+Super_L+Delete"
+alias clear="echo 'USE CTRL+l'"
+alias exit="echo 'USE MOD+q'"
+alias wget="wget --hsts-file="$XDG_CACHE_HOME/wget-hsts""
 alias y="yay -Sy"
+alias abook="abook --datafile "$XDG_DATA_HOME/abook/addressbook""
 alias yr="yay -Rns"
 alias p="sudo pacman -Sy"
 
-alias zrc="nvim ~/.config/zsh/.zshrc"
-alias nvimrc="nvim ~/.config/doom-nvim/doomrc"
+alias zrc="nvim "$XDG_CONFIG_HOME/zsh/.zshrc""
+alias zfc="find "$XDG_CONFIG_HOME/zsh/functions/" -type f | fzf | xargs nvim"
+alias nvimrc="nvim "$XDG_CONFIG_HOME/doom-nvim/doomrc""
 alias slockrc="nvim ~/repos/slock/config.h"
 alias blockrc="nvim ~/repos/dwmblocks/config.h"
 alias dwlrc="nvim ~/repos/dwl/config.h"

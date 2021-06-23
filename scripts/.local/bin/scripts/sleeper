@@ -1,3 +1,4 @@
 #!/bin/sh
 
-[ -z "$1"] && notify-toggle && slock || sudo systemctl suspend && notify-toggle
+[ -z "$1"] && notifyctl true && slock xset dpms force off || sudo systemctl suspend && notifyctl false
+

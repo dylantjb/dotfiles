@@ -1,0 +1,10 @@
+#!/bin/sh
+
+if [ "$(dunstctl is-paused)" = "false" ]; then
+    dunstify -i "/usr/share/icons/Papirus-Dark/48x48/status/notification-disabled.svg" "Notifications off" &&
+        [ "pgrep -x safeeyes" ] && safeeyes -d && sleep 5 && dunstctl set-paused $1
+else
+    dunstify -i "/usr/share/icons/Papirus-Dark/48x48/apps/gnome-panel-notification-area.svg" "Notifications on" &&
+        [ "pgrep -x safeeyes" ] && safeeyes -e && dunstctl set-paused $1
+fi
+
