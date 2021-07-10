@@ -43,7 +43,7 @@ function send_notification {
       bar=$(seq -s "┃" 0 $((volume / 6)) | sed 's/[0-9]//g')
   fi
   # Send the notification
-  dunstify -i "$icon" -r 2593 -u low "$volume   $bar"
+  dunstify -i "$icon" -r 2593 -u low "$volume  $bar"
   pgrep -x dwmblocks && kill -44 $(pidof dwmblocks)
 }
 

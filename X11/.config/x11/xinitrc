@@ -16,7 +16,8 @@ export ZPOOL_VDEV_NAME_PATH=YES
 [ -f "$XDG_CONFIG_HOME/x11/xprofile" ] && . "$XDG_CONFIG_HOME/x11/xprofile" > /dev/null
 
 while true; do
-    dwm 2> ~/.local/share/dwm/dwm.log
+	# gpg-agent --daemon dwm 2> ~/.local/share/dwm/dwm.log
+  dwm
 done
 
 logout

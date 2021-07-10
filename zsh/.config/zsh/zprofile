@@ -210,3 +210,5 @@ ex=:\
 # }}}
 
 [ "$(tty)" = "/dev/tty1" ] && ! pgrep -x Xorg >/dev/null && exec startx "$XINITRC" -- vt1 -ardelay 300 -arinterval 20 2> /dev/null
+
+sudo -n loadkeys $XDG_CONFIG_HOME/vconsole/capsescape.kmap

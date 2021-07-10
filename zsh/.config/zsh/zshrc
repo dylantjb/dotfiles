@@ -41,8 +41,6 @@ source "$ZINITDIR/bin/zinit.zsh"
 export ZINIT[BIN_DIR]="$ZINITDIR/bin"
 export ZINIT[HOME_DIR]="$ZINITDIR"
 export ZINIT[PLUGINS_DIR]="$ZINITDIR/plugins"
-export ZINIT[COMPLETIONS_DIR]="$ZINITDIR/completions"
-export ZINIT[SNIPPETS_DIR]="$ZINITDIR/snippets"
 export ZINIT[ZCOMPDUMP_PATH]="$ZINITDIR/.zcompdump"
 
 autoload -Uz _zinit
@@ -104,7 +102,6 @@ alias stowit="stow -vt ~"
 alias unstow="stow -Dvt ~"
 alias darkmode="xrdb "$XDG_CONFIG_HOME/x11/xresources" && xdotool key Shift_L+Super_L+Delete"
 alias clear="echo 'USE CTRL+l'"
-alias exit="echo 'USE MOD+q'"
 alias wget="wget --hsts-file="$XDG_CACHE_HOME/wget-hsts""
 alias y="yay -Sy"
 alias abook="abook --datafile "$XDG_DATA_HOME/abook/addressbook""
@@ -124,7 +121,6 @@ alias strc="nvim ~/repos/st/config.h"
 alias lg='lazygit'
 alias emacs='emacs -nw'
 alias ls="exa -a --group-directories-first"
-alias cat="ccat"
 alias grep="rg"
 #: }}}
 
