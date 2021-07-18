@@ -17,10 +17,14 @@
 	new = green bold
 	whitespace = red reverse
 [user]
-	email = dthomasbarker@gmail.com
+	email = dylan@dylantjb.com
 	name = Dylan Barker
 [merge]
 	tool = vimdiff
 	conflictstyle = diff3
 [mergetool]
 	prompt = false
+[init]
+	defaultBranch = main
+[commit]
+	gpgsign = true

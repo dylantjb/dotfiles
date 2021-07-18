@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+
+read -p "Name of repo: " repo
+[ -z "$repo" ] && echo "Provide a repository name" && exit 1
+
+read -p "Default branch (main): " branch
+[ -z "$branch" ] && branch=main
+
+git init --bare /srv/git/$repo.git > /dev/null
+chown -R git:git /srv/git/$repo.git
+cd /srv/git/$repo.git
+
+git symbolic-ref HEAD refs/heads/$branch
+
+read -p "Publish it? [y/N] " publish
+[[ $publish =~ [yY] ]] && {
+  touch git-daemon-export-ok
+  read -p "Add a description: " description
+  echo "$description" > description
+  read -p "Add the owner (Dylan Barker): " owner
+  [ -z "$owner" ] && owner="Dylan Barker" && printf "[gitweb]\n\towner=$owner" >> config
+}
+
+cd - > /dev/null
+
