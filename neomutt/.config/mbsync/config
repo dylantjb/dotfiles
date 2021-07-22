@@ -1,6 +1,4 @@
 
-
-
 IMAPStore dylanbarker59@gmail.com-remote
 Host imap.gmail.com
 Port 993
@@ -27,25 +25,25 @@ ExpireUnread no
 # End profile
 
 
-IMAPStore dthomasbarker@gmail.com-remote
-Host imap.gmail.com
+IMAPStore dylan@dylantjb.com-remote
+Host mail.dylantjb.com
 Port 993
-User dthomasbarker@gmail.com
-PassCmd "pass Mutt/dthomasbarker@gmail.com"
+User dylan@dylantjb.com
+PassCmd "pass dylantjb.com/dylan@dylantjb.com"
 AuthMechs LOGIN
 SSLType IMAPS
 CertificateFile /etc/ssl/certs/ca-certificates.crt
 
-MaildirStore dthomasbarker@gmail.com-local
+MaildirStore dylan@dylantjb.com-local
 Subfolders Verbatim
-Path /home/dylan/.local/share/mail/dthomasbarker@gmail.com/
-Inbox /home/dylan/.local/share/mail/dthomasbarker@gmail.com/INBOX
+Path /home/dylan/.local/share/mail/dylan@dylantjb.com/
+Inbox /home/dylan/.local/share/mail/dylan@dylantjb.com/INBOX
 
-Channel dthomasbarker@gmail.com
+Channel dylan@dylantjb.com
 Expunge Both
-Far :dthomasbarker@gmail.com-remote:
-Near :dthomasbarker@gmail.com-local:
-Patterns * !"[Gmail]/All Mail"
+Far :dylan@dylantjb.com-remote:
+Near :dylan@dylantjb.com-local:
+Patterns *
 Create Both
 SyncState *
 MaxMessages 0

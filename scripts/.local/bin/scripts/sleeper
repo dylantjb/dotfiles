@@ -1,4 +1,4 @@
 #!/bin/sh
 
-[ -z "$1"] && notifyctl true && slock xset dpms force off || sudo systemctl suspend && notifyctl false
+[ -z "$1"] && echo "$(dunstctl is-paused)" > /tmp/sleeper && notifyctl true && slock xset dpms force off || sudo systemctl suspend && notifyctl $(cat /tmp/sleeper)
 

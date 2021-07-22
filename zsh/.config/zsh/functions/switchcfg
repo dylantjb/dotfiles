@@ -1,6 +1,0 @@
-switchcfg() {
-    { /usr/bin/ls -l ~/.config/nvim | grep "LunarVim" >/dev/null } && cfg=doom-nvim || cfg=LunarVim
-    rm ~/.config/nvim
-    ln -s ~/.config/$cfg ~/.config/nvim
-    echo "Switched to $cfg"
-}

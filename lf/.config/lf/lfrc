@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 
 # Basic vars
-set cleaner ~/.config/lf/cleaner
-set previewer ~/.config/lf/preview
 set drawbox true
 set ratios 1:2:3
+set cleaner ~/.config/lf/cleaner
+set previewer ~/.config/lf/preview
 set icons
 set hidden true
 
@@ -132,12 +132,12 @@ map p paste
 map y copy
 map x cut
 map <enter> open
-map mf mkfile
+map mf push :mkfile<space>
 map mr push :sudomkfile<space>
 map md push :mkdir<space>
 map cm push :chmod<space>
 map co push :chown<space>
-map bg setwallpaper
+map bg push :setwallpaper<space>
 map r rename
 map R reload
 map C clear
@@ -146,15 +146,14 @@ map U unselect
 # Movement
 map gu cd /media/sda1
 
-map gp. cd  ~/pictures
-map gpr cd  ~/pictures/resources
-map gps cd  ~/pictures/screenshots
-map gpwd cd ~/pictures/wallpapers/desktop
-map gpwa cd ~/pictures/wallpapers/android
+map gp. cd ~/pictures
+map gpr cd ~/pictures/resources
+map gps cd ~/pictures/screenshots
+map gpw cd ~/pictures/wallpapers
 
-map gd cd ~/Documents
+map gd cd ~/documents
 
-map gD cd ~/Downloads
+map gD cd ~/downloads
 
 map gs cd ~/.local/bin/scripts
 
@@ -163,7 +162,7 @@ map grd cd ~/repos/dotfiles
 map grw cd ~/repos/website
 
 map gc cd  ~/.config
-map gl. cd  ~/.local
+map gl. cd ~/.local
 map gls cd ~/.local/share
 map glb cd ~/.local/bin
 map gE cd  /etc

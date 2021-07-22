@@ -9,7 +9,7 @@ capacity=`cat /sys/class/power_supply/BAT?/capacity`
 if [ $status = Discharging ]; then
 	if [ $capacity -lt 5 ]; then
 		logger "Critical battery threshold"
-		sudo systemctl hibernate
+    physlock
 	elif [ $capacity -lt 20 ]; then
 		logger "Low battery threshold"
         dunstify -u critical -i "/usr/share/icons/Papirus-Dark/48x48/status/notification-battery-low.svg" "Low Battery!"

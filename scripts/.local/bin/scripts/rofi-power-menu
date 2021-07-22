@@ -15,24 +15,22 @@ set -e
 set -u
 
 # All supported choices
-all=(shutdown reboot suspend hibernate logout)
+all=(shutdown reboot suspend lock logout)
 
 # By default, show all (i.e., just copy the array)
 show=("${all[@]}")
 
 declare -A texts
-texts[switchuser]="Switch user"
 texts[logout]="Log out"
 texts[suspend]="Suspend"
-texts[hibernate]="Hibernate"
+texts[lock]="Lock"
 texts[reboot]="Reboot"
 texts[shutdown]="Shut down"
 
 declare -A icons
-icons[switchuser]="\uf518"
 icons[logout]="\uf842"
-icons[suspend]="\uf9b1"
-icons[hibernate]="\uf7c9"
+icons[suspend]="\uf7c9"
+icons[lock]="\uf9b1"
 icons[reboot]="\ufc07"
 icons[shutdown]="\uf011"
 icons[cancel]="\u00d7"
@@ -40,7 +38,7 @@ icons[cancel]="\u00d7"
 declare -A actions
 actions[logout]="killall xinit"
 actions[suspend]="sudo systemctl suspend"
-actions[hibernate]="sudo systemctl hibernate"
+actions[lock]="sudo systemctl hibernate"
 actions[reboot]="sudo reboot"
 actions[shutdown]="sudo shutdown now"
 

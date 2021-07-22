@@ -1,15 +1,15 @@
 # vim: filetype=neomuttrc
-# muttrc file for account k20001430@kcl.ac.uk
+# muttrc file for account dylan@dylantjb.com
 set realname = "Dylan Barker"
-set from = "k20001430@kcl.ac.uk"
-set sendmail = "msmtp -a k20001430@kcl.ac.uk"
-alias me k20001430 <k20001430@kcl.ac.uk>
-set folder = "/home/dylan/.local/share/mail/k20001430@kcl.ac.uk"
-set header_cache = /home/dylan/.cache/mutt-wizard/k20001430@kcl.ac.uk/headers
-set message_cachedir = /home/dylan/.cache/mutt-wizard/k20001430@kcl.ac.uk/bodies
+set from = "dylan@dylantjb.com"
+set sendmail = "msmtp -a dylan@dylantjb.com"
+alias me dylan <dylan@dylantjb.com>
+set folder = "/home/dylan/.local/share/mail/dylan@dylantjb.com"
+set header_cache = /home/dylan/.cache/mutt-wizard/dylan@dylantjb.com/headers
+set message_cachedir = /home/dylan/.cache/mutt-wizard/dylan@dylantjb.com/bodies
 set mbox_type = Maildir
 set query_command = "abook --datafile "$XDG_DATA_HOME"/abook/addressbook --mutt-query '%s'"
-set hostname = "kcl.ac.uk"
+set hostname = "dylantjb.com"
 
 bind index,pager gg noop
 bind index,pager g noop
@@ -19,7 +19,7 @@ bind index gg first-entry
 unmailboxes *
 unalternates *
 unset signature
-macro index o "<shell-escape>mw -y k20001430@kcl.ac.uk<enter>" "run mbsync to sync dylanbarker59@gmail.com"
+macro index o "<shell-escape>mw -y dylan@dylantjb.com<enter>" "run mbsync to sync dylanbarker59@gmail.com"
 macro index,pager a "<enter-command>set my_pipe_decode=\$pipe_decode pipe_decode<return><pipe-message>abook --datafile "$XDG_DATA_HOME"/abook/addressbook --add-email<return><enter-command>set pipe_decode=\$my_pipe_decode; unset my_pipe_decode<return>" "add the sender address to abook"
 
 mailboxes "=INBOX" "=Drafts" "=Junk" "=Trash" "=Sent"

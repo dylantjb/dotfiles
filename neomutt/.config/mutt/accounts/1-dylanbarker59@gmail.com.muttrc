@@ -9,6 +9,7 @@ set header_cache = /home/dylan/.cache/mutt-wizard/dylanbarker59@gmail.com/header
 set message_cachedir = /home/dylan/.cache/mutt-wizard/dylanbarker59@gmail.com/bodies
 set mbox_type = Maildir
 set query_command = "abook --datafile "$XDG_DATA_HOME"/abook/addressbook --mutt-query '%s'"
+set hostname = "gmail.com"
 
 bind index,pager gg noop
 bind index,pager g noop
