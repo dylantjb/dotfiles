@@ -8,12 +8,7 @@
 #
 #
 
-#: Plugins {{{
-# Enable cd abbreviations
-setopt auto_cd extendedglob nomatch menucomplete
-
-stty stop undef
-zle_highlight=('paste:none')
+#: Urgent {{{
 autoload -Uz compinit colors
 compinit && colors
 
@@ -21,41 +16,47 @@ compinit && colors
 if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
+# }}}
 
-export CASE_SENSITIVE='true'
-export HISTORY_SUBSTRING_SEARCH_HIGHLIGHT_FOUND=''
+#: Options {{{
+# History
+setopt extended_history       # record timestamp of command in HISTFILE
+setopt hist_expire_dups_first # delete duplicates first when HISTFILE size exceeds HISTSIZE
+setopt hist_ignore_dups       # ignore duplicated commands history list
+setopt hist_ignore_space      # ignore commands that start with space
+setopt hist_verify            # show command with history expansion to user before running it
+setopt inc_append_history     # add commands to HISTFILE in order of execution
+setopt share_history          # share command history data
 
-export ZINITDIR="${XDG_CONFIG_HOME:-$HOME/.config}/zinit"
+setopt auto_cd extendedglob nomatch menucomplete
+# }}}
 
-# Added by Zinit's installer
-if [[ ! -f $ZINITDIR/bin/zinit.zsh ]]; then
+#: Plugins {{{
+declare -A ZINIT
+ZINIT[HOME_DIR]=${XDG_DATA_HOME:-$HOME/.local/share}/zinit
+ZINIT[ZCOMPDUMP_PATH]=${XDG_CACHE_HOME:-$HOME/.cache}/zinit/zcompdump
+ZINIT[BIN_DIR]=${ZINIT[HOME_DIR]}/bin
+ZINIT[PLUGINS_DIR]=${ZINIT[HOME_DIR]}/plugins
+ZINIT[COMPLETIONS_DIR]=${ZINIT[HOME_DIR]}/completions
+ZINIT[SNIPPETS_DIR]=${ZINIT[HOME_DIR]}/snippets
+ZINIT[SERVICES_DIR]=${ZINIT[HOME_DIR]}/services
+
+if [ ! -d "${ZINIT[HOME_DIR]}" ]; then
+    mkdir -p "${ZINIT[HOME_DIR]}" 
     print -P "%F{33}▓▒░ %F{220}Installing %F{33}DHARMA%F{220} Initiative Plugin Manager (%F{33}zdharma/zinit%F{220})…%f"
-    command mkdir -p "$ZINITDIR" && command chmod g-rwX "$ZINITDIR"
-    command git clone https://github.com/zdharma/zinit "$ZINITDIR/bin" && \
+    command mkdir -p "${ZINIT[HOME_DIR]}" && command chmod g-rwX "${ZINIT[HOME_DIR]}"
+    command git clone https://github.com/zdharma/zinit "${ZINIT[BIN_DIR]}" && \
         print -P "%F{33}▓▒░ %F{34}Installation successful.%f%b" || \
         print -P "%F{160}▓▒░ The clone has failed.%f%b"
+else
+    source "${ZINIT[BIN_DIR]}/zinit.zsh"
 fi
-
-source "$ZINITDIR/bin/zinit.zsh"
-
-export ZINIT[BIN_DIR]="$ZINITDIR/bin"
-export ZINIT[HOME_DIR]="$ZINITDIR"
-export ZINIT[PLUGINS_DIR]="$ZINITDIR/plugins"
-export ZINIT[ZCOMPDUMP_PATH]="$ZINITDIR/.zcompdump"
 
 autoload -Uz _zinit
 (( ${+_comps} )) && _comps[zinit]=_zinit
 
 zinit ice depth=1; zinit light romkatv/powerlevel10k
-[[ ! -f ${XDG_CONFIG_HOME:-$HOME/.config}/powerlevel10k/config.zsh ]] || source $HOME/.config/powerlevel10k/config.zsh
-export POWERLEVEL9K_SHORTEN_STRATEGY=truncate_to_last
-
-# Load a few important annexes, without Turbo
-# (this is currently required for annexes)
-zinit light-mode for \
-    zinit-zsh/z-a-patch-dl \
-    zinit-zsh/z-a-submods
-# End of Zinit's installer chunk
+[[ -f ${XDG_CONFIG_HOME:-$HOME/.config}/p10k/config.zsh ]] && source $HOME/.config/p10k/config.zsh
 
 zinit wait lucid for \
     atinit"ZINIT[COMPINIT_OPTS]=-C; zicompinit; zicdreplay" \
@@ -73,17 +74,17 @@ zinit light Aloxaf/fzf-tab
 zinit ice wait"0" lucid pick"zsh-system-clipboard.zsh"
 zinit light kutsan/zsh-system-clipboard
 
+zinit ice depth=1
+zinit light jeffreytse/zsh-vi-mode
+
 zinit ice wait"2" lucid as"program" pick"bin/git-dsf"
 zinit light zdharma/zsh-diff-so-fancy
 
 zinit ice wait"2" silent
 zinit light MichaelAquilina/zsh-autoswitch-virtualenv
-export AUTOSWITCH_VIRTUAL_ENV_DIR="$WORKON_HOME"
-
-source /usr/share/fzf/completion.zsh
 #: }}}
 
-#: COLORS {{{1
+#: COLORS {{{
 zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
 zstyle ':completion:*:*:kill:*' menu yes select
 zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#)*=0=01;31'
@@ -115,11 +116,22 @@ alias dmenurc="$EDITOR ~/repos/dmenu/config.h"
 alias strc="$EDITOR ~/repos/st/config.h"
 
 alias lg='lazygit'
-alias emacs='emacs -nw'
 alias ls="exa -a --group-directories-first"
+alias mkdir="mkdir -p"
 alias ll="ls -l"
 alias grep="rg"
 #: }}}
+
+#: Exports {{{
+export CASE_SENSITIVE='true'
+export HISTORY_SUBSTRING_SEARCH_HIGHLIGHT_FOUND=''
+export POWERLEVEL9K_SHORTEN_STRATEGY=truncate_to_last
+export AUTOSWITCH_VIRTUAL_ENV_DIR="$WORKON_HOME"
+export ZVM_READKEY_ENGINE=$ZVM_READKEY_ENGINE_ZLE
+export ZVM_VI_INSERT_ESCAPE_BINDKEY=jk
+export ZVM_KEYTIMEOUT=0.005
+export ZVM_ESCAPE_KEYTIMEOUT=0.005
+# }}}
 
 #: Functions {{{
 for i in ${XDG_CONFIG_HOME:-$HOME/.config}/zsh/functions/*; do
@@ -131,15 +143,7 @@ done
 HISTSIZE=50000
 SAVEHIST=10000
 
-## History command configuration
-setopt extended_history       # record timestamp of command in HISTFILE
-setopt hist_expire_dups_first # delete duplicates first when HISTFILE size exceeds HISTSIZE
-setopt hist_ignore_dups       # ignore duplicated commands history list
-setopt hist_ignore_space      # ignore commands that start with space
-setopt hist_verify            # show command with history expansion to user before running it
-setopt inc_append_history     # add commands to HISTFILE in order of execution
-setopt share_history          # share command history data
-
-bindkey -M vicmd 'k' history-substring-search-up
 bindkey -M vicmd 'j' history-substring-search-down
+bindkey -M vicmd 'k' history-substring-search-up
 #: }}}
+

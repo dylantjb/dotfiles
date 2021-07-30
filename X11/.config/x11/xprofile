@@ -1,18 +1,18 @@
 #!/bin/sh
 
-wallpaper
-xrdb -merge ~/.config/x11/xresources
-picom -b
-setxkbmap gb
-xset s noblank
-xset s off
+wallpaper &
+xrdb -merge ~/.config/x11/xresources &
+picom &
+setxkbmap gb &
+xset s noblank &
+xset s off &
 unclutter &
 redshift -l 51.5:0 &
 sxhkd &
-bluetoothctl power on
 davmail ~/.config/davmail/dylan.properties &
 dunst &
 xautolock -notify 1 -notifier "notify-toggle" -detectsleep -time 20 -corners 00+- -locker "sleeper" -killtime 20 -killer "sleeper -s" &
-mpd
+mpd &
 safeeyes &
+emacs --daemon &
 

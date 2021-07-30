@@ -27,12 +27,14 @@ export XDG_SCREENSHOTS_DIR="$HOME/pictures/screenshots"
 export _JAVA_OPTIONS=-Djava.util.prefs.userRoot="${XDG_CONFIG_HOME:-$HOME/.config}/java"
 export ANDROID_HOME="${XDG_CONFIG_HOME:-$HOME/.config}/android"
 export GNUPGHOME="${XDG_DATA_HOME:-$HOME/.local/share}/gnupg"
+export NPM_CONFIG_USERCONFIG=$XDG_CONFIG_HOME/npm/npmrc
 export GTK2_RC_FILES="${XDG_CONFIG_HOME:-$HOME/.config}/gtk-2.0/gtkrc-2.0"
 export HISTFILE="${XDG_DATA_HOME:-$HOME/.local/share}/history"
 export LESSHISTFILE="-"
 export MBSYNCRC=${XDG_CONFIG_HOME:-$HOME/.config}/mbsync/config
 export MPD_HOST="${XDG_CONFIG_HOME:-$HOME/.config}/mpd/socket"
 export NOTMUCH_CONFIG="${XDG_CONFIG_HOME:-$HOME/.config}/notmuch/notmuchrc"
+export PYLINTHOME="$XDG_CACHE_HOME"/pylint
 export PASSWORD_STORE_DIR="${XDG_DATA_HOME:-$HOME/.local/share}/password-store"
 export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
 export TASKDATA="${XDG_DATA_HOME:-$HOME/.local/share}/task"

@@ -1,4 +1,3 @@
-# Use lf to switch directories
 lfcd () {
     tmp="$(mktemp)"
     lf -last-dir-path="$tmp" "$@"
