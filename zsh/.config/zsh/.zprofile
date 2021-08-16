@@ -1,22 +1,10 @@
 #!/bin/zsh
 # vim:fileencoding=utf-8:ft=conf:foldmethod=marker
 
-export FZF_DEFAULT_OPTS="--layout=reverse --height 40%"
-export KEYTIMEOUT=1
-export MANPAGER='nvim +Man!'
-export MANWIDTH=999
-
 # Default programs {{{
 EDITOR='lvim' VISUAL='lvim'; export EDITOR VISUAL
 export PATH="$PATH:${$(find ~/.local/bin -type d,l -printf %p:)%%:}"
 # }}}
-
-export _JAVA_AWT_WM_NONREPARENTING=1
-export AWT_TOOLKIT="MToolkit wmname LG3D"
-export BROWSER=brave-launcher
-export IDEA_JDK=/usr/lib/jvm/jdk-jetbrains
-export QT_QPA_PLATFORMTHEME=gtk2
-export TERMINAL=alacritty
 
 # Home cleanup {{{
 export XDG_CACHE_HOME="$HOME/.cache"
@@ -27,15 +15,19 @@ export XDG_SCREENSHOTS_DIR="$HOME/pictures/screenshots"
 export _JAVA_OPTIONS=-Djava.util.prefs.userRoot="${XDG_CONFIG_HOME:-$HOME/.config}/java"
 export ANDROID_HOME="${XDG_CONFIG_HOME:-$HOME/.config}/android"
 export GNUPGHOME="${XDG_DATA_HOME:-$HOME/.local/share}/gnupg"
+export CARGO_HOME="$XDG_DATA_HOME"/cargo
 export NPM_CONFIG_USERCONFIG=$XDG_CONFIG_HOME/npm/npmrc
 export GTK2_RC_FILES="${XDG_CONFIG_HOME:-$HOME/.config}/gtk-2.0/gtkrc-2.0"
 export HISTFILE="${XDG_DATA_HOME:-$HOME/.local/share}/history"
 export LESSHISTFILE="-"
+export GOPATH="${XDG_DATA_HOME:-$HOME/.local/share}/go"
 export MBSYNCRC=${XDG_CONFIG_HOME:-$HOME/.config}/mbsync/config
 export MPD_HOST="${XDG_CONFIG_HOME:-$HOME/.config}/mpd/socket"
 export NOTMUCH_CONFIG="${XDG_CONFIG_HOME:-$HOME/.config}/notmuch/notmuchrc"
 export PYLINTHOME="$XDG_CACHE_HOME"/pylint
 export PASSWORD_STORE_DIR="${XDG_DATA_HOME:-$HOME/.local/share}/password-store"
+export TERMINFO="$XDG_DATA_HOME"/terminfo
+export TERMINFO_DIRS="$XDG_DATA_HOME"/terminfo:/usr/share/terminfo
 export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
 export TASKDATA="${XDG_DATA_HOME:-$HOME/.local/share}/task"
 export TASKRC="${XDG_CONFIG_HOME:-$HOME/.config}/task/taskrc"
@@ -211,6 +203,13 @@ ex=:\
 "
 # }}}
 
-[ "$(tty)" = "/dev/tty1" ] && ! pgrep -x Xorg >/dev/null && exec startx "$XINITRC" -- vt1 -ardelay 300 -arinterval 20 2> /dev/null
+# Misc exports {{{
+export _JAVA_AWT_WM_NONREPARENTING=1
+export AWT_TOOLKIT="MToolkit wmname LG3D"
+export BROWSER=brave-launcher
+export IDEA_JDK=/usr/lib/jvm/jdk-jetbrains
+export QT_QPA_PLATFORMTHEME=gtk2
+export TERMINAL=st
+# }}}
 
-sudo -n loadkeys $XDG_CONFIG_HOME/vconsole/capsescape.kmap
+[ "$(tty)" = "/dev/tty1" ] && ! pgrep -x Xorg >/dev/null && exec startx "$XINITRC" -- vt1 -ardelay 300 -arinterval 20 2> /dev/null

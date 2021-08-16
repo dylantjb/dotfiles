@@ -12,8 +12,8 @@
   <property name="zoomStep" value="10.00000000"/>
   <property name="zoomStepScroll" value="2.00000000"/>
   <property name="displayDpi" value="72"/>
-  <property name="mainWndWidth" value="851"/>
-  <property name="mainWndHeight" value="1045"/>
+  <property name="mainWndWidth" value="1041"/>
+  <property name="mainWndHeight" value="1044"/>
   <property name="maximized" value="false"/>
   <property name="showToolbar" value="true"/>
   <property name="showSidebar" value="false"/>
@@ -42,9 +42,11 @@
   <property name="cursorHighlightRadius" value="30.00000000"/>
   <property name="cursorHighlightBorderWidth" value="0.00000000"/>
   <property name="darkTheme" value="true"/>
+  <property name="useStockIcons" value="false"/>
   <property name="disableScrollbarFadeout" value="true"/>
   <!--Hides scroolbars in the main window, allowed values: "none", "horizontal", "vertical", "both"-->
   <property name="scrollbarHideType" value="both"/>
+  <property name="autoloadMostRecent" value="false"/>
   <property name="autoloadPdfXoj" value="false"/>
   <property name="defaultSaveName" value="%F-Note-%H-%M"/>
   <property name="autosaveEnabled" value="true"/>

@@ -1,0 +1,12 @@
+#!/bin/bash
+
+# https://gist.github.com/jn64/8b412733667e30bf63bf9d4ba1852691
+# Send notification with album art when ncmpcpp plays a new song
+# execute_on_song_change must be set in ncmpcpp config
+
+readonly MUSIC_DIR="${HOME}/music"
+readonly SONG_PATH="$(mpc --format '%file%' current)"
+readonly SONG_DIR="$(dirname "${SONG_PATH}")"
+readonly ALBUM_ART_PATH="${MUSIC_DIR}/${SONG_DIR}/cover.jpg"
+
+dunstify -i "${ALBUM_ART_PATH}" "Now Playing" "$(mpc --format '%title% - %artist%' current)"

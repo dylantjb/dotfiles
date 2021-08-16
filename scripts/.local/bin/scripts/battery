@@ -1,18 +1,26 @@
 #!/bin/sh
 
 export DISPLAY=:0
-export XDG_RUNTIME_DIR=/run/user/$(id -u)
+export XDG_RUNTIME_DIR="/run/user/$(id -u)"
 
-status=`cat /sys/class/power_supply/BAT?/status`
-capacity=`cat /sys/class/power_supply/BAT?/capacity`
+status="$(cat /sys/class/power_supply/BAT?/status)"
+capacity="$(cat /sys/class/power_supply/BAT?/capacity)"
 
-if [ $status = Discharging ]; then
-	if [ $capacity -lt 5 ]; then
+if [ "$status" = Discharging ]; then
+	if [ "$capacity" -lt 5 ]; then
+		logger "Locking screen"
+    physlock -p "Plug in charger before continuing"
+    systemctl --user restart pipewire-pulse.service
+  elif [ "$capacity" -lt 10 ]; then
 		logger "Critical battery threshold"
-    physlock
-	elif [ $capacity -lt 20 ]; then
+    killall zenity
+    zenity --warning --text="Battery Critical ("$capacity"%)" --icon-name='battery-empty' &
+    aplay "$HOME/.local/share/dunst/xp/Windows XP Battery Critical.wav"
+  elif [ "$capacity" -lt 20 ]; then
 		logger "Low battery threshold"
-        dunstify -u critical -i "/usr/share/icons/Papirus-Dark/48x48/status/notification-battery-low.svg" "Low Battery!"
+    killall zenity
+    zenity --warning --text="Battery Low ("$capacity"%)" --icon-name='battery-low' &
+    aplay "$HOME/.local/share/dunst/xp/Windows XP Battery Low.wav"
 	fi
 fi
 

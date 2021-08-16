@@ -56,6 +56,10 @@ cmd fzf_jump ${{
   lf -remote "send $id $cmd \"$res\""
 }}
 
+cmd copy_path ${{
+  echo -n \""$(pwd)"\" | xclip -selection clipboard
+}}
+
 # Archive bindings
 cmd unarchive ${{
   case "$f" in
@@ -108,6 +112,7 @@ map d
 map "'"
 map '"'
 map e
+map y
 
 # File Openers
 map ee $$EDITOR "$f"
@@ -129,7 +134,8 @@ map tr restore_trash
 map . set hidden!
 map D delete
 map p paste
-map y copy
+map yy copy
+map yp copy_path
 map x cut
 map <enter> open
 map mf push :mkfile<space>

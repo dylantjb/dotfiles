@@ -1,7 +1,7 @@
 #!/bin/sh
 
 wallpaper &
-xrdb -merge ~/.config/x11/xresources &
+xrdb -merge ~/.config/x11/xresources
 picom &
 setxkbmap gb &
 xset s noblank &
@@ -14,5 +14,4 @@ dunst &
 xautolock -notify 1 -notifier "notify-toggle" -detectsleep -time 20 -corners 00+- -locker "sleeper" -killtime 20 -killer "sleeper -s" &
 mpd &
 safeeyes &
-emacs --daemon &
-
+xcape -e 'Control_L=Escape'
