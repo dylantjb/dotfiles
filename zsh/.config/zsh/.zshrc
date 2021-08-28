@@ -9,7 +9,7 @@
 #
 
 # Urgent {{{
-autoload -Uz compinit colors
+autoload -Uz +X compinit colors
 compinit && colors
 
 [ -f "$HOME/.config/zsh/instant-zsh.zsh" ] && source "$HOME/.config/zsh/instant-zsh.zsh"
@@ -79,43 +79,39 @@ zinit ice wait"2" silent
 zinit light MichaelAquilina/zsh-autoswitch-virtualenv
 #: }}}
 
-# Completion {{{
-zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#)*=0=01;31'
-zstyle ':completion:*:*:kill:*:processes' command 'ps xo pid,user:10,cmd | ack-grep -v "sshd:|-zsh$"'
-# }}}
+# Functions {{{
+for i in ${XDG_CONFIG_HOME:-$HOME/.config}/zsh/functions/*; do
+    source "$i"
+done
+#: }}}
 
 # Aliases {{{
-alias upgrade="yay -Syyu"
+alias snapshots='zfs list -t snapshot -S creation $(df --output=source ~ | tail -n +2)'
+alias vimdiff='$EDITOR -d'
+alias stowit='stow -vt ~'
+alias unstow='stow -Dvt ~'
+alias abook='abook --datafile "$XDG_DATA_HOME/abook/addressbook"'
+alias monerod='monerod --data-dir "$XDG_DATA_HOME"/bitmonero'
+alias wget='wget --hsts-file="$XDG_CACHE_HOME/wget-hsts"'
+alias y='yay -Sy'
+alias yr='yay -Rns'
 alias debloat="sudo pacman -Rns $(pacman -Qdtq | tr '\r\n' ' ')"
-alias degit="rm -rf .git*"
-alias snapshots="zfs list -t snapshot -S creation $(df --output=source ~ | tail -n +2)"
-alias vimdiff="$EDITOR -d"
-alias nvim="lvim"
-alias stowit="stow -vt ~"
-alias unstow="stow -Dvt ~"
-alias monerod="monerod --data-dir "$XDG_DATA_HOME"/bitmonero"
-alias darkmode="xrdb "$XDG_CONFIG_HOME/x11/xresources" && xdotool key Shift_L+Super_L+Delete"
-alias wget="wget --hsts-file="$XDG_CACHE_HOME/wget-hsts""
-alias y="yay -Sy"
-alias abook="abook --datafile "$XDG_DATA_HOME/abook/addressbook""
-alias yr="yay -Rns"
-alias p="sudo pacman -Sy"
 
-alias zrc="$EDITOR "$XDG_CONFIG_HOME/zsh/.zshrc""
-alias zfc="find "$XDG_CONFIG_HOME/zsh/functions/" -type f | fzf | xargs -r $EDITOR"
-alias slockrc="$EDITOR ~/repos/slock/config.h"
-alias blockrc="$EDITOR ~/repos/dwmblocks/config.h"
-alias dwlrc="$EDITOR ~/repos/dwl/config.h"
-alias dwmrc="$EDITOR ~/repos/dwm/config.h"
-alias dmenurc="$EDITOR ~/repos/dmenu/config.h"
-alias strc="$EDITOR ~/repos/st/config.h"
+alias zrc='$EDITOR "$XDG_CONFIG_HOME/zsh/.zshrc"'
+alias zfc='find "$XDG_CONFIG_HOME/zsh/functions/" -type f | fzf | xargs -r $EDITOR'
+alias slockrc='$EDITOR ~/repos/slock/config.h'
+alias blockrc='$EDITOR ~/repos/dwmblocks/config.h'
+alias dwlrc='$EDITOR ~/repos/dwl/config.h'
+alias dwmrc='$EDITOR ~/repos/dwm/config.h'
+alias dmenurc='$EDITOR ~/repos/dmenu/config.h'
+alias strc='$EDITOR ~/repos/st/config.h'
 
+alias ls='LC_COLLATE=C ls -A --group-directories-first --color'
+alias ll='ls -l'
+alias grep='grep --color'
+alias mkdir='mkdir -p'
 alias lg='lazygit'
-alias sld='sudo lazydocker'
-alias ls="exa -a --group-directories-first"
-alias mkdir="mkdir -p"
-alias ll="ls -l"
-alias grep="rg"
+alias degit='rm -rf .git*'
 #: }}}
 
 # Exports {{{
@@ -124,19 +120,12 @@ export HISTORY_SUBSTRING_SEARCH_HIGHLIGHT_FOUND=''
 export AUTOSWITCH_VIRTUAL_ENV_DIR="$WORKON_HOME"
 export ZVM_VI_INSERT_ESCAPE_BINDKEY=jk
 export ZVM_READKEY_ENGINE=$ZVM_READKEY_ENGINE_ZLE
-# export ZVM_KEYTIMEOUT=0.0005
 export ZVM_LINE_INIT_MODE=$ZVM_MODE_INSERT
 export FZF_DEFAULT_OPTS="--layout=reverse --height 40%"
 export KEYTIMEOUT=1
-export MANPAGER='lvim +Man!'
+export MANPAGER='nvim +Man!'
 export MANWIDTH=999
 # }}}
-
-# Functions {{{
-for i in ${XDG_CONFIG_HOME:-$HOME/.config}/zsh/functions/*; do
-    source "$i"
-done
-#: }}}
 
 # History {{{
 HISTSIZE=50000

@@ -9,9 +9,7 @@ xset s off &
 unclutter &
 redshift -l 51.5:0 &
 sxhkd &
-davmail ~/.config/davmail/dylan.properties &
 dunst &
-xautolock -notify 1 -notifier "notify-toggle" -detectsleep -time 20 -corners 00+- -locker "sleeper" -killtime 20 -killer "sleeper -s" &
+xautolock -notify 1 -notifier "notifyctl" -detectsleep -time 20 -corners +-00 -locker "sleeper" -killtime 20 -killer "sleeper -s" &
 mpd &
 safeeyes &
-xcape -e 'Control_L=Escape'

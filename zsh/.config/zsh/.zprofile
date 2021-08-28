@@ -2,8 +2,11 @@
 # vim:fileencoding=utf-8:ft=conf:foldmethod=marker
 
 # Default programs {{{
-EDITOR='lvim' VISUAL='lvim'; export EDITOR VISUAL
 export PATH="$PATH:${$(find ~/.local/bin -type d,l -printf %p:)%%:}"
+EDITOR='nvim' VISUAL='nvim'; export EDITOR VISUAL
+export SCRIPTS_DIR="$HOME/.local/bin/scripts"
+export BROWSER=brave-launcher
+export TERMINAL=st
 # }}}
 
 # Home cleanup {{{
@@ -204,12 +207,11 @@ ex=:\
 # }}}
 
 # Misc exports {{{
-export _JAVA_AWT_WM_NONREPARENTING=1
-export AWT_TOOLKIT="MToolkit wmname LG3D"
-export BROWSER=brave-launcher
+export RCLONE_PASSWORD_COMMAND="pass rclone"
 export IDEA_JDK=/usr/lib/jvm/jdk-jetbrains
+export AWT_TOOLKIT="MToolkit wmname LG3D"
+export _JAVA_AWT_WM_NONREPARENTING=1
 export QT_QPA_PLATFORMTHEME=gtk2
-export TERMINAL=st
 # }}}
 
 [ "$(tty)" = "/dev/tty1" ] && ! pgrep -x Xorg >/dev/null && exec startx "$XINITRC" -- vt1 -ardelay 300 -arinterval 20 2> /dev/null

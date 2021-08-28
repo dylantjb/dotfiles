@@ -1,0 +1,3 @@
+#!/bin/sh
+
+grub-mkconfig -o /boot/efi/EFI/arch/grub/grub.cfg && cp /boot/efi/EFI/arch/grub/grub.cfg /boot/grub/grub.cfg

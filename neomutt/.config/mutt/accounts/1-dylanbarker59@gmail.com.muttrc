@@ -22,8 +22,8 @@ unset signature
 macro index o "<shell-escape>mw -y dylanbarker59@gmail.com<enter>" "run mbsync to sync dylanbarker59@gmail.com"
 macro index,pager a "<enter-command>set my_pipe_decode=\$pipe_decode pipe_decode<return><pipe-message>abook --datafile "$XDG_DATA_HOME"/abook/addressbook --add-email<return><enter-command>set pipe_decode=\$my_pipe_decode; unset my_pipe_decode<return>" "add the sender address to abook"
 
-mailboxes "=INBOX" "=[Gmail]/Starred" "=[Gmail]/Sent Mail" "=[Gmail]/Drafts" "=[Gmail]/Bin"
-named-mailboxes Junk "=[Gmail]/Spam"
+mailboxes "=INBOX" "=[Gmail]/Starred" "=[Gmail]/Drafts" 
+named-mailboxes Junk "=[Gmail]/Spam" Sent "=[Gmail]/Sent Mail" Trash "=[Gmail]/Bin" 
 
 set spoolfile = "+INBOX"
 macro index,pager gi "<change-folder>=INBOX<enter>" "go to inbox"
@@ -45,11 +45,11 @@ macro index,pager Md ";<save-message>=[Gmail]/Drafts<enter>" "move mail to draft
 macro index,pager Cd ";<copy-message>=[Gmail]/Drafts<enter>" "copy mail to drafts"
 
 set trash = "+[Gmail]/Bin"
-macro index,pager gb "<change-folder>=[Gmail]/Bin<enter>" "go to bin"
-macro index,pager Mb ";<save-message>=[Gmail]/Bin<enter>" "move mail to bin"
-macro index,pager Cb ";<copy-message>=[Gmail]/Bin<enter>" "copy mail to bin"
+macro index,pager gt "<change-folder>=[Gmail]/Bin<enter>" "go to bin"
+macro index,pager Mt ";<save-message>=[Gmail]/Bin<enter>" "move mail to bin"
+macro index,pager Ct ";<copy-message>=[Gmail]/Bin<enter>" "copy mail to bin"
 
-macro index,pager gj "<change-folder>=[Gmail]/Spam<enter>" "go to junk"
-macro index,pager Mj ";<save-message>=[Gmail]/Spam<enter>" "move mail to junk"
-macro index,pager Cj ";<copy-message>=[Gmail]/Spam<enter>" "copy mail to junk"
+macro index,pager gj "<change-folder>Junk<enter>" "go to junk"
+macro index,pager Mj ";<save-message>Junk<enter>" "move mail to junk"
+macro index,pager Cj ";<copy-message>Junk<enter>" "copy mail to junk"
 

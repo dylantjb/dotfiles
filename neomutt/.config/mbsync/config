@@ -3,7 +3,7 @@ IMAPStore dylanbarker59@gmail.com-remote
 Host imap.gmail.com
 Port 993
 User dylanbarker59@gmail.com
-PassCmd "pass Mutt/dylanbarker59@gmail.com"
+PassCmd "pass mutt/dylanbarker59@gmail.com"
 AuthMechs LOGIN
 SSLType IMAPS
 CertificateFile /etc/ssl/certs/ca-certificates.crt
@@ -29,7 +29,7 @@ IMAPStore dylan@dylantjb.com-remote
 Host mail.dylantjb.com
 Port 993
 User dylan@dylantjb.com
-PassCmd "pass dylantjb.com/dylan@dylantjb.com"
+PassCmd "pass mutt/dylan@dylantjb.com"
 AuthMechs LOGIN
 SSLType IMAPS
 CertificateFile /etc/ssl/certs/ca-certificates.crt
@@ -43,7 +43,6 @@ Channel dylan@dylantjb.com
 Expunge Both
 Far :dylan@dylantjb.com-remote:
 Near :dylan@dylantjb.com-local:
-Patterns *
 Create Both
 SyncState *
 MaxMessages 0
@@ -52,12 +51,12 @@ ExpireUnread no
 
 
 IMAPStore k20001430@kcl.ac.uk-remote
-Host 127.0.0.1
+Host dylantjb.com
 Port 1143
 User k20001430@kcl.ac.uk
-PassCmd "pass microsoftonline.com/k20001430@kcl.ac.uk"
+PassCmd "pass mutt/k20001430@kcl.ac.uk"
 AuthMechs LOGIN
-SSLType None
+SSLType IMAPS
 CertificateFile /etc/ssl/certs/ca-certificates.crt
 
 MaildirStore k20001430@kcl.ac.uk-local
@@ -69,7 +68,7 @@ Channel k20001430@kcl.ac.uk
 Expunge Both
 Far :k20001430@kcl.ac.uk-remote:
 Near :k20001430@kcl.ac.uk-local:
-Patterns * !Archive !Clutter !"Conversation History" !"Social Activity Notifications" !"Unsent Messages" !"Sync Issues"
+Patterns * !Archive !Clutter !Contacts !"Conversation History" !Journal !Notes !Outbox !"RSS Feeds" !Tasks
 Create Both
 SyncState *
 MaxMessages 0
