@@ -6,9 +6,9 @@ yap() {
       p)
         sudo pacman -Syu ;;
       z)
-        yay -R --noconfirm zfs-linux-hardened zfs-linux-hardened-headers
-        yay -Sy --noconfirm linux-hardened linux-hardened-headers
-        yay -Sy --noconfirm zfs-linux-hardened zfs-linux-hardened-headers
+        yay -R --noconfirm zfs-linux-lts zfs-linux-lts-headers
+        yay -Sy --noconfirm linux-lts linux-lts-headers
+        yay -Sy --noconfirm zfs-linux-lts zfs-linux-lts-headers
         sudo mkinitcpio -P
         ;;
     esac

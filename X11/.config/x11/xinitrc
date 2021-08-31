@@ -4,16 +4,14 @@
 #
 # Executed by startx (run your window manager from here)
 
-if [ -d /etc/X11/xinit/xinitrc.d ]; then
-  for f in /etc/X11/xinit/xinitrc.d/*; do
-    [ -x "$f" ] && . "$f"
-  done
-  unset f
-fi
+for f in /etc/X11/xinit/xinitrc.d/*; do
+  [ -x "$f" ] && . "$f"
+done
+unset f
+
+. "$XDG_CONFIG_HOME/x11/xprofile" > /dev/null
 
 export ZPOOL_VDEV_NAME_PATH=YES
-
-[ -f "$XDG_CONFIG_HOME/x11/xprofile" ] && . "$XDG_CONFIG_HOME/x11/xprofile" > /dev/null
 
 xcape -e 'Control_L=Escape'
 

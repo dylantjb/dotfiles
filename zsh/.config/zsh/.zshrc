@@ -10,7 +10,7 @@
 
 # Urgent {{{
 autoload -Uz +X compinit colors
-compinit && colors
+colors && compinit -d ~/.cache/zinit/zcompdump
 
 [ -f "$HOME/.config/zsh/instant-zsh.zsh" ] && source "$HOME/.config/zsh/instant-zsh.zsh"
 instant-zsh-pre "%B%{$fg[blue]%}[%{$fg[white]%}%n%{$fg[red]%}@%{$fg[white]%}%m%{$fg[blue]%}] %(?:%{$fg_bold[green]%} :%{$fg_bold[red]%}➜ )%{$fg[cyan]%}%c%{$reset_color%} "
@@ -91,6 +91,7 @@ alias vimdiff='$EDITOR -d'
 alias stowit='stow -vt ~'
 alias unstow='stow -Dvt ~'
 alias abook='abook --datafile "$XDG_DATA_HOME/abook/addressbook"'
+alias yarn='yarn --use-yarnrc "$XDG_CONFIG_HOME/yarn/config"'
 alias monerod='monerod --data-dir "$XDG_DATA_HOME"/bitmonero'
 alias wget='wget --hsts-file="$XDG_CACHE_HOME/wget-hsts"'
 alias y='yay -Sy'

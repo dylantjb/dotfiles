@@ -17,7 +17,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 user=sufian10@hotmail.co.uk
-pass=`pass btwifi.com/sufian10@hotmail.co.uk`
+pass=`pass sufian10@hotmail.co.uk`
 
 parseCommandLine()
 {
