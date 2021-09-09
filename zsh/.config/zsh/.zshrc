@@ -110,7 +110,6 @@ alias strc='$EDITOR ~/repos/st/config.h'
 alias ls='LC_COLLATE=C ls -A --group-directories-first --color'
 alias ll='ls -l'
 alias grep='grep --color'
-alias mkdir='mkdir -p'
 alias lg='lazygit'
 alias degit='rm -rf .git*'
 #: }}}

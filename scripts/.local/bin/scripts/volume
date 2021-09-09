@@ -40,7 +40,7 @@ function send_notification {
   fi
   # Send the notification
   dunstify -i "$icon" -r 2593 -u low "$volume  $bar"
-  pgrep -x dwmblocks && kill -44 $(pidof dwmblocks)
+  pgrep -x dwmblocks && kill -44 "$(pidof dwmblocks)"
 }
 
 case $1 in

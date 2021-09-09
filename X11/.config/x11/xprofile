@@ -13,3 +13,4 @@ dunst &
 xautolock -notify 1 -notifier "notifyctl" -detectsleep -time 20 -corners +-00 -locker "sleeper" -killtime 20 -killer "sleeper -s" &
 mpd &
 safeeyes &
+emacs --daemon &
