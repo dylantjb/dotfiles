@@ -13,7 +13,7 @@ unset f
 
 export ZPOOL_VDEV_NAME_PATH=YES
 
-xcape -e 'Control_L=Escape'
+xcape -fe 'Control_L=Escape' &
 
 while true; do
   dwm

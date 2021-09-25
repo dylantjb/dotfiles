@@ -4,6 +4,7 @@
 # Default programs {{{
 export PATH="$PATH:${$(find ~/.local/bin -type d,l -printf %p:)%%:}"
 EDITOR='nvim' VISUAL='nvim'; export EDITOR VISUAL
+export PAGER=less
 export BROWSER=brave-launcher
 export TERMINAL=st
 # }}}

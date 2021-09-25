@@ -9,7 +9,7 @@
 #
 
 # Urgent {{{
-autoload -Uz +X compinit colors
+autoload -Uz +X compinit colors zmv
 colors && compinit -d ~/.cache/zinit/zcompdump
 
 [ -f "$HOME/.config/zsh/instant-zsh.zsh" ] && source "$HOME/.config/zsh/instant-zsh.zsh"
@@ -79,20 +79,18 @@ zinit ice wait"2" silent
 zinit light MichaelAquilina/zsh-autoswitch-virtualenv
 #: }}}
 
-# Functions {{{
-for i in ${XDG_CONFIG_HOME:-$HOME/.config}/zsh/functions/*; do
-    source "$i"
-done
-#: }}}
-
 # Aliases {{{
 alias snapshots='zfs list -t snapshot -S creation $(df --output=source ~ | tail -n +2)'
-alias vimdiff='$EDITOR -d'
 alias stowit='stow -vt ~'
 alias unstow='stow -Dvt ~'
 alias abook='abook --datafile "$XDG_DATA_HOME/abook/addressbook"'
 alias yarn='yarn --use-yarnrc "$XDG_CONFIG_HOME/yarn/config"'
-alias monerod='monerod --data-dir "$XDG_DATA_HOME"/bitmonero'
+alias make='rm -f "config.h" && make'
+alias monerod='monerod --config-file "$XDG_CONFIG_HOME"/bitmonero/bitmonero.conf'
+alias magit='emacsclient -cne "(progn (magit-status) (delete-other-windows))"'
+alias magit-term='emacsclient -cte "(progn (magit-status) (delete-other-windows))"'
+alias transmission-cli='transmission-cli -w ~/.local/share/transmission'
+alias emacs='emacsclient -t -a "nvim"'
 alias wget='wget --hsts-file="$XDG_CACHE_HOME/wget-hsts"'
 alias y='yay -Sy'
 alias yr='yay -Rns'
@@ -100,25 +98,38 @@ alias debloat="sudo pacman -Rns $(pacman -Qdtq | tr '\r\n' ' ')"
 
 alias zrc='$EDITOR "$XDG_CONFIG_HOME/zsh/.zshrc"'
 alias zfc='find "$XDG_CONFIG_HOME/zsh/functions/" -type f | fzf | xargs -r $EDITOR'
-alias slockrc='$EDITOR ~/repos/slock/config.h'
-alias blockrc='$EDITOR ~/repos/dwmblocks/config.h'
-alias dwlrc='$EDITOR ~/repos/dwl/config.h'
-alias dwmrc='$EDITOR ~/repos/dwm/config.h'
-alias dmenurc='$EDITOR ~/repos/dmenu/config.h'
-alias strc='$EDITOR ~/repos/st/config.h'
 
-alias ls='LC_COLLATE=C ls -A --group-directories-first --color'
+alias q=exit
+alias rm='rm -i'
+alias cp='cp -i'
+alias jc='journalctl -xe'
+alias sc=systemctl
+alias ssc='sudo systemctl'
+alias mv='mv -i'
+alias mkdir='mkdir -p'
+alias wget='wget -c'
+alias path='echo -e ${PATH//:/\\n}'
+alias ports='netstat -tulanp'
+alias c='xclip -selection clipboard -in'
+alias p='xclip -selection clipboard -out'
+alias ls='exa -a --group-directories-first --color auto'
 alias ll='ls -l'
 alias grep='grep --color'
-alias lg='lazygit'
+alias lg=lazygit
 alias degit='rm -rf .git*'
+#: }}}
+
+# Functions {{{
+for i in ${XDG_CONFIG_HOME:-$HOME/.config}/zsh/functions/*; do
+    source "$i"
+done
 #: }}}
 
 # Exports {{{
 export CASE_SENSITIVE='true'
 export HISTORY_SUBSTRING_SEARCH_HIGHLIGHT_FOUND=''
 export AUTOSWITCH_VIRTUAL_ENV_DIR="$WORKON_HOME"
-export ZVM_VI_INSERT_ESCAPE_BINDKEY=jk
+export ZVM_VI_INSERT_ESCAPE_BINDKEY=jj
 export ZVM_READKEY_ENGINE=$ZVM_READKEY_ENGINE_ZLE
 export ZVM_LINE_INIT_MODE=$ZVM_MODE_INSERT
 export FZF_DEFAULT_OPTS="--layout=reverse --height 40%"

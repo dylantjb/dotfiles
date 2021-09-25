@@ -20,7 +20,7 @@
 	email = dylan@dylantjb.com
 	name = Dylan Barker
 [merge]
-	tool = vimdiff
+	tool = nvimdiff
 	conflictstyle = diff3
 [mergetool]
 	prompt = false

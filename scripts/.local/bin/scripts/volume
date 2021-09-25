@@ -11,8 +11,8 @@
 # https://gist.github.com/Blaradox/030f06d165a82583ae817ee954438f2e
 
 
-function get_icon {
-  level=`get_volume`
+get_icon() {
+  level="$(get_volume)"
   is_mute && muted=1 || muted=0
   case $((
     level > 0 && level < 30 && muted==0     ? 1 :
@@ -25,36 +25,38 @@ function get_icon {
   esac
 }
 
-function get_volume { amixer get Master | grep '%' | head -n 1 | cut -d '[' -f 2 | cut -d '%' -f 1 ; }
+get_volume() { amixer get Master | grep '%' | head -n 1 | cut -d '[' -f 2 | cut -d '%' -f 1 ; }
 
-function is_mute { amixer get Master | grep '%' | grep -oE '[^ ]+$' | grep off > /dev/null ; }
+is_mute() { amixer get Master | grep '%' | grep -oE '[^ ]+$' | grep off > /dev/null ; }
 
-function send_notification {
-  icon=`get_icon`
+send_notification() {
+  icon="$(get_icon)"
   volume=Mute
   if ! is_mute; then
-      volume=`get_volume`
+      volume="$(get_volume)"
       # Make the bar with the special character ┃ (it's not pipe |)
       # https://en.wikipedia.org/wiki/Box-drawing_character
-      bar=$(seq -s "┃" 0 $((volume / 5)) | sed 's/[0-9]//g')
+      bar=$(seq -s "┃" 0 "$((volume / 5))" | sed 's/[0-9]//g')
   fi
   # Send the notification
   dunstify -i "$icon" -r 2593 -u low "$volume  $bar"
-  pgrep -x dwmblocks && kill -44 "$(pidof dwmblocks)"
 }
 
 case $1 in
   up)
+    # increase the volume by 5%
     amixer set Master on > /dev/null
     amixer set Master 5%+ > /dev/null
     send_notification
     ;;
   down)
+    # descrease the volume by 5%
     amixer set Master on > /dev/null
     amixer set Master 5%- > /dev/null
     send_notification
     ;;
   mute)
+    # mute or unmute the volume
     amixer set Master 1+ toggle > /dev/null
     send_notification
     ;;

@@ -48,3 +48,9 @@
 ;(unpin! pinned-package another-pinned-package)
 ;; ...Or *all* packages (NOT RECOMMENDED; will likely break things)
 ;(unpin! t)
+
+(package! org-caldav :recipe
+  (:host github
+   :repo "whirm/org-caldav"
+   :branch "sync-todos"))
+(package! dashboard)

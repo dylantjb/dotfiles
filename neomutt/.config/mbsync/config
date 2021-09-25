@@ -51,13 +51,12 @@ ExpireUnread no
 
 
 IMAPStore k20001430@kcl.ac.uk-remote
-Host dylantjb.com
+Host localhost
 Port 1143
 User k20001430@kcl.ac.uk
 PassCmd "pass mutt/k20001430@kcl.ac.uk"
-AuthMechs LOGIN
-SSLType IMAPS
-CertificateFile /etc/ssl/certs/ca-certificates.crt
+AuthMechs LOGIN 
+SSLType None
 
 MaildirStore k20001430@kcl.ac.uk-local
 Subfolders Verbatim

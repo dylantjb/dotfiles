@@ -12,7 +12,7 @@
   <property name="zoomStep" value="10.00000000"/>
   <property name="zoomStepScroll" value="2.00000000"/>
   <property name="displayDpi" value="72"/>
-  <property name="mainWndWidth" value="1041"/>
+  <property name="mainWndWidth" value="851"/>
   <property name="mainWndHeight" value="1044"/>
   <property name="maximized" value="false"/>
   <property name="showToolbar" value="true"/>
@@ -187,9 +187,21 @@
       <attribute name="deviceClass" type="int" value="1"/>
       <attribute name="deviceSource" type="int" value="7"/>
     </data>
+    <data name="USB-HID Keyboard Mouse">
+      <attribute name="deviceClass" type="int" value="1"/>
+      <attribute name="deviceSource" type="int" value="0"/>
+    </data>
+    <data name="Wacom Intuos S 2 Pad">
+      <attribute name="deviceClass" type="int" value="0"/>
+      <attribute name="deviceSource" type="int" value="8"/>
+    </data>
     <data name="Wacom Intuos S 2 Pad pad">
       <attribute name="deviceClass" type="int" value="0"/>
       <attribute name="deviceSource" type="int" value="8"/>
+    </data>
+    <data name="Wacom Intuos S 2 Pen Pen (0x581a06b)">
+      <attribute name="deviceClass" type="int" value="2"/>
+      <attribute name="deviceSource" type="int" value="1"/>
     </data>
     <data name="Wacom Intuos S 2 Pen stylus">
       <attribute name="deviceClass" type="int" value="2"/>

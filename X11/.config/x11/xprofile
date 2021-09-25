@@ -1,6 +1,7 @@
 #!/bin/sh
 
 wallpaper &
+slstatus &
 xrdb -merge ~/.config/x11/xresources
 picom &
 setxkbmap gb &
@@ -13,4 +14,5 @@ dunst &
 xautolock -notify 1 -notifier "notifyctl" -detectsleep -time 20 -corners +-00 -locker "sleeper" -killtime 20 -killer "sleeper -s" &
 mpd &
 safeeyes &
-emacs --daemon &
+davmail ~/.local/share/davmail/davmail.properties &
+# emacs --daemon &

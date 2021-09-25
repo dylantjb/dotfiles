@@ -161,8 +161,6 @@ map gd cd ~/documents
 
 map gD cd ~/downloads
 
-map gs cd ~/.local/bin/scripts
-
 map gr. cd ~/repos
 map grd cd ~/repos/dotfiles
 map grw cd ~/repos/website
