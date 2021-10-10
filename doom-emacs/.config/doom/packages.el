@@ -49,6 +49,8 @@
 ;; ...Or *all* packages (NOT RECOMMENDED; will likely break things)
 ;(unpin! t)
 
+(package! mu4e-alert :disable t)
+
 (package! org-caldav :recipe
   (:host github
    :repo "whirm/org-caldav"

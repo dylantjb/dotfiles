@@ -235,10 +235,10 @@
     # Context menu.
     context = ctrl+shift+period
 
-[Brave]
-    appname = "Brave"
-    summary = "*"
-    format = ""
+# [Brave]
+#     appname = "Brave"
+#     summary = "*"
+#     format = ""
 
 [play_sound]
     summary = "*"

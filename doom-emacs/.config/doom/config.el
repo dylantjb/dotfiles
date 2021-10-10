@@ -2,36 +2,39 @@
 (setq user-full-name "Dylan Barker"
       user-mail-address "dylan@dylantjb.com")
 
-(setq doom-scratch-buffer-major-mode nil)
+(with-eval-after-load "emojify"
+  (delete 'mu4e-headers-mode emojify-inhibit-major-modes))
 
-;; (use-package! dashboard
-;;   :init
-;;   (setq dashboard-set-heading-icons t)
-;;   (setq dashboard-set-file-icons t)
-;;   (setq dashboard-banner-logo-title "Emacs Is More Than A Text Editor!")
-;;   (setq dashboard-startup-banner (expand-file-name "dashboard.png" doom-private-dir))
-;;   (setq dashboard-center-content t)
-;;   (setq dashboard-items '((recents . 5)
-;;                           (agenda . 5 )
-;;                           (bookmarks . 5)
-;;                           (projects . 5)
-;;                           (registers . 5)))
-;;   :config
-;;   (dashboard-setup-startup-hook)
-;;   (dashboard-modify-heading-icons '((recents . "file-text")
-;;                                     (bookmarks . "book"))))
+(use-package! dashboard
+  :init
+  (setq dashboard-set-heading-icons t
+        dashboard-set-file-icons t
+        dashboard-banner-logo-title "Emacs Is More Than A Text Editor!"
+        dashboard-center-content t
+        dashboard-items '((recents . 5)
+                          (agenda . 5 )
+                          (bookmarks . 5)
+                          (projects . 5)
+                          (registers . 5)))
+  :config
+  (dashboard-setup-startup-hook)
+  (dashboard-modify-heading-icons '((recents . "file-text")
+                                    (bookmarks . "book"))))
 
-;; (setq doom-fallback-buffer-name "*dashboard*")
+(setq doom-fallback-buffer-name "*dashboard*"
+      +doom-dashboard-name "*dashboard*")
 
 (remove-hook 'doom-first-input-hook #'evil-snipe-mode)
 
 (setq doom-theme 'doom-one)
 
-(setq org-directory "~/documents/org")
+(after! org
+  (setq org-directory "~/documents/org")
+  (setq org-log-done 'time)
+  (setq org-todo-keywords '((sequence "TODO(t)" "PROJ(p)" "HOMEWORK(h)" "COURSEWORK(c)"
+                                      "|" "DONE(d)" "CANCELLED(c)"))))
 
 (setq display-line-numbers-type 'relative)
-
-(after! evil-escape (setq evil-escape-key-sequence "jj"))
 
 (use-package! org-caldav
   :commands (org-caldav-sync)
@@ -53,7 +56,6 @@
 (after! mu4e
   (setq user-mail-address "dylanbarker59@gmail.com"
         user-full-name  "Dylan Barker"
-        ;; mu4e-update-interval (* 10 60)
         mu4e-change-filenames-when-moving t
         mu4e-main-buffer-hide-personal-addresses t
 
@@ -62,53 +64,43 @@
         message-sendmail-extra-arguments '("--read-envelope-from")
         message-send-mail-function #'message-send-mail-with-sendmail
 
-        mu4e-get-mail-command "mbsync -ac ~/.config/mbsync/config"
-        mu4e-sent-folder "/dylanbarker59@gmail.com/[Gmail]/Sent Mail"
-        mu4e-drafts-folder "/dylanbarker59@gmail.com/[Gmail]/Drafts"
-        mu4e-trash-folder "/dylanbarker59@gmail.com/[Gmail]/Bin"
-        mu4e-maildir-shortcuts
-        '(("/dylanbarker59@gmail.com/INBOX" . ?i)
-          ("/dylanbarker59@gmail.com/[Gmail]/Sent Mail" . ?s)
-          ("/dylanbarker59@gmail.com/[Gmail]/Drafts" . ?d)
-          ("/dylanbarker59@gmail.com/[Gmail]/Bin" . ?t))))
+        mu4e-compose-signature "---\nDylan Barker"
 
-(defvar my-mu4e-account-alist
-  '(("dylanbarker59@gmail.com"
-     (user-mail-address "dylanbarker59@gmail.com")
-     (mu4e-sent-folder "/dylanbarker59@gmail.com/[Gmail]/Sent Mail")
-     (mu4e-drafts-folder "/dylanbarker59@gmail.com/[Gmail]/Drafts")
-     (mu4e-trash-folder "/dylanbarker59@gmail.com/[Gmail]/Bin")
-     (mu4e-compose-signature
-       (concat
-         "Dylan Barker\n"
-         "dylanbarker59@gmail.com\n"))
-    ("dylan@dylantjb.com"
-     (user-mail-address "dylan@dylantjb.com")
-     (mu4e-sent-folder "/dylan@dylantjb.com/Sent")
-     (mu4e-drafts-folder "/dylan@dylantjb.com/Drafts")
-     (mu4e-trash-folder "/dylan@dylantjb.com/Trash")
-     (mu4e-compose-signature
-       (concat
-         "Dylan Barker\n"
-         "dylan@dylantjb.com\n")))
-    ("k20001430@kcl.ac.uk"
-     (user-mail-address "k20001430@kcl.ac.uk")
-     (mu4e-sent-folder "/k20001430@kcl.ac.uk/Sent")
-     (mu4e-drafts-folder "/k20001430@kcl.ac.uk/Drafts")
-     (mu4e-trash-folder "/k20001430@kcl.ac.uk/Trash")
-     (mu4e-compose-signature
-       (concat
-         "Dylan Barker\n"
-         "k20001430@kcl.ac.uk\n"))))))
+        mu4e-get-mail-command "mbsync -ac ~/.config/mbsync/config")
+
+  (set-email-account! "Domain"
+                      '((mu4e-sent-folder       . "/Domain/Sent")
+                        (mu4e-drafts-folder     . "/Domain/Drafts")
+                        (mu4e-trash-folder      . "/Domain/Trash")
+                        (smtpmail-smtp-user     . "dylan@dylantjb.com")
+                        (mu4e-maildir-shortcuts . (("/Domain/INBOX" . ?i)
+                                                   ("/Domain/Sent" . ?s)
+                                                   ("/Domain/Drafts" . ?d)
+                                                   ("/Domain/Trash" . ?b)))) t)
+  (set-email-account! "School"
+                      '((mu4e-sent-folder       . "/School/Sent")
+                        (mu4e-drafts-folder     . "/School/Drafts")
+                        (mu4e-trash-folder      . "/School/Trash")
+                        (smtpmail-smtp-user     . "k20001430@kcl.ac.uk")
+                        (mu4e-maildir-shortcuts . (("/School/INBOX" . ?i)
+                                                   ("/School/Sent" . ?s)
+                                                   ("/School/Drafts" . ?d)
+                                                   ("/School/Trash" . ?t)))) t)
+  (set-email-account! "Google"
+                      '((mu4e-sent-folder       . "/Google/Sent Mail")
+                        (mu4e-drafts-folder     . "/Google/Drafts")
+                        (mu4e-trash-folder      . "/Google/Bin")
+                        (smtpmail-smtp-user     . "dylanbarker59@gmail.com")
+                        (mu4e-maildir-shortcuts . (("/Google/INBOX" . ?i)
+                                                   ("/Google/Sent Mail" . ?s)
+                                                   ("/Google/Drafts" . ?d)
+                                                   ("/Google/Bin" . ?t)))) t))
 
 (defun greedily-do-daemon-setup ()
   (require 'org)
   (when (require 'mu4e nil t)
     (setq mu4e-confirm-quit t)
-    (setq +mu4e-lock-greedy t)
-    (setq +mu4e-lock-relaxed t)
-    (when (+mu4e-lock-available t)
-      (mu4e~start))))
+    (mu4e)))
 
 (when (daemonp)
   (add-hook 'emacs-startup-hook #'greedily-do-daemon-setup)

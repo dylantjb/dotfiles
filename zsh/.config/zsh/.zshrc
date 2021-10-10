@@ -10,7 +10,7 @@
 
 # Urgent {{{
 autoload -Uz +X compinit colors zmv
-colors && compinit -d ~/.cache/zinit/zcompdump
+colors && compinit -d "${XDG_CACHE_HOME:-$HOME/.cache}/zinit/zcompdump"
 
 [ -f "$HOME/.config/zsh/instant-zsh.zsh" ] && source "$HOME/.config/zsh/instant-zsh.zsh"
 instant-zsh-pre "%B%{$fg[blue]%}[%{$fg[white]%}%n%{$fg[red]%}@%{$fg[white]%}%m%{$fg[blue]%}] %(?:%{$fg_bold[green]%} :%{$fg_bold[red]%}➜ )%{$fg[cyan]%}%c%{$reset_color%} "
@@ -66,10 +66,7 @@ zinit wait lucid for \
 # zinit ice silent wait'!'
 zinit light zsh-users/zsh-history-substring-search
 
-zinit ice depth=1
-zinit light jeffreytse/zsh-vi-mode
-
-zinit ice silent wait"0"
+zinit ice sijent wait"0"
 zinit light Aloxaf/fzf-tab
 
 zinit ice wait"0" lucid pick"zsh-system-clipboard.zsh"
@@ -83,21 +80,24 @@ zinit light MichaelAquilina/zsh-autoswitch-virtualenv
 alias snapshots='zfs list -t snapshot -S creation $(df --output=source ~ | tail -n +2)'
 alias stowit='stow -vt ~'
 alias unstow='stow -Dvt ~'
-alias abook='abook --datafile "$XDG_DATA_HOME/abook/addressbook"'
-alias yarn='yarn --use-yarnrc "$XDG_CONFIG_HOME/yarn/config"'
+alias abook='abook --datafile "${XDG_DATA_HOME:-$HOME/.local/share}/abook/addressbook"'
+alias yarn='yarn --use-yarnrc "${XDG_CONFIG_HOME:-$HOME/.config}/yarn/config"'
 alias make='rm -f "config.h" && make'
-alias monerod='monerod --config-file "$XDG_CONFIG_HOME"/bitmonero/bitmonero.conf'
+alias monerod='monerod --config-file "${XDG_CONFIG_HOME:-$HOME/.config}"/bitmonero/bitmonero.conf'
 alias magit='emacsclient -cne "(progn (magit-status) (delete-other-windows))"'
 alias magit-term='emacsclient -cte "(progn (magit-status) (delete-other-windows))"'
 alias transmission-cli='transmission-cli -w ~/.local/share/transmission'
 alias emacs='emacsclient -t -a "nvim"'
-alias wget='wget --hsts-file="$XDG_CACHE_HOME/wget-hsts"'
-alias y='yay -Sy'
-alias yr='yay -Rns'
-alias debloat="sudo pacman -Rns $(pacman -Qdtq | tr '\r\n' ' ')"
+alias wget='wget --hsts-file="${XDG_CACHE_HOME:-$HOME/.cache}/wget-hsts"'
+alias ros='singularity run -B /etc/machine-id "$HOME/.local/share/singularity/ros/ros-container.sif"'
+[ "$(uname -n)" = "arch" ] && {
+  alias y='yay -Sy'
+  alias yr='yay -Rns'
+  alias debloat="sudo pacman -Rns $(pacman -Qdtq | tr '\r\n' ' ')"
+}
 
-alias zrc='$EDITOR "$XDG_CONFIG_HOME/zsh/.zshrc"'
-alias zfc='find "$XDG_CONFIG_HOME/zsh/functions/" -type f | fzf | xargs -r $EDITOR'
+alias zrc='${EDITOR:-nvim} "${XDG_CONFIG_HOME:-$HOME/.config}/zsh/.zshrc"'
+alias zfc='find "${XDG_CONFIG_HOME:-$HOME/.config}/zsh/functions/" -type f | fzf | xargs -r ${EDITOR:-nvim}'
 
 alias q=exit
 alias rm='rm -i'
@@ -112,8 +112,9 @@ alias path='echo -e ${PATH//:/\\n}'
 alias ports='netstat -tulanp'
 alias c='xclip -selection clipboard -in'
 alias p='xclip -selection clipboard -out'
-alias ls='exa -a --group-directories-first --color auto'
+alias ls='LC_COLLATE=C ls --group-directories-first --color'
 alias ll='ls -l'
+alias la='ls -A'
 alias grep='grep --color'
 alias lg=lazygit
 alias degit='rm -rf .git*'
@@ -128,10 +129,7 @@ done
 # Exports {{{
 export CASE_SENSITIVE='true'
 export HISTORY_SUBSTRING_SEARCH_HIGHLIGHT_FOUND=''
-export AUTOSWITCH_VIRTUAL_ENV_DIR="$WORKON_HOME"
-export ZVM_VI_INSERT_ESCAPE_BINDKEY=jj
-export ZVM_READKEY_ENGINE=$ZVM_READKEY_ENGINE_ZLE
-export ZVM_LINE_INIT_MODE=$ZVM_MODE_INSERT
+export AUTOSWITCH_VIRTUAL_ENV_DIR="${WORKON_HOME:-$HOME/.local/share/virtualenvs}"
 export FZF_DEFAULT_OPTS="--layout=reverse --height 40%"
 export KEYTIMEOUT=1
 export MANPAGER='nvim +Man!'

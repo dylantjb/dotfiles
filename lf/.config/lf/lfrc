@@ -12,22 +12,23 @@ set hidden true
 cmd open ${{
     case $(file --mime-type "$f" -bL) in
         text/*|application/json) $EDITOR "$f";;
+        application/pdf) zathura "$f" ;;
         *) mimeo "$f" ;;
     esac
 }}
 
 cmd mkdir ${{
-  mkdir -p $1
+  mkdir -p "$1"
 }}
 
 cmd mkfile ${{
-  touch $1
+  touch "$1"
 }}
 
 cmd chmod ${{
   for file in "$fx"
   do
-    chmod $1 $file
+    chmod "$1" "$file"
   done
 
   lf -remote 'send reload'
@@ -36,12 +37,12 @@ cmd chmod ${{
 cmd chown ${{
   for file in "$fx"
   do
-    sudo chown $1 $file
+    sudo chown "$1" "$file"
   done
 }}
 
 cmd sudomkfile ${{
-  sudoedit $1
+  sudoedit "$1"
 }}
 
 cmd setwallpaper ${{ feh --no-fehbg --bg-scale "$f" }}

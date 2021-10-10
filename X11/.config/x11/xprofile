@@ -15,4 +15,4 @@ xautolock -notify 1 -notifier "notifyctl" -detectsleep -time 20 -corners +-00 -l
 mpd &
 safeeyes &
 davmail ~/.local/share/davmail/davmail.properties &
-# emacs --daemon &
+emacs --daemon &
