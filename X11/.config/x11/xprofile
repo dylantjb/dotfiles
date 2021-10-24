@@ -1,18 +1,17 @@
 #!/bin/sh
 
 wallpaper &
-slstatus &
 xrdb -merge ~/.config/x11/xresources
+slstatus &
 picom &
 setxkbmap gb &
 xset s noblank &
 xset s off &
-unclutter &
 redshift -l 51.5:0 &
-sxhkd &
 dunst &
-xautolock -notify 1 -notifier "notifyctl" -detectsleep -time 20 -corners +-00 -locker "sleeper" -killtime 20 -killer "sleeper -s" &
-mpd &
 safeeyes &
 davmail ~/.local/share/davmail/davmail.properties &
 emacs --daemon &
+unclutter &
+! pgrep -x mpd && mpd &
+xautolock -notify 1 -notifier "notifyctl" -detectsleep -time 20 -corners +-00 -locker "sleeper" -killtime 20 -killer "sleeper -s" &

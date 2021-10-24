@@ -1,21 +1,67 @@
+#+TITLE: Doom Emacs Config
+#+AUTHOR: Dylan Barker
+#+DESCRIPTION: My personal doom Emacs configuration file
+#+STARTUP: showeverything
+
+* TABLE OF CONTENTS :toc:
+- [[#basics][BASICS]]
+  - [[#gnupg][GnuPG]]
+  - [[#line-numbers][Line numbers]]
+  - [[#doom-look][Doom look]]
+  - [[#warnings][Warnings]]
+- [[#emms][EMMS]]
+- [[#elfeed][ELFEED]]
+- [[#calendar][CALENDAR]]
+- [[#dashboard][DASHBOARD]]
+  - [[#dashboard-in-emacsclient][Dashboard in emacsclient]]
+  - [[#configuring-dashboard][Configuring dashboard]]
+- [[#org][ORG]]
+  - [[#setting-up-org][Setting up org]]
+  - [[#caldav][Caldav]]
+  - [[#super-agenda][Super agenda]]
+- [[#mu4e][MU4E]]
+- [[#daemon][DAEMON]]
+
+* BASICS
+** GnuPG
+Set full name and email for GPG to access encrypted files. Set 'authinfo.gpg' path.
+#+BEGIN_SRC emacs-lisp
 ;;; config.el -*- lexical-binding: t; -*-
 (setq user-full-name "Dylan Barker"
       user-mail-address "dylan@dylantjb.com"
       auth-sources '("~/.local/share/authinfo.gpg"))
-
+#+END_SRC
+** Line numbers
+Set to relative.
+#+BEGIN_SRC emacs-lisp
 (setq display-line-numbers-type 'relative)
-
+#+END_SRC
+** Doom look
+Set the default doom theme, and change fonts.
+#+BEGIN_SRC emacs-lisp
 (setq doom-theme 'doom-one)
 (setq doom-font (font-spec :family "JetBrainsMono Nerd Font" :size 14 :weight 'regular)
       doom-variable-pitch-font (font-spec :family "JetBrainsMono Nerd Font"))
-
+#+END_SRC
+** Warnings
+Disable warnings on deprecated cl-functions.
+#+BEGIN_SRC emacs-lisp
 (setq byte-compile-warnings '(cl-functions))
-
+#+END_SRC
+* EMMS
+Set the lyrics directory.
+#+BEGIN_SRC emacs-lisp
 (setq emms-lyrics-dir "~/.local/share/lyrics")
-
+#+END_SRC
+* ELFEED
+Adjust elfeed ratio and update feeds when searching.
+#+BEGIN_SRC emacs-lisp
 (setq elfeed-goodies/entry-pane-size 0.5)
 (add-hook! 'elfeed-search-mode-hook 'elfeed-update)
-
+#+END_SRC
+* CALENDAR
+Generate my school calendar from an ICS link.
+#+BEGIN_SRC emacs-lisp
 (defun my-open-calendar ()
   (interactive)
   (cfw:open-calendar-buffer
@@ -24,10 +70,17 @@
     (cfw:ical-create-source "school" "https://scientia-eu-v2-4-api-d4-02.azurewebsites.net/api/ical/ca05f91a-6c36-45db-9b40-6d011398ed58/aec0ea92-8d98-f1d0-4c1c-b13e57353431/timetable.ics" "IndianRed"))))
 (map! :leader :prefix ("o" . "open")
       :desc "Calendar" "c" #'my-open-calendar)
-
+#+END_SRC
+* DASHBOARD
+** Dashboard in emacsclient
+Ensures the default buffer that opens in emacsclient is the dashboard.
+#+BEGIN_SRC emacs-lisp
 (setq doom-fallback-buffer-name "*dashboard*"
       +doom-dashboard-name "*dashboard*")
-
+#+END_SRC
+** Configuring dashboard
+Start up page that shows me recent files, entries from org-agenda, and projects.
+#+BEGIN_SRC emacs-lisp
 (use-package! dashboard
   :init
   (setq dashboard-set-heading-icons t
@@ -43,7 +96,10 @@
   (require 'org)
   (require 'org-habit)
   (require 'org-checklist))
-
+#+END_SRC
+* ORG
+** Setting up org
+#+BEGIN_SRC emacs-lisp
 (setq org-directory "~/documents/org")
 (after! org
   (setq org-default-notes-file (expand-file-name "notes.org" org-directory)
@@ -52,7 +108,10 @@
         org-journal-date-format "%B %d, %Y (%A) "
         org-journal-file-format "%Y-%m-%d.org"
         org-hide-emphasis-markers t))
-
+#+END_SRC
+** Caldav
+Sync two calendars to my org directory. Sync status and backup file stored in cache.
+#+BEGIN_SRC emacs-lisp
 (use-package! org-caldav
   :commands (org-caldav-sync)
   :init
@@ -69,7 +128,9 @@
   (setq org-caldav-sync-todo 'all)
   :config
   (setq org-icalendar-timezone "Europe/London"))
-
+#+END_SRC
+** Super agenda
+#+BEGIN_SRC emacs-lisp
 (use-package! org-super-agenda
   :commands org-super-agenda-mode)
 (after! org-agenda
@@ -141,7 +202,10 @@
                            :todo ("SOMEDAY")
                            :order 90)
                           (:discard (:tag ("Chore" "Routine" "Daily")))))))))))
-
+#+END_SRC
+* MU4E
+Set up mail with my own update script to show notifications as well as use msmtp to send mail. Set up views for all three of my emails, default being Google.
+#+BEGIN_SRC emacs-lisp
 (after! mu4e
   (setq mu4e-change-filenames-when-moving t
         mu4e-main-buffer-hide-personal-addresses t
@@ -183,7 +247,10 @@
                                                    (:maildir "/Google/[Gmail]/Sent Mail" :key ?s)
                                                    (:maildir "/Google/[Gmail]/Drafts"    :key ?d)
                                                    (:maildir "/Google/[Gmail]/Bin"       :key ?b)))) t))
-
+#+END_SRC
+* DAEMON
+When Emacs starts up from a daemon, the following function is ran first, we force a switch to the dashboard buffer.
+#+BEGIN_SRC emacs-lisp
 (defun greedily-do-daemon-setup ()
   (when (require 'mu4e nil t)
     (setq mu4e-confirm-quit t)
@@ -194,3 +261,4 @@
 (when (daemonp)
   (add-hook 'emacs-startup-hook #'greedily-do-daemon-setup)
   (add-hook! 'server-after-make-frame-hook (switch-to-buffer doom-fallback-buffer-name)))
+#+END_SRC

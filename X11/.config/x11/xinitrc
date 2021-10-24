@@ -4,19 +4,16 @@
 #
 # Executed by startx (run your window manager from here)
 
-for f in /etc/X11/xinit/xinitrc.d/*; do
+for f in /etc/X11/xinit/xinitrc.d/* /etc/profile.d/*.sh; do
   [ -x "$f" ] && . "$f"
 done
+
 unset f
 
-. "$XDG_CONFIG_HOME/x11/xprofile" > /dev/null
-
-export ZPOOL_VDEV_NAME_PATH=YES
-
-xcape -fe 'Control_L=Escape' &
+. "${XDG_CONFIG_HOME:-$HOME/.config}/x11/xprofile" > /dev/null
 
 while true; do
-  dwm
+  dwm > ~/.local/share/dwm/dwm.log 2>&1
 done
 
 logout

@@ -6,13 +6,15 @@
   <property name="pressureMultiplier" value="2.40000000"/>
   <property name="zoomGesturesEnabled" value="true"/>
   <property name="selectedToolbar" value="Floating Toolbox"/>
-  <property name="lastSavePath" value=""/>
-  <property name="lastOpenPath" value="/home/dylan/Documents/Working"/>
+  <property name="lastSavePath" value="/home/dylan/documents/school/slides/FC2"/>
+  <property name="lastOpenPath" value="/home/dylan/documents/school/slides/FC2"/>
   <property name="lastImagePath" value=""/>
+  <property name="edgePanSpeed" value="20.00000000"/>
+  <property name="edgePanMaxMult" value="5.00000000"/>
   <property name="zoomStep" value="10.00000000"/>
   <property name="zoomStepScroll" value="2.00000000"/>
   <property name="displayDpi" value="72"/>
-  <property name="mainWndWidth" value="851"/>
+  <property name="mainWndWidth" value="1904"/>
   <property name="mainWndHeight" value="1044"/>
   <property name="maximized" value="false"/>
   <property name="showToolbar" value="true"/>
@@ -63,6 +65,7 @@
   <property name="snapGridTolerance" value="0.25000000"/>
   <property name="snapGridSize" value="14.17000000"/>
   <property name="touchDrawing" value="false"/>
+  <property name="gtkTouchInertialScrolling" value="true"/>
   <property name="pressureGuessing" value="false"/>
   <property name="selectionBorderColor" value="4294901760"/>
   <property name="backgroundColor" value="4292664021"/>
@@ -118,7 +121,9 @@
       <attribute name="tool" type="string" value="pen"/>
     </data>
     <data name="eraser">
-      <attribute name="tool" type="string" value="none"/>
+      <attribute name="eraserMode" type="string" value="none"/>
+      <attribute name="size" type="string" value="none"/>
+      <attribute name="tool" type="string" value="eraser"/>
     </data>
     <data name="middle">
       <attribute name="tool" type="string" value="none"/>
@@ -164,19 +169,19 @@
       <attribute name="deviceSource" type="int" value="7"/>
     </data>
     <data name="OpenTabletDriver Virtual Artist Tablet Pen (0)">
-      <attribute name="deviceClass" type="int" value="2"/>
+      <attribute name="deviceClass" type="int" value="0"/>
       <attribute name="deviceSource" type="int" value="1"/>
     </data>
     <data name="OpenTabletDriver Virtual Mouse">
-      <attribute name="deviceClass" type="int" value="2"/>
+      <attribute name="deviceClass" type="int" value="0"/>
       <attribute name="deviceSource" type="int" value="1"/>
     </data>
     <data name="OpenTabletDriver Virtual Tablet">
-      <attribute name="deviceClass" type="int" value="2"/>
+      <attribute name="deviceClass" type="int" value="0"/>
       <attribute name="deviceSource" type="int" value="1"/>
     </data>
     <data name="SINO WEALTH Gaming KB  Consumer Control">
-      <attribute name="deviceClass" type="int" value="1"/>
+      <attribute name="deviceClass" type="int" value="0"/>
       <attribute name="deviceSource" type="int" value="0"/>
     </data>
     <data name="TrackPoint Keyboard II Consumer Control">

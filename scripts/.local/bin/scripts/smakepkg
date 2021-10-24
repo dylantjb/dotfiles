@@ -1,0 +1,5 @@
+#!/bin/sh
+
+cd "$(mktemp -d)"
+cp "$HOME/repos/$1/PKGBUILD" .
+makepkg -si --noconfirm

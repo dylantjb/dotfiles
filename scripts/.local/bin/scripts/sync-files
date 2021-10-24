@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+
+eval "$(grep -h -- \
+	"^\s*\(export \)\?\(RCLONE_PASSWORD_COMMAND\|PASSWORD_STORE_DIR\)=" \
+	"$HOME/.config/zsh/.zprofile" 2>/dev/null)"
+
+file_export() { rclone copy "$1" "nextcloud:$2" ; }
+file_import() { rclone copy "nextcloud:$2/${1##*/}" "$1" ; }
+
+sync_file() {
+  local_time="$(stat -c %Y "$1" | cut -d ' ' -f 1,2)"
+  remote_time="$(rclone lsf --format 't' "nextcloud:$2/${1##*/}" | xargs -I{} date -d {} +%s)"
+  
+  if [ "$local_time" -gt "$remote_time" ]; then
+    file_export "$1" "$2"
+  elif [ "$local_time" -lt "$remote_time" ]; then
+    file_import "$1" "$2"
+  fi
+}
+
+sync_directory() { find "$1" -maxdepth 1 -type f | while read f; do sync_file "$f" "$2"; done ; }
+
+[ -d "$1" ] && sync_directory "$1" "$2" || { [ -f "$1" ] && sync_file "$1" "$2" ; } || {
+  echo "Usage: sync-files SOURCE_FILE_OR_DIR REMOTE_DIR"
+}

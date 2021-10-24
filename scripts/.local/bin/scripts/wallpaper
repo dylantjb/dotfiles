@@ -1,8 +1,6 @@
 #!/bin/sh
 
 export DISPLAY=:0
+feh --no-fehbg --bg-scale \
+  "$(find "$HOME"/pictures/wallpapers -type f -not -path '*/\.git/*' | shuf -n 1)"
 
-# cd /tmp
-# wget 'https://source.unsplash.com/random/1920x1080?sig=${'RANDOM'} -o background && IMG=/tmp/background || 
-    IMG="$(find $HOME/pictures/wallpapers -type f -not -path '*/\.git/*' | shuf -n 1)"
-feh --no-fehbg --bg-scale "$IMG"
