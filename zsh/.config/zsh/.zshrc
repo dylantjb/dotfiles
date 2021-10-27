@@ -81,7 +81,6 @@ alias snapshots='zfs list -t snapshot -S creation $(df --output=source ~ | tail 
 alias stowit='stow -vt ~'
 alias unstow='stow -Dvt ~'
 alias abook='abook --datafile "${XDG_DATA_HOME:-$HOME/.local/share}/abook/addressbook"'
-alias yarn='yarn --use-yarnrc "${XDG_CONFIG_HOME:-$HOME/.config}/yarn/config"'
 alias smake='rm -f "config.h" && make'
 alias monerod='monerod --config-file "${XDG_CONFIG_HOME:-$HOME/.config}"/bitmonero/bitmonero.conf'
 alias mg='emacsclient -cte "(progn (magit-status) (delete-other-windows))"'

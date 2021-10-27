@@ -13,15 +13,12 @@
 
 (setq emms-lyrics-dir "~/.local/share/lyrics")
 
-(setq elfeed-goodies/entry-pane-size 0.5)
-(add-hook! 'elfeed-search-mode-hook 'elfeed-update)
-
 (defun my-open-calendar ()
   (interactive)
   (cfw:open-calendar-buffer
    :contents-sources
    (list
-    (cfw:ical-create-source "school" "https://scientia-eu-v2-4-api-d4-02.azurewebsites.net/api/ical/ca05f91a-6c36-45db-9b40-6d011398ed58/aec0ea92-8d98-f1d0-4c1c-b13e57353431/timetable.ics" "IndianRed"))))
+    (cfw:org-create-file-source "School" "~/documents/org/timetable.org" "IndianRed"))))
 (map! :leader :prefix ("o" . "open")
       :desc "Calendar" "c" #'my-open-calendar)
 
@@ -39,10 +36,7 @@
   :config
   (dashboard-setup-startup-hook)
   (dashboard-modify-heading-icons '((recents   . "file-text")
-                                    (bookmarks . "book")))
-  (require 'org)
-  (require 'org-habit)
-  (require 'org-checklist))
+                                    (bookmarks . "book"))))
 
 (setq org-directory "~/documents/org")
 (after! org
@@ -146,7 +140,7 @@
   (setq mu4e-change-filenames-when-moving t
         mu4e-main-buffer-hide-personal-addresses t
         mu4e-compose-signature "---\nDylan Barker"
-        mu4e-get-mail-command "~/.local/bin/syncmail"
+        mu4e-get-mail-command "~/.local/bin/scripts/syncmail"
         message-sendmail-f-is-evil t
         sendmail-program (executable-find "msmtp")
         message-sendmail-extra-arguments '("--read-envelope-from")
@@ -161,6 +155,7 @@
                         (mu4e-drafts-folder     . "/Domain/Drafts")
                         (mu4e-trash-folder      . "/Domain/Trash")
                         (smtpmail-smtp-user     . "dylan@dylantjb.com")
+                        (user-mail-address      . "dylan@dylantjb.com")
                         (mu4e-maildir-shortcuts . ((:maildir "/Domain/INBOX"  :key ?i)
                                                    (:maildir "/Domain/Sent"   :key ?s)
                                                    (:maildir "/Domain/Drafts" :key ?d)
@@ -170,6 +165,7 @@
                         (mu4e-drafts-folder     . "/School/Drafts")
                         (mu4e-trash-folder      . "/School/Trash")
                         (smtpmail-smtp-user     . "k20001430@kcl.ac.uk")
+                        (user-mail-address      . "k20001430@kcl.ac.uk")
                         (mu4e-maildir-shortcuts . ((:maildir "/School/INBOX"  :key ?i)
                                                    (:maildir "/School/Sent"   :key ?s)
                                                    (:maildir "/School/Drafts" :key ?d)
@@ -179,17 +175,19 @@
                         (mu4e-drafts-folder     . "/Google/[Gmail]/Drafts")
                         (mu4e-trash-folder      . "/Google/[Gmail]/Bin")
                         (smtpmail-smtp-user     . "dylanbarker59@gmail.com")
+                        (user-mail-address      . "dylanbarker59@gmail.com")
                         (mu4e-maildir-shortcuts . ((:maildir "/Google/INBOX"             :key ?i)
                                                    (:maildir "/Google/[Gmail]/Sent Mail" :key ?s)
                                                    (:maildir "/Google/[Gmail]/Drafts"    :key ?d)
                                                    (:maildir "/Google/[Gmail]/Bin"       :key ?b)))) t))
 
 (defun greedily-do-daemon-setup ()
+  (require 'org)
+  (require 'org-habit)
+  (require 'org-checklist)
   (when (require 'mu4e nil t)
     (setq mu4e-confirm-quit t)
-    (mu4e~start))
-  (when (require 'elfeed nil t)
-    (run-at-time nil (* 8 60 60) #'elfeed-update)))
+    (mu4e~start)))
 
 (when (daemonp)
   (add-hook 'emacs-startup-hook #'greedily-do-daemon-setup)

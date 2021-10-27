@@ -2,16 +2,16 @@
 
 export GPG_TTY="$(tty)"
 eval "$(grep -h -- \
-	"^\s*\(export \)\?\(MBSYNCRC\|PASSWORD_STORE_DIR\|NOTMUCH_CONFIG\|GNUPGHOME\)=" \
+	"^\s*\(export \)\?\(MBSYNCRC\|PASSWORD_STORE_DIR\|GNUPGHOME\)=" \
 	"$HOME/.config/zsh/.zprofile" 2>/dev/null)"
 
-alias mbsync="mbsync -c $MBSYNCRC"
+[ -f "$MBSYNCRC" ] && ISYNC="$(dirname $MBSYNCRC)" && alias mbsync="mbsync -c $MBSYNCRC"
 
 case "$(readlink -f /sbin/init)" in
 	*systemd*) export DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/$(id -u)/bus ;;
 esac
 
-# remember if a display server is running since `ps` doesn't always contain a display
+# Remember if a display server is running since `ps` doesn't always contain a display
 pgrepoutput="$(pgrep -a X\(org\|wayland\))"
 displays="$(echo "$pgrepoutput" | grep -wo "[0-9]*:[0-9]\+" | sort -u)"
 notify() { [ -n "$pgrepoutput" ] && for x in ${displays:-0:}; do
@@ -32,7 +32,7 @@ syncandnotify() {
       k20001430@kcl.ac.uk) acc=School ;;
       dylan@dylantjb.com) acc=Domain ;;
     esac
-    new=$(find "$HOME/.local/share/mail/$acc/INBOX/new/" -type f -newer "${XDG_CONFIG_HOME:-$HOME/.config}/mutt/.mailsynclastrun" 2> /dev/null)
+    new=$(find "$HOME/.local/share/mail/$acc/INBOX/new/" "${ISYNC:-$HOME/.isync}/.lastrun" -type f -newer 2> /dev/null)
     newcount=$(echo "$new" | sed '/^\s*$/d' | wc -l)
     case 1 in
 	    $((newcount > 5)) ) notify-send "$acc" "$newcount" ;;
@@ -62,8 +62,10 @@ done
 
 wait
 
-notmuch new 2>/dev/null | grep "Added" && emacsclient -s "/run/user/1000/emacs/server" -e '(mu4e-update-index)' >/dev/null
+# Update the mu4e index in running emacs daemon
+[ -f "/run/user/1000/emacs/server" ] && \
+  emacsclient -s "/run/user/1000/emacs/server" -e '(mu4e-update-index)' >/dev/null
 
 # Create a touch file that indicates the time of the last run of mailsync
-touch "${XDG_CONFIG_HOME:-$HOME/.config}/mutt/.mailsynclastrun"
+touch "${ISYNC:-$HOME/.isync}/.lastrun"
 

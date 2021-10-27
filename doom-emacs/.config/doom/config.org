@@ -5,12 +5,11 @@
 
 * TABLE OF CONTENTS :toc:
 - [[#basics][BASICS]]
-  - [[#gnupg][GnuPG]]
+  - [[#identity][Identity]]
   - [[#line-numbers][Line numbers]]
   - [[#doom-look][Doom look]]
   - [[#warnings][Warnings]]
 - [[#emms][EMMS]]
-- [[#elfeed][ELFEED]]
 - [[#calendar][CALENDAR]]
 - [[#dashboard][DASHBOARD]]
   - [[#dashboard-in-emacsclient][Dashboard in emacsclient]]
@@ -23,8 +22,8 @@
 - [[#daemon][DAEMON]]
 
 * BASICS
-** GnuPG
-Set full name and email for GPG to access encrypted files. Set 'authinfo.gpg' path.
+** Identity
+Set full name and email for mu4e and GPG. Set 'authinfo.gpg' path.
 #+BEGIN_SRC emacs-lisp
 ;;; config.el -*- lexical-binding: t; -*-
 (setq user-full-name "Dylan Barker"
@@ -53,12 +52,6 @@ Set the lyrics directory.
 #+BEGIN_SRC emacs-lisp
 (setq emms-lyrics-dir "~/.local/share/lyrics")
 #+END_SRC
-* ELFEED
-Adjust elfeed ratio and update feeds when searching.
-#+BEGIN_SRC emacs-lisp
-(setq elfeed-goodies/entry-pane-size 0.5)
-(add-hook! 'elfeed-search-mode-hook 'elfeed-update)
-#+END_SRC
 * CALENDAR
 Generate my school calendar from an ICS link.
 #+BEGIN_SRC emacs-lisp
@@ -67,7 +60,7 @@ Generate my school calendar from an ICS link.
   (cfw:open-calendar-buffer
    :contents-sources
    (list
-    (cfw:ical-create-source "school" "https://scientia-eu-v2-4-api-d4-02.azurewebsites.net/api/ical/ca05f91a-6c36-45db-9b40-6d011398ed58/aec0ea92-8d98-f1d0-4c1c-b13e57353431/timetable.ics" "IndianRed"))))
+    (cfw:org-create-file-source "School" "~/documents/org/timetable.org" "IndianRed"))))
 (map! :leader :prefix ("o" . "open")
       :desc "Calendar" "c" #'my-open-calendar)
 #+END_SRC
@@ -92,10 +85,7 @@ Start up page that shows me recent files, entries from org-agenda, and projects.
   :config
   (dashboard-setup-startup-hook)
   (dashboard-modify-heading-icons '((recents   . "file-text")
-                                    (bookmarks . "book")))
-  (require 'org)
-  (require 'org-habit)
-  (require 'org-checklist))
+                                    (bookmarks . "book"))))
 #+END_SRC
 * ORG
 ** Setting up org
@@ -210,7 +200,7 @@ Set up mail with my own update script to show notifications as well as use msmtp
   (setq mu4e-change-filenames-when-moving t
         mu4e-main-buffer-hide-personal-addresses t
         mu4e-compose-signature "---\nDylan Barker"
-        mu4e-get-mail-command "~/.local/bin/syncmail"
+        mu4e-get-mail-command "~/.local/bin/scripts/syncmail"
         message-sendmail-f-is-evil t
         sendmail-program (executable-find "msmtp")
         message-sendmail-extra-arguments '("--read-envelope-from")
@@ -225,6 +215,7 @@ Set up mail with my own update script to show notifications as well as use msmtp
                         (mu4e-drafts-folder     . "/Domain/Drafts")
                         (mu4e-trash-folder      . "/Domain/Trash")
                         (smtpmail-smtp-user     . "dylan@dylantjb.com")
+                        (user-mail-address      . "dylan@dylantjb.com")
                         (mu4e-maildir-shortcuts . ((:maildir "/Domain/INBOX"  :key ?i)
                                                    (:maildir "/Domain/Sent"   :key ?s)
                                                    (:maildir "/Domain/Drafts" :key ?d)
@@ -234,6 +225,7 @@ Set up mail with my own update script to show notifications as well as use msmtp
                         (mu4e-drafts-folder     . "/School/Drafts")
                         (mu4e-trash-folder      . "/School/Trash")
                         (smtpmail-smtp-user     . "k20001430@kcl.ac.uk")
+                        (user-mail-address      . "k20001430@kcl.ac.uk")
                         (mu4e-maildir-shortcuts . ((:maildir "/School/INBOX"  :key ?i)
                                                    (:maildir "/School/Sent"   :key ?s)
                                                    (:maildir "/School/Drafts" :key ?d)
@@ -243,6 +235,7 @@ Set up mail with my own update script to show notifications as well as use msmtp
                         (mu4e-drafts-folder     . "/Google/[Gmail]/Drafts")
                         (mu4e-trash-folder      . "/Google/[Gmail]/Bin")
                         (smtpmail-smtp-user     . "dylanbarker59@gmail.com")
+                        (user-mail-address      . "dylanbarker59@gmail.com")
                         (mu4e-maildir-shortcuts . ((:maildir "/Google/INBOX"             :key ?i)
                                                    (:maildir "/Google/[Gmail]/Sent Mail" :key ?s)
                                                    (:maildir "/Google/[Gmail]/Drafts"    :key ?d)
@@ -252,11 +245,12 @@ Set up mail with my own update script to show notifications as well as use msmtp
 When Emacs starts up from a daemon, the following function is ran first, we force a switch to the dashboard buffer.
 #+BEGIN_SRC emacs-lisp
 (defun greedily-do-daemon-setup ()
+  (require 'org)
+  (require 'org-habit)
+  (require 'org-checklist)
   (when (require 'mu4e nil t)
     (setq mu4e-confirm-quit t)
-    (mu4e~start))
-  (when (require 'elfeed nil t)
-    (run-at-time nil (* 8 60 60) #'elfeed-update)))
+    (mu4e~start)))
 
 (when (daemonp)
   (add-hook 'emacs-startup-hook #'greedily-do-daemon-setup)
