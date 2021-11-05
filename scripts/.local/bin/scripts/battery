@@ -9,7 +9,10 @@ capacity="$(cat /sys/class/power_supply/BAT?/capacity)"
 if [ "$status" = Discharging ]; then
 	if [ "$capacity" -lt 5 ]; then
 		logger "Locking screen"
+    xautolock -disable
     physlock -p "Plug in charger before continuing"
+    pgrep -x slock && pkill slock
+    xautolock -enable
     systemctl --user restart pipewire-pulse.service
   elif [ "$capacity" -lt 10 ]; then
 		logger "Critical battery threshold"

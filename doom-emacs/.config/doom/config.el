@@ -11,7 +11,39 @@
 
 (setq byte-compile-warnings '(cl-functions))
 
-(setq emms-lyrics-dir "~/.local/share/lyrics")
+(setq projectile-project-search-path '("~/repos"))
+
+(defvar-local my-flycheck-local-cache nil)
+(defun my-flycheck-checker-get (fn checker property)
+  (or (alist-get property (alist-get checker my-flycheck-local-cache))
+      (funcall fn checker property)))
+(advice-add 'flycheck-checker-get :around 'my-flycheck-checker-get)
+
+(setq lsp-clients-clangd-args '("-j=3"
+                                "--background-index"
+                                "--clang-tidy"
+                                "--completion-style=detailed"
+                                "--header-insertion=never"
+                                "--header-insertion-decorators=0"))
+(after! lsp-clangd (set-lsp-priority! 'clangd 2))
+(add-hook 'lsp-managed-mode-hook
+          (lambda ()
+            (when (derived-mode-p 'c++-mode)
+              (setq my-flycheck-local-cache '((lsp . ((next-checkers . (c/c++-clang)))))))))
+
+(add-hook 'lsp-managed-mode-hook
+          (lambda ()
+            (when (derived-mode-p 'python-mode)
+              (setq my-flycheck-local-cache '((lsp . ((next-checkers . (python-pylint)))))))))
+(defun my-pyvenv-autoload ()
+    (require 'projectile)
+    (let* ((pdir (projectile-project-root)) (pfile (concat pdir ".venv")))
+      (if (file-exists-p pfile)
+          (pyvenv-workon (with-temp-buffer
+                           (insert-file-contents pfile)
+                           (nth 0 (split-string (buffer-string)))))
+        (pyvenv-deactivate))))
+(add-hook 'python-mode-hook 'my-pyvenv-autoload)
 
 (defun my-open-calendar ()
   (interactive)
@@ -28,9 +60,12 @@
 (use-package! dashboard
   :init
   (setq dashboard-set-heading-icons t
+        dashboard-week-agenda t
+        dashboard-agenda-release-buffers t
         dashboard-set-file-icons t
         dashboard-center-content t
-        dashboard-items '((recents   . 10)
+        dashboard-items '((recents   . 5)
+                          (agenda)
                           (bookmarks . 5)
                           (projects  . 5)))
   :config
@@ -181,8 +216,7 @@
                                                    (:maildir "/Google/[Gmail]/Drafts"    :key ?d)
                                                    (:maildir "/Google/[Gmail]/Bin"       :key ?b)))) t))
 
-(defun greedily-do-daemon-setup ()
-  (require 'org)
+(defun my-daemon-setup ()
   (require 'org-habit)
   (require 'org-checklist)
   (when (require 'mu4e nil t)
@@ -190,5 +224,5 @@
     (mu4e~start)))
 
 (when (daemonp)
-  (add-hook 'emacs-startup-hook #'greedily-do-daemon-setup)
+  (add-hook 'emacs-startup-hook #'my-daemon-setup)
   (add-hook! 'server-after-make-frame-hook (switch-to-buffer doom-fallback-buffer-name)))

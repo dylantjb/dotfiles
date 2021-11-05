@@ -52,7 +52,7 @@
 (package! dashboard)
 (package! org-super-agenda :pin "a5557ea4f51571ee9def3cd9a1ab1c38f1a27af7")
 (package! mu4e-alert :disable t)
-(package! org-caldav :recipe
-  (:host github
-   :repo "whirm/org-caldav"
-   :branch "sync-todos"))
+;; (package! org-caldav :recipe
+;;   (:host github
+;;    :repo "whirm/org-caldav"
+;;    :branch "sync-todos"))

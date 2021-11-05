@@ -15,7 +15,7 @@ set -e
 set -u
 
 # All supported choices
-all=(shutdown reboot suspend lock logout)
+all=(shutdown reboot suspend logout)
 
 # By default, show all (i.e., just copy the array)
 show=("${all[@]}")
@@ -23,14 +23,12 @@ show=("${all[@]}")
 declare -A texts
 texts[logout]="Log out"
 texts[suspend]="Suspend"
-texts[lock]="Lock"
 texts[reboot]="Reboot"
 texts[shutdown]="Shut down"
 
 declare -A icons
 icons[logout]="\uf842"
 icons[suspend]="\uf7c9"
-icons[lock]="\uf9b1"
 icons[reboot]="\ufc07"
 icons[shutdown]="\uf011"
 icons[cancel]="\u00d7"
@@ -38,7 +36,6 @@ icons[cancel]="\u00d7"
 declare -A actions
 actions[logout]="killall xinit"
 actions[suspend]="sudo systemctl suspend"
-actions[lock]="slock"
 actions[reboot]="sudo reboot"
 actions[shutdown]="sudo shutdown now"
 

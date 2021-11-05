@@ -1,6 +1,0 @@
-#!/bin/sh
-
-BRAVE_USER_FLAGS_FILE="${XDG_CONFIG_HOME:-$HOME/.config}/brave-flags.conf"
-[ -f "$BRAVE_USER_FLAGS_FILE" ] && USER_FLAGS="$(cat $BRAVE_USER_FLAGS_FILE | sed 's/#.*//')"
-
-/usr/bin/brave-nightly $@ $USER_FLAGS

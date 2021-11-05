@@ -45,7 +45,7 @@ if [ ! -d "${ZINIT[HOME_DIR]}" ]; then
     mkdir -p "${ZINIT[HOME_DIR]}" 
     print -P "%F{33}▓▒░ %F{220}Installing %F{33}DHARMA%F{220} Initiative Plugin Manager (%F{33}zdharma/zinit%F{220})…%f"
     command mkdir -p "${ZINIT[HOME_DIR]}" && command chmod g-rwX "${ZINIT[HOME_DIR]}"
-    command git clone https://github.com/zdharma/zinit "${ZINIT[BIN_DIR]}" && \
+    command git clone https://github.com/zdharma-continuum/zinit "${ZINIT[BIN_DIR]}" && \
         print -P "%F{33}▓▒░ %F{34}Installation successful.%f%b" || \
         print -P "%F{160}▓▒░ The clone has failed.%f%b"
 else
@@ -57,7 +57,7 @@ autoload -Uz _zinit
 
 zinit wait lucid for \
     atinit"ZINIT[COMPINIT_OPTS]=-C; zicompinit; zicdreplay" \
-       zdharma/fast-syntax-highlighting \
+       zdharma-continuum/fast-syntax-highlighting \
     blockf \
        zsh-users/zsh-completions \
     atload"!_zsh_autosuggest_start" \
@@ -89,8 +89,8 @@ alias emacs='emacsclient -t -a "nvim"'
 alias wget='wget --hsts-file="${XDG_CACHE_HOME:-$HOME/.cache}/wget-hsts"'
 alias ros='singularity run -B /etc/machine-id "$HOME/.local/share/ros/ros-container.sif"'
 [ "$(uname -n)" = "arch" ] && {
-  alias p='paru -Sy'
-  alias pr='paru -Rns'
+  alias y='yay -Sy'
+  alias yr='yay -Rns'
   alias debloat="sudo pacman -Rns $(pacman -Qdtq | tr '\r\n' ' ') 2>/dev/null || echo 'No packages to debloat'"
 }
 

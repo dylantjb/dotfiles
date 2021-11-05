@@ -14,32 +14,23 @@
 get_icon() {
   level="$(get_volume)"
   is_mute && muted=1 || muted=0
-  case $((
-    level > 0 && level < 30 && muted==0     ? 1 :
-    level >= 30 && level < 70 && muted==0   ? 2 :
-    level >= 70 && level <= 100 && muted==0 ? 3 : 0)) in
-    (0) echo "/usr/share/icons/Papirus-Dark/48x48/status/notification-audio-volume-muted.svg";;
-    (1) echo "/usr/share/icons/Papirus-Dark/48x48/status/notification-audio-volume-low.svg";;
-    (2) echo "/usr/share/icons/Papirus-Dark/48x48/status/notification-audio-volume-medium.svg";;
-    (3) echo "/usr/share/icons/Papirus-Dark/48x48/status/notification-audio-volume-high.svg";;
+  case 1 in
+    $((level > 0 && level < 30 && muted==0)) ) echo \
+      "/usr/share/icons/Papirus-Dark/48x48/status/notification-audio-volume-low.svg";;
+    $((level >= 30 && level <= 70 && muted==0)) ) echo \
+      "/usr/share/icons/Papirus-Dark/48x48/status/notification-audio-volume-medium.svg";;
+    $((level >= 70 && level <= 100 && muted==0)) ) echo \
+      "/usr/share/icons/Papirus-Dark/48x48/status/notification-audio-volume-high.svg";;
+    *) echo "/usr/share/icons/Papirus-Dark/48x48/status/notification-audio-volume-muted.svg"
   esac
 }
 
 get_volume() { amixer get Master | grep '%' | head -n 1 | cut -d '[' -f 2 | cut -d '%' -f 1 ; }
-
 is_mute() { amixer get Master | grep '%' | grep -oE '[^ ]+$' | grep off > /dev/null ; }
 
 send_notification() {
-  icon="$(get_icon)"
-  volume=Mute
-  if ! is_mute; then
-      volume="$(get_volume)"
-      # Make the bar with the special character ┃ (it's not pipe |)
-      # https://en.wikipedia.org/wiki/Box-drawing_character
-      bar=$(seq -s "┃" 0 "$((volume / 5))" | sed 's/[0-9]//g')
-  fi
-  # Send the notification
-  dunstify -i "$icon" -r 2593 -u low "$volume  $bar"
+  ! is_mute && volume="Volume [$(get_volume)%]" || volume="Volume: Muted"
+  dunstify "$volume" -i "$(get_icon)" -r 2593 -u low -h int:value:"$(get_volume)"
 }
 
 case $1 in

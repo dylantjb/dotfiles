@@ -1,6 +1,6 @@
 #+TITLE: Doom Emacs Config
 #+AUTHOR: Dylan Barker
-#+DESCRIPTION: My personal doom Emacs configuration file
+#+DESCRIPTION: My personal Doom Emacs configuration file
 #+STARTUP: showeverything
 
 * TABLE OF CONTENTS :toc:
@@ -9,7 +9,10 @@
   - [[#line-numbers][Line numbers]]
   - [[#doom-look][Doom look]]
   - [[#warnings][Warnings]]
-- [[#emms][EMMS]]
+  - [[#projectile][Projectile]]
+- [[#flycheck][FLYCHECK]]
+- [[#cc][CC]]
+- [[#python][PYTHON]]
 - [[#calendar][CALENDAR]]
 - [[#dashboard][DASHBOARD]]
   - [[#dashboard-in-emacsclient][Dashboard in emacsclient]]
@@ -31,7 +34,6 @@ Set full name and email for mu4e and GPG. Set 'authinfo.gpg' path.
       auth-sources '("~/.local/share/authinfo.gpg"))
 #+END_SRC
 ** Line numbers
-Set to relative.
 #+BEGIN_SRC emacs-lisp
 (setq display-line-numbers-type 'relative)
 #+END_SRC
@@ -47,13 +49,51 @@ Disable warnings on deprecated cl-functions.
 #+BEGIN_SRC emacs-lisp
 (setq byte-compile-warnings '(cl-functions))
 #+END_SRC
-* EMMS
-Set the lyrics directory.
+** Projectile
+Find projects in this path.
 #+BEGIN_SRC emacs-lisp
-(setq emms-lyrics-dir "~/.local/share/lyrics")
+(setq projectile-project-search-path '("~/repos"))
+#+END_SRC
+* FLYCHECK
+#+BEGIN_SRC emacs-lisp
+(defvar-local my-flycheck-local-cache nil)
+(defun my-flycheck-checker-get (fn checker property)
+  (or (alist-get property (alist-get checker my-flycheck-local-cache))
+      (funcall fn checker property)))
+(advice-add 'flycheck-checker-get :around 'my-flycheck-checker-get)
+#+END_SRC
+* CC
+#+BEGIN_SRC emacs-lisp
+(setq lsp-clients-clangd-args '("-j=3"
+                                "--background-index"
+                                "--clang-tidy"
+                                "--completion-style=detailed"
+                                "--header-insertion=never"
+                                "--header-insertion-decorators=0"))
+(after! lsp-clangd (set-lsp-priority! 'clangd 2))
+(add-hook 'lsp-managed-mode-hook
+          (lambda ()
+            (when (derived-mode-p 'c++-mode)
+              (setq my-flycheck-local-cache '((lsp . ((next-checkers . (c/c++-clang)))))))))
+#+END_SRC
+* PYTHON
+#+BEGIN_SRC emacs-lisp
+(add-hook 'lsp-managed-mode-hook
+          (lambda ()
+            (when (derived-mode-p 'python-mode)
+              (setq my-flycheck-local-cache '((lsp . ((next-checkers . (python-pylint)))))))))
+(defun my-pyvenv-autoload ()
+    (require 'projectile)
+    (let* ((pdir (projectile-project-root)) (pfile (concat pdir ".venv")))
+      (if (file-exists-p pfile)
+          (pyvenv-workon (with-temp-buffer
+                           (insert-file-contents pfile)
+                           (nth 0 (split-string (buffer-string)))))
+        (pyvenv-deactivate))))
+(add-hook 'python-mode-hook 'my-pyvenv-autoload)
 #+END_SRC
 * CALENDAR
-Generate my school calendar from an ICS link.
+Generate calendar from org file.
 #+BEGIN_SRC emacs-lisp
 (defun my-open-calendar ()
   (interactive)
@@ -77,9 +117,12 @@ Start up page that shows me recent files, entries from org-agenda, and projects.
 (use-package! dashboard
   :init
   (setq dashboard-set-heading-icons t
+        dashboard-week-agenda t
+        dashboard-agenda-release-buffers t
         dashboard-set-file-icons t
         dashboard-center-content t
-        dashboard-items '((recents   . 10)
+        dashboard-items '((recents   . 5)
+                          (agenda)
                           (bookmarks . 5)
                           (projects  . 5)))
   :config
@@ -244,8 +287,7 @@ Set up mail with my own update script to show notifications as well as use msmtp
 * DAEMON
 When Emacs starts up from a daemon, the following function is ran first, we force a switch to the dashboard buffer.
 #+BEGIN_SRC emacs-lisp
-(defun greedily-do-daemon-setup ()
-  (require 'org)
+(defun my-daemon-setup ()
   (require 'org-habit)
   (require 'org-checklist)
   (when (require 'mu4e nil t)
@@ -253,6 +295,6 @@ When Emacs starts up from a daemon, the following function is ran first, we forc
     (mu4e~start)))
 
 (when (daemonp)
-  (add-hook 'emacs-startup-hook #'greedily-do-daemon-setup)
+  (add-hook 'emacs-startup-hook #'my-daemon-setup)
   (add-hook! 'server-after-make-frame-hook (switch-to-buffer doom-fallback-buffer-name)))
 #+END_SRC

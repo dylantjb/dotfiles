@@ -12,30 +12,21 @@
 
 get_icon() {
   level="$(get_brightness)"
-  case "$((
-    level > 0 && level < 10     ? 1 :
-    level >= 10 && level < 30   ? 2 :
-    level >= 30 && level < 70   ? 3 :
-    level >= 70 && level <= 100 ? 4 : 0))" in
-    (0) echo "/usr/share/icons/Papirus-Dark/48x48/status/notification-display-brightness-off.svg";;
-    (1) echo "/usr/share/icons/Papirus-Dark/48x48/status/notification-display-brightness-low.svg";;
-    (2) echo "/usr/share/icons/Papirus-Dark/48x48/status/notification-display-brightness-medium.svg";;
-    (3) echo "/usr/share/icons/Papirus-Dark/48x48/status/notification-display-brightness-high.svg";;
-    (4) echo "/usr/share/icons/Papirus-Dark/48x48/status/notification-display-brightness-full.svg";;
+  case 1 in
+    $((level > 0 && level < 10))    ) echo \
+      "/usr/share/icons/Papirus-Dark/48x48/status/notification-display-brightness-off.svg" ;;
+    $((level >= 10 && level < 30))  ) echo \
+      "/usr/share/icons/Papirus-Dark/48x48/status/notification-display-brightness-medium.svg" ;;
+    $((level >= 30 && level < 70))  ) echo \
+      "/usr/share/icons/Papirus-Dark/48x48/status/notification-display-brightness-high.svg" ;;
+    $((level >= 70 && level <= 100)) ) echo \
+      "/usr/share/icons/Papirus-Dark/48x48/status/notification-display-brightness-full.svg" ;;
+    *) echo "/usr/share/icons/Papirus-Dark/48x48/status/notification-display-brightness-off.svg" ;;
   esac
 }
 
 get_brightness() { light -G | cut -d '.' -f 1 ; }
-
-send_notification() {
-  icon="$(get_icon)"
-  brightness="$(get_brightness)"
-  # Make the bar with the special character ┃ (it's not pipe |)
-  # https://en.wikipedia.org/wiki/Box-drawing_character
-  bar="$(seq -s "┃" 0 "$((brightness / 5))" | sed 's/[0-9]//g')"
-  # Send the notification
-  dunstify -i "$icon" -r 5555 -u low "$brightness  $bar"
-}
+send_notification() { dunstify "Brightness [$(get_brightness)%] " -i "$(get_icon)" -r 5555 -u low -h int:value:"$(get_brightness)"; }
 
 case "$1" in
   up)

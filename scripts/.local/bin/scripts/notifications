@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 
 blacklist=( "Spotify" "dunstify" "Brave" )
-sound_path() { echo "$XDG_DATA_HOME/dunst/$1.wav" ; }
+sound_path() { echo "$XDG_DATA_HOME/dunst/$1.wav"; }
 
-[[ ! " ${blacklist[@]} " =~ " $DUNST_APP_NAME " ]] || [[ "$DUNST_URGENCY" = "CRITICAL" ]] && {
+[[ ! " ${blacklist[*]} " =~ $DUNST_APP_NAME ]] || [[ "$DUNST_URGENCY" = "CRITICAL" ]] && {
   aplay "$(sound_path "$DUNST_APP_NAME")" 2>/dev/null || aplay "$(sound_path notify)"
 }
 

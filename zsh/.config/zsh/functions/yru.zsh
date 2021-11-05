@@ -1,7 +1,7 @@
-pru() {
+yru() {
   while getopts "apz" opt; do
     case "$opt" in
-      a) paru -Sua ;;
+      a) yay -Sua ;;
       p) sudo pacman -Syu ;;
       z) 
         INST_LINVAR=$(sed 's|.*linux|linux|' /proc/cmdline | sed 's|.img||g' | awk '{ print $1 }')
