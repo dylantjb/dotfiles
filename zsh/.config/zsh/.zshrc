@@ -87,7 +87,6 @@ alias mg='emacsclient -cte "(progn (magit-status) (delete-other-windows))"'
 alias transmission-cli='transmission-cli -w ~/.local/share/transmission'
 alias emacs='emacsclient -t -a "nvim"'
 alias wget='wget --hsts-file="${XDG_CACHE_HOME:-$HOME/.cache}/wget-hsts"'
-alias ros='singularity run -B /etc/machine-id "$HOME/.local/share/ros/ros-container.sif"'
 [ "$(uname -n)" = "arch" ] && {
   alias y='yay -Sy'
   alias yr='yay -Rns'

@@ -7,4 +7,41 @@ Xft.hintstyle: hintslight
 Xft.lcdfilter: lcddefault
 Xft.rgba:      rgb
 
-#include "/home/dylan/.config/x11/one-dark.xresources"
+! colors
+
+! special
+*.foreground: #abb2bf
+*.background: #282c34
+
+! black
+*.color0:     #1e222a
+*.color8:     #5c6370
+
+! red
+*.color1:     #d47d85
+*.color9:     #be5046
+
+! green
+*.color2:     #98c379
+*.color10:    #7eca9c
+
+! yellow
+*.color3:     #e5c07b
+*.color11:    #d19a66
+
+! blue
+*.color4:     #7aa2f7
+*.color12:    #668ee3
+
+! magenta
+*.color5:     #c678dd
+*.color13:    #9a52af
+
+! cyan
+*.color6:     #56b6c2
+*.color14:    #3c909b
+
+! white
+*.color7:     #abb2bf
+*.color15:    #828997
+

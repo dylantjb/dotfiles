@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 # https://gist.github.com/jn64/8b412733667e30bf63bf9d4ba1852691
 # Send notification with album art when ncmpcpp plays a new song

@@ -1,7 +1,0 @@
-#!/bin/sh
-
-file=$(mktemp)
-cat ~/.config/x11/xresources | head -n -1 > $file
-echo "#include \"$HOME/.config/x11/one-light.xresources\"" >> $file
-xrdb $file && xdotool key Shift_L+Super_L+Delete
-

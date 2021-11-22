@@ -2,7 +2,6 @@
 
 wallpaper &
 xrdb -merge ~/.config/x11/xresources
-slstatus &
 picom &
 setxkbmap gb &
 xset s noblank &
@@ -14,4 +13,4 @@ unclutter &
 ! pgrep -x mpd && mpd &
 xautolock -notify 1 -notifier "notifyctl" -detectsleep -time 20 -corners 0-+0 -locker "sleeper" -killtime 20 -killer "sleeper -s" &
 davmail ~/.local/share/davmail/davmail.properties &
-emacs --daemon &
+statusbar &

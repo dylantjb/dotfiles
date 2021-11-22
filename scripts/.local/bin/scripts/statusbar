@@ -1,0 +1,51 @@
+#!/bin/sh
+
+# !load colors
+red="$(xrdb -get color1)"
+blue="$(xrdb -get color4)"
+black="$(xrdb -get color0)"
+green="$(xrdb -get color10)"
+purple="$(xrdb -get color5)"
+darkblue="$(xrdb -get color12)"
+
+volume() {
+  [ "$(amixer get Master | grep '%' | grep -oE '[^ ]+$' | grep off)" ] && \
+    icon='' || icon='ﱝ'
+	printf "^c$black^ ^b$green^ %s" "$icon"
+	printf "^c$green^ ^b$black^ %s%%" \
+    "$(amixer get Master | grep '%' | head -n 1 | cut -d '[' -f 2 | cut -d '%' -f 1)"
+}
+
+battery() {
+  battery="/sys/class/power_supply/BAT0"
+  case "$(cat "$battery/status")" in
+		"Discharging") state="" ;;
+		"Charging") state="" ;;
+	  "Not charging"|"Unknown") state="" ;;
+	esac
+	capacity=$(cat "$battery/capacity")
+	[ "$state" = "" ] && [ "$capacity" -le 20 ] && warn=" "
+	printf "^c$black^ ^b$purple^ %s" "$state"
+	printf "^c$purple^ ^b$black^ %s%%" "$warn$capacity"; unset warn
+}
+
+memory() {
+	printf "^c$black^ ^b$red^ %s" "MEM"
+	printf "^c$red^ ^b$black^ %s" "$(free -h | awk '/^Mem/ { print $3 }' | sed s/i//g)"
+}
+
+wlan() {
+	case "$(cat /sys/class/net/w*/operstate 2>/dev/null)" in
+    up) printf "^c$black^ ^b$blue^ 󰤨 ^d^%s" " ^c$blue^$(iwgetid -r)" ;;
+	  *) printf "^c$black^ ^b$blue^ 󰤭 ^d^%s" " ^c$blue^NULL" ;;
+	esac
+}
+
+clock() {
+	printf "^c$black^ ^b$darkblue^ %s " "󱑆"
+  printf "^c$black^^b$blue^ %s " "$(date '+%a %b %d %R')"
+}
+
+while true; do
+  sleep 1 && xsetroot -name "$(memory) $(volume) $(battery) $(wlan) $(clock)"
+done

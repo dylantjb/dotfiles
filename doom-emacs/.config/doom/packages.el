@@ -51,7 +51,11 @@
 
 (package! dashboard)
 (package! org-super-agenda :pin "a5557ea4f51571ee9def3cd9a1ab1c38f1a27af7")
+(package! org-wild-notifier)
 (package! mu4e-alert :disable t)
+(package! tree-sitter)
+(package! tree-sitter-langs)
+(package! elcord)
 ;; (package! org-caldav :recipe
 ;;   (:host github
 ;;    :repo "whirm/org-caldav"

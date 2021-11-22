@@ -1,4 +1,4 @@
 #!/bin/sh
 
-[ -z "$1"] && echo "$(dunstctl is-paused)" > /tmp/sleeper && notifyctl true && slock xset dpms force off && sleep 3 && gpg-connect-agent --no-autostart reloadagent /bye || sudo systemctl suspend && notifyctl $(cat /tmp/sleeper)
+[ -z "$1" ] && "$(dunstctl is-paused)" > /tmp/sleeper && notifyctl true && slock xset dpms force off && sleep 3 || sudo systemctl suspend && notifyctl "$(cat /tmp/sleeper)"
 

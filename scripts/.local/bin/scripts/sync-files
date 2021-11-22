@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/sh
 
 eval "$(grep -h -- \
 	"^\s*\(export \)\?\(RCLONE_PASSWORD_COMMAND\|PASSWORD_STORE_DIR\)=" \

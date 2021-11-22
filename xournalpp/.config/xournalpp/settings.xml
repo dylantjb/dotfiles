@@ -6,16 +6,16 @@
   <property name="pressureMultiplier" value="2.40000000"/>
   <property name="zoomGesturesEnabled" value="true"/>
   <property name="selectedToolbar" value="Floating Toolbox"/>
-  <property name="lastSavePath" value="/home/dylan/documents/school/slides/FC2"/>
-  <property name="lastOpenPath" value="/home/dylan/documents/school/slides/FC2"/>
+  <property name="lastSavePath" value="/home/dylan/downloads"/>
+  <property name="lastOpenPath" value="/home/dylan/documents/school/slides/PEP"/>
   <property name="lastImagePath" value=""/>
   <property name="edgePanSpeed" value="20.00000000"/>
   <property name="edgePanMaxMult" value="5.00000000"/>
   <property name="zoomStep" value="10.00000000"/>
   <property name="zoomStepScroll" value="2.00000000"/>
   <property name="displayDpi" value="72"/>
-  <property name="mainWndWidth" value="1904"/>
-  <property name="mainWndHeight" value="1044"/>
+  <property name="mainWndWidth" value="851"/>
+  <property name="mainWndHeight" value="516"/>
   <property name="maximized" value="false"/>
   <property name="showToolbar" value="true"/>
   <property name="showSidebar" value="false"/>
@@ -36,7 +36,7 @@
   <property name="fullscreenHideElements" value="mainMenubar"/>
   <!--Which gui elements are hidden if you are in Presentation mode, separated by a colon (,)-->
   <property name="presentationHideElements" value="mainMenubar,sidebarContents"/>
-  <!--The cursor icon used with a stylus, allowed values are "none", "dot", "big"-->
+  <!--The cursor icon used with a stylus, allowed values are "none", "dot", "big", "arrow"-->
   <property name="stylusCursorType" value="big"/>
   <property name="highlightPosition" value="false"/>
   <property name="cursorHighlightColor" value="2164260608"/>
@@ -249,7 +249,7 @@
       <attribute name="drawingType" type="string" value="default"/>
     </data>
     <data name="pen">
-      <attribute name="color" type="hex" value="ff000000"/>
+      <attribute name="color" type="hex" value="000000"/>
       <attribute name="drawingType" type="string" value="default"/>
       <attribute name="fill" type="int" value="0"/>
       <attribute name="fillAlpha" type="int" value="128"/>
