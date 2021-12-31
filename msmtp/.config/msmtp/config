@@ -1,4 +1,4 @@
-account dylanbarker59@gmail.com
+account Google
 host smtp.gmail.com
 port 587
 from dylanbarker59@gmail.com
@@ -9,7 +9,7 @@ tls on
 tls_trust_file	/etc/ssl/certs/ca-certificates.crt
 logfile /home/dylan/.config/msmtp/msmtp.log
 
-account dylan@dylantjb.com
+account Domain
 host mail.dylantjb.com
 port 587
 from dylan@dylantjb.com
@@ -20,7 +20,7 @@ tls on
 tls_trust_file	/etc/ssl/certs/ca-certificates.crt
 logfile /home/dylan/.config/msmtp/msmtp.log
 
-account k20001430@kcl.ac.uk
+account School
 host localhost
 port 1025
 from k20001430@kcl.ac.uk

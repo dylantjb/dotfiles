@@ -45,7 +45,7 @@ cmd sudomkfile ${{
   sudoedit "$1"
 }}
 
-cmd setwallpaper ${{ feh --no-fehbg --bg-scale "$f" }}
+cmd setwallpaper ${{ feh --no-fehbg --bg-fill "$f" }}
 
 cmd fzf_jump ${{
   res="$(find . -maxdepth 3 | fzf --reverse --header='Jump to location')"
@@ -144,7 +144,7 @@ map mr push :sudomkfile<space>
 map md push :mkdir<space>
 map cm push :chmod<space>
 map co push :chown<space>
-map bg push :setwallpaper<space>
+map bg setwallpaper
 map r rename
 map R reload
 map C clear

@@ -1,7 +1,7 @@
 #+TITLE: Doom Emacs Config
 #+AUTHOR: Dylan Barker
 #+DESCRIPTION: My personal Doom Emacs configuration file
-#+STARTUP: showeverything
+#+STARTUP: show2levels
 
 * TABLE OF CONTENTS :toc:
 - [[#basics][BASICS]]
@@ -15,16 +15,16 @@
 - [[#flycheck][FLYCHECK]]
 - [[#cc][CC]]
 - [[#python][PYTHON]]
+- [[#scala][SCALA]]
 - [[#calendar][CALENDAR]]
 - [[#dashboard][DASHBOARD]]
-  - [[#dashboard-in-emacsclient][Dashboard in emacsclient]]
-  - [[#configuring-dashboard][Configuring dashboard]]
-- [[#tree-sitter][TREE-SITTER]]
 - [[#org][ORG]]
   - [[#setting-up-org][Setting up org]]
   - [[#notifications][Notifications]]
   - [[#caldav][Caldav]]
   - [[#org-agenda][Org agenda]]
+  - [[#org-capture][Org Capture]]
+  - [[#getting-things-done][Getting Things Done]]
 - [[#mu4e][MU4E]]
 - [[#daemon][DAEMON]]
 
@@ -48,9 +48,45 @@ Save every 30 seconds of idle time
 ** Doom look
 Set the default doom theme, and change fonts.
 #+BEGIN_SRC emacs-lisp
-(setq doom-theme 'doom-one)
 (setq doom-font (font-spec :family "JetBrainsMono Nerd Font" :size 14 :weight 'regular)
       doom-variable-pitch-font (font-spec :family "JetBrainsMono Nerd Font"))
+(custom-set-faces
+ '(magit-diff-base ((((type tty)) (:extend t) (:foreground "#cc4c00"))))
+ '(magit-diff-our ((((type tty)) (:inherit magit-diff-removed))))
+ '(magit-diff-added ((((type tty)) (:extend t) (:foreground "#afff00"))))
+ '(magit-diff-their ((((type tty)) (:inherit magit-diff-added))))
+ '(magit-diff-context ((((type tty)) (:extend t) (:foreground "#888888"))))
+ '(magit-diff-removed ((((type tty)) (:extend t) (:background "#4d3434") (:foreground "#ff0000"))))
+ '(magit-diff-hunk-region ((((type tty)) (:inherit bold))))
+ '(magit-diff-file-heading ((((type tty)) (:extend t) (:weight bold) (:foreground "#e4e4e4"))))
+ '(magit-diff-hunk-heading ((((type tty)) (:extend t))))
+ '(magit-diff-lines-heading ((((type tty)) (:extend t) (:background "#ff0000") (:foreground "#ffd700"))))
+ '(magit-diff-our-highlight ((((type tty)) (:inherit magit-diff-removed-highlight))))
+ '(magit-diff-base-highlight ((((type tty)) (:weight bold) (:extend t) (:foreground "#ff5f00"))))
+ '(magit-diff-lines-boundary ((((type tty)) (:extend t) (:inherit magit-diff-lines-heading))))
+ ;; '(magit-diff-added-highlight ((((type tty)) (:weight bold) (:extend t) (:foreground "LimeGreen"))))
+ ;; '(magit-diff-their-highlight ((((type tty)) (:foreground ""))))
+ ;; '(magit-diff-conflict-heading ((((type tty)) (:foreground ""))))
+ ;; '(magit-diff-revision-summary ((((type tty)) (:foreground ""))))
+ ;; '(magit-diff-context-highlight ((((type tty)) (:foreground ""))))
+ ;; '(magit-diff-removed-highlight ((((type tty)) (:foreground ""))))
+ ;; '(magit-diff-whitespace-warning ((((type tty)) (:foreground ""))))
+ ;; '(magit-diff-file-heading-highlight ((((type tty)) (:foreground ""))))
+ ;; '(magit-diff-file-heading-selection ((((type tty)) (:foreground ""))))
+ ;; '(magit-diff-hunk-heading-highlight ((((type tty)) (:foreground ""))))
+ ;; '(magit-diff-hunk-heading-selection ((((type tty)) (:foreground ""))))
+ ;; '(magit-diff-revision-summary-highlight ((((type tty)) (:foreground ""))))
+
+ ;; '(magit-diff-added ((((type tty)) (:foreground "green"))))
+ ;; '(magit-diff-added-highlight ((((type tty)) (:foreground "LimeGreen"))))
+ ;; '(magit-diff-context-highlight ((((type tty)) (:foreground "default"))))
+ ;; '(magit-diff-file-heading ((((type tty)) nil)))
+ ;; '(magit-diff-none ((((type tty) (class color) (min-colors 256)) (:inherit diff-context))
+ ;;                    (((type graphic)) (:inherit diff-context))))
+ ;; '(magit-diff-removed ((((type tty)) (:foreground "red"))))
+ ;; '(magit-diff-removed-highlight ((((type tty)) (:foreground "IndianRed"))))
+ ;; '(magit-section-highlight ((((type tty)) nil))))
+ )
 #+END_SRC
 ** Warnings
 Disable warnings on deprecated cl-functions.
@@ -105,6 +141,13 @@ Find projects in this path.
             (when (derived-mode-p 'python-mode)
               (setq my-flycheck-local-cache '((lsp . ((next-checkers . (python-pylint)))))))))
 #+END_SRC
+* SCALA
+#+BEGIN_SRC emacs-lisp
+(add-hook 'lsp-managed-mode-hook
+          (lambda ()
+            (when (derived-mode-p 'scala-mode)
+              (setq my-flycheck-local-cache '((lsp . ((next-checkers . (scala)))))))))
+#+END_SRC
 * CALENDAR
 Generate calendar from org file.
 #+BEGIN_SRC emacs-lisp
@@ -113,18 +156,11 @@ Generate calendar from org file.
   (cfw:open-calendar-buffer
    :contents-sources
    (list
-    (cfw:org-create-file-source "School" "~/documents/org/timetable.org" "IndianRed"))))
+    (cfw:org-create-file-source "School" "~/documents/gtd/timetable.org" "IndianRed"))))
 (map! :leader :prefix ("o" . "open")
       :desc "Calendar" "c" #'my-open-calendar)
 #+END_SRC
 * DASHBOARD
-** Dashboard in emacsclient
-Ensures the default buffer that opens in emacsclient is the dashboard.
-#+BEGIN_SRC emacs-lisp
-(setq doom-fallback-buffer-name "*dashboard*"
-      +doom-dashboard-name "*dashboard*")
-#+END_SRC
-** Configuring dashboard
 Start up page that shows me recent files, entries from org-agenda, and projects.
 #+BEGIN_SRC emacs-lisp
 (use-package! dashboard
@@ -140,53 +176,44 @@ Start up page that shows me recent files, entries from org-agenda, and projects.
   (dashboard-modify-heading-icons '((recents   . "file-text")
                                     (bookmarks . "book"))))
 #+END_SRC
-* TREE-SITTER
-#+BEGIN_SRC emacs-lisp
-(use-package! tree-sitter
-  :when (bound-and-true-p module-file-suffix)
-  :hook (prog-mode . tree-sitter-mode)
-  :hook (tree-sitter-after-on . tree-sitter-hl-mode)
-  :config
-  (require 'tree-sitter-langs)
-  (defadvice! doom-tree-sitter-fail-gracefully-a (orig-fn &rest args)
-    "Don't break with errors when current major mode lacks tree-sitter support."
-    :around #'tree-sitter-mode
-    (condition-case e
-        (apply orig-fn args)
-      (error
-       (unless (string-match-p (concat "^Cannot find shared library\\|"
-                                       "^No language registered\\|"
-                                       "cannot open shared object file")
-                               (error-message-string e))
-         (signal (car e) (cadr e)))))))
-#+END_SRC
 * ORG
 ** Setting up org
 #+BEGIN_SRC emacs-lisp
 (require 'org-habit)
+(require 'org-checklist)
 (after! org
-  (setq org-directory "~/documents/org")
-  (setq org-default-notes-file (expand-file-name "notes.org" org-directory)
+  (setq org-directory "~/documents/org"
         org-log-done 'time
         org-log-into-drawer t
         org-hide-emphasis-markers t
+        org-tag-alist
+        '((:startgroup . nil)
+          ("@home"    . ?h)
+          ("@library" . ?l)
+          ("@uni"     . ?u)
+          (:endgroup   . nil)
+          ("chore"    . ?c)
+          ("event"    . ?e)
+          ("fit"      . ?f)
+          ("health"   . ?H)
+          ("module"   . ?m)
+          ("shop"     . ?s)
+          ("uni"      . ?U)
+          ("tutorial" . ?t))
         org-todo-keywords
         '((sequence
-           "TODO(t)"
            "NEXT(n)"
-           "WAITING(w)"
-           "SOMEDAY(s)"
+           "TODO(t)"
+           "WAIT(w@)"
            "|"
            "DONE(d)"
-           "CANCELLED(c)" ))))
+           "CANCELED(c@)"))))
 #+END_SRC
 ** Notifications
 #+BEGIN_SRC emacs-lisp
 (use-package! org-wild-notifier
-  :init
-  (add-hook 'after-init-hook 'org-wild-notifier-mode)
-  :config
-  (setq alert-default-style 'libnotify))
+  :init (add-hook 'after-init-hook 'org-wild-notifier-mode)
+  :config (setq alert-default-style 'libnotify))
 #+END_SRC
 ** Caldav
 Sync two calendars to my org directory. Sync status and backup file stored in cache.
@@ -205,122 +232,136 @@ Sync two calendars to my org directory. Sync status and backup file stored in ca
   (setq org-caldav-backup-file "~/.cache/org-caldav/backup.org")
   (setq org-caldav-save-directory "~/.cache/org-caldav")
   (setq org-caldav-sync-todo 'all)
-  :config
-  (setq org-icalendar-timezone "Europe/London"))
+  :config (setq org-icalendar-timezone "Europe/London"))
 #+END_SRC
 ** Org agenda
 #+BEGIN_SRC emacs-lisp
 (use-package! org-super-agenda
-  :after org-agenda
+  :after org-gtd
   :config (org-super-agenda-mode)
   :init
   (setq org-agenda-skip-scheduled-if-done t
-        org-agenda-start-day nil
+        org-agenda-property-list '("DELEGATED_TO")
+        org-agenda-start-day "today"
         org-agenda-skip-deadline-if-done t
         org-agenda-include-deadlines t
-        org-agenda-block-separator nil
         org-agenda-tags-column 100
-        org-agenda-compact-blocks t
-        org-agenda-files '("~/documents/org")
-        org-agenda-custom-commands
-        '(("o" "Overview"
-           ((agenda)
-            (todo "NEXT" ((org-agenda-overriding-header "Next actions:")))
-            (todo "WAITING" ((org-agenda-overriding-header "Waiting on:")))
-            (todo "DONE" ((org-agenda-overriding-header "Completed items:")))
-            (tags "projects" ((org-agenda-overriding-header "Projects in progress:")))
-            (alltodo "" ((org-agenda-overriding-header "")
-                         (org-super-agenda-groups
-                          '((:name "Next to do"
-                             :todo "NEXT"
-                             :order 1)
-                            (:name "Important"
-                             :priority "A"
-                             :order 6)
-                            (:name "Due Today"
-                             :deadline today
-                             :order 2)
-                            (:name "Due Soon"
-                             :deadline future
-                             :order 8)
-                            (:name "Overdue"
-                             :deadline past
-                             :face error
-                             :order 7)
-                            (:name "Assignments"
-                             :tag "assignment"
-                             :order 10)
-                            (:name "Emacs"
-                             :tag "emacs"
-                             :order 13)
-                            (:name "Projects"
-                             :tag "project"
-                             :order 14)
-                            (:name "Research"
-                             :tag "research"
-                             :order 15)
-                            (:name "To read"
-                             :tag "book"
-                             :order 30)
-                            (:name "Waiting"
-                             :todo "WAITING"
-                             :order 20)
-                            (:name "University"
-                             :tag "uni"
-                             :order 32)
-                            (:name "Trivial"
-                             :priority<= "E"
-                             :todo "SOMEDAY"
-                             :order 90)
-                            (:discard (:tag ("habit"))))))))))))
+        org-super-agenda-header-map nil
+        org-agenda-compact-blocks nil
+        org-agenda-files `(,org-gtd-directory)
+        org-agenda-custom-commands '(("g" "GTD View"
+                                      ((agenda "" ((org-agenda-span 1)
+                                                   (org-super-agenda-groups
+                                                    '((:name ""
+                                                       :date nil
+                                                       :scheduled nil
+                                                       :order 0)
+                                                      (:date today)
+                                                      (:auto-parent t)))))
+                                       (alltodo "" ((org-agenda-overriding-header "")
+                                                    (org-super-agenda-groups
+                                                     '((:discard (:habit t))
+                                                       (:auto-parent t))))))))))
+
+#+END_SRC
+** Org Capture
+#+BEGIN_SRC emacs-lisp
+(use-package! org-capture
+  :after org-gtd
+  :config
+  (setq org-capture-templates `(("i" "Inbox"
+                                 entry (file ,(org-gtd-inbox-path))
+                                 "* %?\n%U\n\n  %i"
+                                 :kill-buffer t)
+                                ("t" "Todo with link"
+                                 entry (file ,(org-gtd-inbox-path))
+                                 "* %?\n%U\n\n  %i\n  %a"
+                                 :kill-buffer t))))
+#+END_SRC
+** Getting Things Done
+#+BEGIN_SRC emacs-lisp
+(require 'org-gtd)
+(require 'org-gtd-refile)
+(defun org-gtd-show-agenda (&optional arg)
+  (interactive "P")
+  (org-agenda arg "g"))
+(defun org-gtd-match-tags (&optional arg)
+  (interactive "P")
+  (org-agenda arg "m"))
+
+(add-hook 'org-after-refile-insert-hook #'save-buffer)
+
+(use-package org-gtd
+  :after org
+  :demand t
+  :custom
+  (org-gtd-directory "~/documents/gtd")
+  (org-agenda-property-position 'next-line)
+  (org-edna-use-inheritance t)
+  :config (org-edna-mode)
+  :init
+  (map! :after org
+        :map org-mode-map
+        :leader
+        (:prefix-map ("d" . "GTD")
+         :desc "Agenda view"            "a" #'org-gtd-show-agenda
+         :desc "Inbox Capture"          "i" #'org-gtd-capture
+         :desc "Show All Next"          "n" #'org-gtd-show-all-next
+         :desc "Process Inbox"          "p" #'org-gtd-process-inbox
+         :desc "Show Stuck Projects"    "s" #'org-gtd-show-stuck-projects
+         :desc "Show Matched Tags"      "t" #'org-gtd-match-tags))
+  :bind (:map org-gtd-process-map
+         ("C-c c" . org-gtd-choose)))
 #+END_SRC
 * MU4E
 Set up email with mbsync + msmtp with views for all three of my emails, default being Google.
 #+BEGIN_SRC emacs-lisp
-(setq mu4e-change-filenames-when-moving t
-      mu4e-main-buffer-hide-personal-addresses t
-      mu4e-compose-signature "---\nDylan Barker"
-      mu4e-get-mail-command "mbsync -ac ~/.config/isync/mbsyncrc"
-      mu4e-update-interval 900
-      message-sendmail-f-is-evil t
-      sendmail-program (executable-find "msmtp")
-      message-sendmail-extra-arguments '("--read-envelope-from")
-      message-send-mail-function #'message-send-mail-with-sendmail
-      mu4e-bookmarks '((:name "Unread messages" :query "flag:unread AND (maildir:/Google/INBOX OR maildir:/School/INBOX OR maildir:/Domain/INBOX)" :key ?u)
-                       (:name "Today's messages" :query "date:today..now AND (maildir:/Google/INBOX OR maildir:/School/INBOX OR maildir:/Domain/INBOX)" :key ?t)
-                       (:name "Last 7 days" :query "date:7d..now AND (maildir:/Google/INBOX OR maildir:/School/INBOX OR maildir:/Domain/INBOX)" :hide-unread t :key ?w)
-                       ("flag:flagged" "Flagged messages" ?f)))
+(after! mu4e
+  (setq mu4e-change-filenames-when-moving t
+        mu4e-main-buffer-hide-personal-addresses t
+        mu4e-get-mail-command "~/.local/bin/scripts/syncmail"
+        message-sendmail-f-is-evil t
 
-(set-email-account! "Domain"
-                    '((mu4e-sent-folder       . "/Domain/Sent")
-                      (mu4e-drafts-folder     . "/Domain/Drafts")
-                      (mu4e-trash-folder      . "/Domain/Trash")
-                      (smtpmail-smtp-user     . "dylan@dylantjb.com")
-                      (user-mail-address      . "dylan@dylantjb.com")
-                      (mu4e-maildir-shortcuts . ((:maildir "/Domain/INBOX"  :key ?i)
-                                                 (:maildir "/Domain/Sent"   :key ?s)
-                                                 (:maildir "/Domain/Drafts" :key ?d)
-                                                 (:maildir "/Domain/Trash"  :key ?t)))) t)
-(set-email-account! "School"
-                    '((mu4e-sent-folder       . "/School/Sent")
-                      (mu4e-drafts-folder     . "/School/Drafts")
-                      (mu4e-trash-folder      . "/School/Trash")
-                      (smtpmail-smtp-user     . "k20001430@kcl.ac.uk")
-                      (user-mail-address      . "k20001430@kcl.ac.uk")
-                      (mu4e-maildir-shortcuts . ((:maildir "/School/INBOX"  :key ?i)
-                                                 (:maildir "/School/Sent"   :key ?s)
-                                                 (:maildir "/School/Drafts" :key ?d)
-                                                 (:maildir "/School/Trash"  :key ?t)))) t)
-(set-email-account! "Google"
-                    '((mu4e-sent-folder       . "/Google/[Gmail]/Sent Mail")
-                      (mu4e-drafts-folder     . "/Google/[Gmail]/Drafts")
-                      (mu4e-trash-folder      . "/Google/[Gmail]/Bin")
-                      (smtpmail-smtp-user     . "dylanbarker59@gmail.com")
-                      (user-mail-address      . "dylanbarker59@gmail.com")
-                      (mu4e-maildir-shortcuts . ((:maildir "/Google/INBOX"             :key ?i)
-                                                 (:maildir "/Google/[Gmail]/Sent Mail" :key ?s)
-                                                 (:maildir "/Google/[Gmail]/Drafts"    :key ?d)
-                                                 (:maildir "/Google/[Gmail]/Bin"       :key ?b)))) t)
+        sendmail-program (executable-find "msmtp")
+        message-sendmail-extra-arguments '("--read-envelope-from")
+        send-mail-function #'smtpmail-send-it
+        message-send-mail-function #'message-send-mail-with-sendmail
+
+        mu4e-bookmarks '((:name "Unread messages" :query "flag:unread AND (maildir:/Google/INBOX OR maildir:/School/INBOX OR maildir:/Domain/INBOX)" :key ?u)
+                         (:name "Today's messages" :query "date:today..now AND (maildir:/Google/INBOX OR maildir:/School/INBOX OR maildir:/Domain/INBOX)" :key ?t)
+                         (:name "Last 7 days" :query "date:7d..now AND (maildir:/Google/INBOX OR maildir:/School/INBOX OR maildir:/Domain/INBOX)" :hide-unread t :key ?w)
+                         ("flag:flagged" "Flagged messages" ?f)))
+
+  (set-email-account! "Domain"
+                      '((mu4e-sent-folder       . "/Domain/Sent")
+                        (mu4e-drafts-folder     . "/Domain/Drafts")
+                        (mu4e-trash-folder      . "/Domain/Trash")
+                        (smtpmail-smtp-user     . "dylan@dylantjb.com")
+                        (user-mail-address      . "dylan@dylantjb.com")
+                        (mu4e-maildir-shortcuts . ((:maildir "/Domain/INBOX"  :key ?i)
+                                                   (:maildir "/Domain/Sent"   :key ?s)
+                                                   (:maildir "/Domain/Drafts" :key ?d)
+                                                   (:maildir "/Domain/Trash"  :key ?t)))) t)
+  (set-email-account! "School"
+                      '((mu4e-sent-folder       . "/School/Sent")
+                        (mu4e-drafts-folder     . "/School/Drafts")
+                        (mu4e-trash-folder      . "/School/Trash")
+                        (smtpmail-smtp-user     . "k20001430@kcl.ac.uk")
+                        (user-mail-address      . "k20001430@kcl.ac.uk")
+                        (mu4e-maildir-shortcuts . ((:maildir "/School/INBOX"  :key ?i)
+                                                   (:maildir "/School/Sent"   :key ?s)
+                                                   (:maildir "/School/Drafts" :key ?d)
+                                                   (:maildir "/School/Trash"  :key ?t)))) t)
+  (set-email-account! "Google"
+                      '((mu4e-sent-folder       . "/Google/[Gmail]/Sent Mail")
+                        (mu4e-drafts-folder     . "/Google/[Gmail]/Drafts")
+                        (mu4e-trash-folder      . "/Google/[Gmail]/Bin")
+                        (smtpmail-smtp-user     . "dylanbarker59@gmail.com")
+                        (user-mail-address      . "dylanbarker59@gmail.com")
+                        (mu4e-maildir-shortcuts . ((:maildir "/Google/INBOX"             :key ?i)
+                                                   (:maildir "/Google/[Gmail]/Sent Mail" :key ?s)
+                                                   (:maildir "/Google/[Gmail]/Drafts"    :key ?d)
+                                                   (:maildir "/Google/[Gmail]/Bin"       :key ?b)))) t))
 #+END_SRC
 * DAEMON
 When Emacs starts up from a daemon, the following function is ran first, we force a switch to the dashboard buffer.
@@ -328,9 +369,11 @@ When Emacs starts up from a daemon, the following function is ran first, we forc
 (defun my-daemon-setup ()
   (when (require 'mu4e nil t)
     (setq mu4e-confirm-quit t)
-    (mu4e~start)))
+    (mu4e~start))
+  (setq doom-theme 'doom-one
+        doom-fallback-buffer-name "*dashboard*"))
 
-(when (daemonp)
+(when (equal (daemonp) "gui")
   (add-hook 'emacs-startup-hook #'my-daemon-setup)
   (add-hook! 'server-after-make-frame-hook (switch-to-buffer doom-fallback-buffer-name)))
 #+END_SRC
