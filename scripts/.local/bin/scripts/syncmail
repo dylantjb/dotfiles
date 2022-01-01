@@ -70,8 +70,9 @@ done
 wait
 
 # Update the mu4e index in running emacs daemon
-[ -S "/run/user/1000/emacs/server" ] && \
-  emacsclient -s "/run/user/$(id -u)/emacs/server" -e '(mu4e-update-index)' >/dev/null
+esock="/run/user/$(id -u)/emacs/gui"
+[ -S "$esock" ] && \
+  emacsclient -s "$esock" -e '(mu4e-update-index)' >/dev/null
 
 # Create a touch file that indicates the time of the last run of mailsync
 touch "${ISYNC:-$HOME/.isync}/.lastrun"

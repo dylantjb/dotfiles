@@ -2,7 +2,13 @@
 # vim:fileencoding=utf-8:ft=conf:foldmethod=marker
 
 # Default programs {{{
-export PATH="$PATH:${$(find ~/.local/bin -type d,l -printf %p:)%%:}"
+[ "$(uname)" = "Darwin" ] && {
+  for i in {coreutils,findutils,gnu-tar,gawk,gnutls,gnu-indent,gnu-getopt,grep}; do
+    PATH="/usr/local/opt/$i/libexec/gnubin:$PATH"
+    MANPATH="/usr/local/opt/$i/libexec/gnuman:$PATH"
+  done
+}
+export PATH="$PATH:${$(gfind ~/.local/bin -type d,l -printf %p:)%%:}"
 EDITOR='nvim' VISUAL='nvim'; export EDITOR VISUAL
 export PAGER=less
 export BROWSER=brave-launcher
@@ -13,6 +19,7 @@ export TERMINAL=st
 export XDG_CACHE_HOME="$HOME/.cache"
 export XDG_CONFIG_HOME="$HOME/.config"
 export XDG_DATA_HOME="$HOME/.local/share"
+export XDG_STATE_HOME="$HOME/.local/state"
 export XDG_DOWNLOAD_DIR="$HOME/downloads"
 export XDG_SCREENSHOTS_DIR="$HOME/pictures/screenshots"
 
@@ -22,7 +29,7 @@ export GNUPGHOME="${XDG_DATA_HOME:-$HOME/.local/share}/gnupg"
 export CARGO_HOME="${XDG_DATA_HOME:-$HOME/.local/share}/cargo"
 export NPM_CONFIG_USERCONFIG="${XDG_CONFIG_HOME:-$HOME/.config}/npm/npmrc"
 export GTK2_RC_FILES="${XDG_CONFIG_HOME:-$HOME/.config}/gtk-2.0/gtkrc-2.0"
-export HISTFILE="${XDG_DATA_HOME:-$HOME/.local/share}/history"
+export HISTFILE="${XDG_STATE_HOME:-$HOME/.local/state}/zsh/history"
 export LESSHISTFILE="-"
 export GOPATH="${XDG_DATA_HOME:-$HOME/.local/share}/go"
 export MBSYNCRC="${XDG_CONFIG_HOME:-$HOME/.config}/isync/mbsyncrc"

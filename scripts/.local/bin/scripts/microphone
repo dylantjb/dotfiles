@@ -16,12 +16,12 @@ get_icon() {
   is_mute && muted=1 || muted=0
   case 1 in
     $((level > 0 && level < 30 && muted==0)) ) echo \
-      "/usr/share/icons/Papirus-Dark/48x48/status/notification-audio-volume-low.svg";;
+      "/usr/share/icons/Papirus-Dark/48x48/status/microphone-sensitivity-low.svg";;
     $((level >= 30 && level <= 70 && muted==0)) ) echo \
-      "/usr/share/icons/Papirus-Dark/48x48/status/notification-audio-volume-medium.svg";;
+      "/usr/share/icons/Papirus-Dark/48x48/status/microphone-sensitivity-medium.svg";;
     $((level >= 70 && level <= 100 && muted==0)) ) echo \
-      "/usr/share/icons/Papirus-Dark/48x48/status/notification-audio-volume-high.svg";;
-    *) echo "/usr/share/icons/Papirus-Dark/48x48/status/notification-audio-volume-muted.svg"
+      "/usr/share/icons/Papirus-Dark/48x48/status/microphone-sensitivity-high.svg";;
+    *) echo "/usr/share/icons/Papirus-Dark/48x48/status/microphone-sensitivity-muted.svg"
   esac
 }
 

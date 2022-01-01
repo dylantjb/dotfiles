@@ -4,9 +4,12 @@
 # Send notification with album art when ncmpcpp plays a new song
 # execute_on_song_change must be set in ncmpcpp config
 
-readonly MUSIC_DIR="${HOME}/music"
-readonly SONG_PATH="$(mpc --format '%file%' current)"
-readonly SONG_DIR="$(dirname "${SONG_PATH}")"
-readonly ALBUM_ART_PATH="${MUSIC_DIR}/${SONG_DIR}/cover.jpg"
+music_home="$HOME/music"
+album="$(dirname "$(mpc --format '%file%' current)")"
+if [ -f "$music_home/$album/cover.jpg" ]; then 
+  art="$music_home/$album/cover.jpg"
+elif [ -f "$(dirname "$music_home/$album")/cover.jpg" ]; then
+  art="$(dirname "$music_home/$album")/cover.jpg"; else
+  art="/usr/share/icons/Papirus-Dark/48x48/devices/audio-headphones.svg"; fi
 
-dunstify -i "${ALBUM_ART_PATH}" "Now Playing" "$(mpc --format '%title% - %artist%' current)"
+dunstify -i "$art" "Now Playing" "$(mpc --format '%title% - %artist%' current)"

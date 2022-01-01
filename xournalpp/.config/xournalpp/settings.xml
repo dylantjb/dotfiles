@@ -5,7 +5,7 @@
   <property name="minimumPressure" value="0.10000000"/>
   <property name="pressureMultiplier" value="2.40000000"/>
   <property name="zoomGesturesEnabled" value="true"/>
-  <property name="selectedToolbar" value="Floating Toolbox"/>
+  <property name="selectedToolbar" value="Toolbar Right"/>
   <property name="lastSavePath" value="/home/dylan/downloads"/>
   <property name="lastOpenPath" value="/home/dylan/documents/school/slides/PEP"/>
   <property name="lastImagePath" value=""/>
@@ -14,8 +14,8 @@
   <property name="zoomStep" value="10.00000000"/>
   <property name="zoomStepScroll" value="2.00000000"/>
   <property name="displayDpi" value="72"/>
-  <property name="mainWndWidth" value="851"/>
-  <property name="mainWndHeight" value="516"/>
+  <property name="mainWndWidth" value="1041"/>
+  <property name="mainWndHeight" value="1044"/>
   <property name="maximized" value="false"/>
   <property name="showToolbar" value="true"/>
   <property name="showSidebar" value="false"/>
@@ -249,7 +249,7 @@
       <attribute name="drawingType" type="string" value="default"/>
     </data>
     <data name="pen">
-      <attribute name="color" type="hex" value="000000"/>
+      <attribute name="color" type="hex" value="ff000000"/>
       <attribute name="drawingType" type="string" value="default"/>
       <attribute name="fill" type="int" value="0"/>
       <attribute name="fillAlpha" type="int" value="128"/>

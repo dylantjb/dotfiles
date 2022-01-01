@@ -1,6 +1,6 @@
 {
   "vscode-neovim.neovimExecutablePaths.linux": "/usr/bin/nvim",
-  "vscode-neovim.neovimInitVimPaths.linux": "$HOME/.config/LunarVim/vimscript/lv-vscode/init.vim",
+  "vscode-neovim.neovimInitVimPaths.linux": "/home/dylan/.local/share/lunarvim/lvim/utils/lv-vscode/init.vim",
   "whichkey.sortOrder": "alphabetically",
   "whichkey.delay": 0,
   "whichkey.bindings": [

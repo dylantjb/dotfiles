@@ -9,10 +9,11 @@
 #
 
 # Urgent {{{
-autoload -Uz +X compinit colors zmv
-colors && compinit -d "${XDG_CACHE_HOME:-$HOME/.cache}/zinit/zcompdump"
+autoload -Uz +X compinit colors
+colors && compinit -d "${XDG_CACHE_HOME:-$HOME/.cache}/zsh/zcompdump-$ZSH_VERSION"
+zstyle ':completion:*' cache-path "${XDG_CACHE_HOME:-$HOME/.cache}/zsh/zcompcache"
 
-[ -f "$HOME/.config/zsh/instant-zsh.zsh" ] && source "$HOME/.config/zsh/instant-zsh.zsh"
+[ -f "${XDG_CACHE_HOME:-$HOME/.cache}/zsh/instant-zsh.zsh" ] && source "${XDG_CACHE_HOME:-$HOME/.cache}/zsh/instant-zsh.zsh"
 instant-zsh-pre "%B%{$fg[blue]%}[%{$fg[white]%}%n%{$fg[red]%}@%{$fg[white]%}%m%{$fg[blue]%}] %(?:%{$fg_bold[green]%} :%{$fg_bold[red]%}➜ )%{$fg[cyan]%}%c%{$reset_color%} "
 # }}}
 
@@ -32,7 +33,7 @@ setopt share_history          # share command history data
 # Plugins {{{
 declare -A ZINIT
 ZINIT[HOME_DIR]=${XDG_DATA_HOME:-$HOME/.local/share}/zinit
-ZINIT[ZCOMPDUMP_PATH]=${XDG_CACHE_HOME:-$HOME/.cache}/zinit/zcompdump
+ZINIT[ZCOMPDUMP_PATH]=${XDG_CACHE_HOME:-$HOME/.cache}/zsh/zcompdump-$ZSH_VERSION
 ZINIT[BIN_DIR]=${ZINIT[HOME_DIR]}/bin
 ZINIT[PLUGINS_DIR]=${ZINIT[HOME_DIR]}/plugins
 ZINIT[COMPLETIONS_DIR]=${ZINIT[HOME_DIR]}/completions
@@ -77,24 +78,26 @@ zinit light MichaelAquilina/zsh-autoswitch-virtualenv
 #: }}}
 
 # Aliases {{{
-alias snapshots='zfs list -t snapshot -S creation $(df --output=source ~ | tail -n +2)'
+alias syncorg='syncfiles ~/documents/gtd nextcloud:Org'
+alias playlist-dl='youtube-dl --extract-audio --audio-format mp3 -w4 -o "%(playlist_index)s - %(title)s.%(ext)s"'
 alias stowit='stow -vt ~'
 alias unstow='stow -Dvt ~'
 alias abook='abook --datafile "${XDG_DATA_HOME:-$HOME/.local/share}/abook/addressbook"'
 alias smake='rm -f "config.h" && make'
 alias monerod='monerod --config-file "${XDG_CONFIG_HOME:-$HOME/.config}"/bitmonero/bitmonero.conf'
-alias mg='emacsclient -cte "(progn (magit-status) (delete-other-windows))"'
 alias transmission-cli='transmission-cli -w ~/.local/share/transmission'
-alias emacs='emacsclient -t -a "nvim"'
+alias mg='em -s "term" -cte "(progn (magit-status) (delete-other-windows))"'
+alias em='~/.local/bin/scripts/em -s "term" -t -a ""'
 alias wget='wget --hsts-file="${XDG_CACHE_HOME:-$HOME/.cache}/wget-hsts"'
 [ "$(uname -n)" = "arch" ] && {
   alias y='yay -Sy'
   alias yr='yay -Rns'
+  alias snapshots='zfs list -t snapshot -S creation $(df --output=source ~ | tail -n +2)'
   alias debloat="sudo pacman -Rns $(pacman -Qdtq | tr '\r\n' ' ') 2>/dev/null || echo 'No packages to debloat'"
 }
 
 alias zrc='${EDITOR:-nvim} "${XDG_CONFIG_HOME:-$HOME/.config}/zsh/.zshrc"'
-alias zfc='find "${XDG_CONFIG_HOME:-$HOME/.config}/zsh/functions/" -type f | fzf | xargs -r ${EDITOR:-nvim}'
+alias zfc='find "${XDG_CONFIG_HOME:-$HOME/.config}/zsh/functions/" -type f | fzf | xargs -0 ${EDITOR:-nvim}'
 
 alias q=exit
 alias rm='rm -i'
@@ -114,6 +117,7 @@ alias la='ls -A'
 alias grep='grep --color'
 alias lg=lazygit
 alias degit='rm -rf .git*'
+alias tempmail='ssh -t dylan@dylantjb.com "~/.local/bin/tempmail"'
 #: }}}
 
 # Functions {{{
