@@ -6,73 +6,65 @@ pgrep -u "${USER:=$LOGNAME}" >/dev/null || { echo "$USER not logged in; sync wil
 pgrep mbsync >/dev/null && { echo "mbsync is already running."; exit ;}
 
 eval "$(grep -h -- \
-	"^\s*\(export \)\?\(MBSYNCRC\|PASSWORD_STORE_DIR\|GNUPGHOME\)=" \
-	"$HOME/.config/zsh/.zprofile" 2>/dev/null)"
+  "^\s*\(export \)\?\(MBSYNCRC\|PASSWORD_STORE_DIR\|NOTMUCH_CONFIG\|GNUPGHOME\)=" \
+  "$HOME/.config/zsh/.zprofile" 2>/dev/null)"
 
 export GPG_TTY="$(tty)"
 
 [ -f "$MBSYNCRC" ] && ISYNC="$(dirname $MBSYNCRC)" && alias mbsync="mbsync -c $MBSYNCRC"
 
 case "$(readlink -f /sbin/init)" in
-	*systemd*) export DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/$(id -u)/bus ;;
+  *systemd*) export DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/$(id -u)/bus ;;
 esac
 
 # Remember if a display server is running since `ps` doesn't always contain a display
 pgrepoutput="$(pgrep -a X\(org\|wayland\))"
 displays="$(echo "$pgrepoutput" | grep -wo "[0-9]*:[0-9]\+" | sort -u)"
 notify() { [ -n "$pgrepoutput" ] && for x in "${displays:-0:}"; do
-		export DISPLAY="$x"
-		notify-send -i "$HOME/pictures/resources/emacs.png" -a "mu4e" "mu4e" "$2 new mail(s) in \`$1\` account."
-	done ;}
+    export DISPLAY="$x"
+    notify-send -i "/usr/share/icons/Papirus-Dark/48x48/apps/mutt.svg" -a "mutt" "mutt" "$2 new mail(s) in \`$1\` account."
+  done ;}
 messageinfo() { [ -n "$pgrepoutput" ] && for x in "${displays:-0:}"; do
-		export DISPLAY="$x"
-		notify-send -i "$HOME/pictures/resources/emacs.png" -a "mu4e" "$from" "$subject"
-	done ;}
+    export DISPLAY="$x"
+    notify-send -i "/usr/share/icons/Papirus-Dark/48x48/apps/mutt.svg" -a "mutt" "$from" "$subject"
+  done ;}
 
 # Check account for new mail. Notify if there is new content.
 syncandnotify() {
     acc="$(echo "$account" | sed "s/.*\///")"
     if [ -z "$opts" ]; then mbsync "$acc"; else mbsync "$opts" "$acc"; fi
-    case "$acc" in
-      "dylanbarker59@gmail.com") acc=Google ;;
-      "k20001430@kcl.ac.uk") acc=School ;;
-      "dylan@dylantjb.com") acc=Domain ;;
-    esac
     new=$(find "$HOME/.local/share/mail/$acc/INBOX/new/" \
       "$HOME/.local/share/mail/$acc/INBOX/cur" \
       -newer "${ISYNC:-$HOME/.isync}/.lastrun" -type f 2> /dev/null)
     newcount=$(echo "$new" | sed '/^\s*$/d' | wc -l)
     case 1 in
-    	$((newcount > 0)) ) for file in $new; do
-		    # Extract subject and sender from mail.
-		    from=$(awk '/^From: / && ++n ==1,/^\<.*\>:/' "$file" | perl -CS -MEncode -ne 'print decode("MIME-Header", $_)' | awk '{ $1=""; if (NF>=3)$NF=""; print $0 }' | sed 's/^[[:blank:]]*[\"'\''\<]*//;s/[\"'\''\>]*[[:blank:]]*$//')
-		    subject=$(awk '/^Subject: / && ++n == 1,/^\<.*\>: / && ++i == 2' "$file" | head -n 1 | perl -CS -MEncode -ne 'print decode("MIME-Header", $_)' | sed 's/^Subject: //' | sed 's/^{[[:blank:]]*[\"'\''\<]*//;s/[\"'\''\>]*[[:blank:]]*$//' | tr -d '\n')
-		    messageinfo &
-		  done 
+      $((newcount > 0)) ) for file in $new; do
+        # Extract subject and sender from mail.
+        from=$(awk '/^From: / && ++n ==1,/^\<.*\>:/' "$file" | perl -CS -MEncode -ne 'print decode("MIME-Header", $_)' | awk '{ $1=""; if (NF>=3)$NF=""; print $0 }' | sed 's/^[[:blank:]]*[\"'\''\<]*//;s/[\"'\''\>]*[[:blank:]]*$//')
+        subject=$(awk '/^Subject: / && ++n == 1,/^\<.*\>: / && ++i == 2' "$file" | head -n 1 | perl -CS -MEncode -ne 'print decode("MIME-Header", $_)' | sed 's/^Subject: //' | sed 's/^{[[:blank:]]*[\"'\''\<]*//;s/[\"'\''\>]*[[:blank:]]*$//' | tr -d '\n')
+        messageinfo &
+      done 
     esac
 }
 
 # Sync accounts passed as argument or all.
 if [ "$#" -eq "0" ]; then
-    accounts="$(awk '/^Channel/ {print $2}' "$MBSYNCRC")"
+  accounts="$(awk '/^Channel/ {print $2}' "$MBSYNCRC")"
 else
-    for arg in "$@"; do
-        [ "${arg%${arg#?}}" = '-' ] && opts="${opts:+${opts} }${arg}" && shift 1
-    done
-    accounts=$*
+  for arg in "$@"; do
+      [ "${arg%${arg#?}}" = '-' ] && opts="${opts:+${opts} }${arg}" && shift 1
+  done
+  accounts=$*
 fi
 
 # Parallelize multiple accounts
 for account in $accounts; do
-    syncandnotify &
+  syncandnotify &
 done
 
 wait
 
-# Update the mu4e index in running emacs daemon
-esock="/run/user/$(id -u)/emacs/gui"
-[ -S "$esock" ] && \
-  emacsclient -s "$esock" -e '(mu4e-update-index)' >/dev/null
+notmuch new 2>/dev/null
 
 # Create a touch file that indicates the time of the last run of mailsync
 touch "${ISYNC:-$HOME/.isync}/.lastrun"

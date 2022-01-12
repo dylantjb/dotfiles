@@ -9,8 +9,8 @@ CertificateFile /etc/ssl/certs/ca-certificates.crt
 
 MaildirStore dylanbarker59@gmail.com-local
 Subfolders Verbatim
-Path /home/dylan/.local/share/mail/Google/
-Inbox /home/dylan/.local/share/mail/Google/INBOX
+Path /home/dylan/.local/share/mail/dylanbarker59@gmail.com/
+Inbox /home/dylan/.local/share/mail/dylanbarker59@gmail.com/INBOX
 
 Channel dylanbarker59@gmail.com
 Expunge Both
@@ -35,8 +35,8 @@ CertificateFile /etc/ssl/certs/ca-certificates.crt
 
 MaildirStore dylan@dylantjb.com-local
 Subfolders Verbatim
-Path /home/dylan/.local/share/mail/Domain/
-Inbox /home/dylan/.local/share/mail/Domain/INBOX
+Path /home/dylan/.local/share/mail/dylan@dylantjb.com/
+Inbox /home/dylan/.local/share/mail/dylan@dylantjb.com/INBOX
 
 Channel dylan@dylantjb.com
 Expunge Both
@@ -48,7 +48,6 @@ MaxMessages 0
 ExpireUnread no
 # End profile
 
-
 IMAPStore k20001430@kcl.ac.uk-remote
 Host localhost
 Port 1143
@@ -59,8 +58,8 @@ SSLType None
 
 MaildirStore k20001430@kcl.ac.uk-local
 Subfolders Verbatim
-Path /home/dylan/.local/share/mail/School/
-Inbox /home/dylan/.local/share/mail/School/INBOX
+Path /home/dylan/.local/share/mail/k20001430@kcl.ac.uk/
+Inbox /home/dylan/.local/share/mail/k20001430@kcl.ac.uk/INBOX
 
 Channel k20001430@kcl.ac.uk
 Expunge Both

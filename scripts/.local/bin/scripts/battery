@@ -16,13 +16,13 @@ if [ "$status" = Discharging ]; then
     systemctl --user restart pipewire-pulse.service
   elif [ "$capacity" -lt 10 ]; then
     logger "Critical battery threshold"
-    killall zenity
-    zenity --warning --text="Battery Critical ("$capacity"%)" --icon-name='battery-empty' &
+    ! pgrep -x zenity && \
+      zenity --warning --text="Battery Critical ("$capacity"%)" --icon-name='battery-empty' &
     aplay "$HOME/.local/share/sounds/xp/Windows XP Battery Critical.wav"
   elif [ "$capacity" -lt 20 ]; then
     logger "Low battery threshold"
-    killall zenity
-    zenity --warning --text="Battery Low ("$capacity"%)" --icon-name='battery-low' &
+    ! pgrep -x zenity && \
+      zenity --warning --text="Battery Low ("$capacity"%)" --icon-name='battery-low' &
     aplay "$HOME/.local/share/sounds/xp/Windows XP Battery Low.wav"
   fi
 fi

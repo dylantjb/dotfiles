@@ -1,4 +1,0 @@
-configuration {
-    modi: "window,drun";
-}
-@theme "~/.config/rofi/onedark.rasi"

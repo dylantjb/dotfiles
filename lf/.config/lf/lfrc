@@ -10,11 +10,12 @@ set hidden true
 
 # cmds/functions
 cmd open ${{
-    case $(file --mime-type "$f" -bL) in
-        text/*|application/json) $EDITOR "$f";;
-        application/pdf) zathura "$f" ;;
-        *) mimeo "$f" ;;
-    esac
+  case $(file --mime-type "$f" -bL) in
+      text/*|application/json) $EDITOR "$f";;
+      application/pdf) zathura "$f" ;;
+      image/*) feh "$f" ;;
+      *) mimeo "$f" ;;
+  esac
 }}
 
 cmd mkdir ${{

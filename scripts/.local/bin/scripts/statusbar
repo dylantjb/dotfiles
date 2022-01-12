@@ -19,13 +19,12 @@ volume() {
 }
 
 battery() {
-  battery="/sys/class/power_supply/BAT0"
   state=""
-  case "$(cat "$battery/status")" in
+  case "$(cat /sys/class/power_supply/BAT?/status)" in
     "Charging") state="" ;;
     "Not charging"|"Unknown") state="" ;;
   esac
-  capacity=$(cat "$battery/capacity")
+  capacity="$(cat /sys/class/power_supply/BAT?/capacity)"
   [ "$state" = "" ] && [ "$capacity" -le 20 ] && warn=""
   printf "^c$black^ ^b$purple^ %s" "$state"
   printf "^c$purple^ ^b$black^ %s%%" "$warn$capacity"; unset warn
