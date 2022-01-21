@@ -12,4 +12,4 @@ elif [ -f "$(dirname "$music_home/$album")/cover.jpg" ]; then
   art="$(dirname "$music_home/$album")/cover.jpg"; else
   art="/usr/share/icons/Papirus-Dark/48x48/devices/audio-headphones.svg"; fi
 
-dunstify -i "$art" "Now Playing" "$(mpc --format '%title% - %artist%' current)"
+# dunstify -i "$art" "Now Playing" "$(mpc --format '%title% - %artist%' current)"

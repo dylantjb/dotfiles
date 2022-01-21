@@ -8,19 +8,30 @@
 #
 #
 
-# Urgent {{{
-autoload -Uz +X compinit colors
-colors && compinit -d "${XDG_CACHE_HOME:-$HOME/.cache}/zsh/zcompdump-$ZSH_VERSION"
-zstyle ':completion:*' cache-path "${XDG_CACHE_HOME:-$HOME/.cache}/zsh/zcompcache"
-
-[ -f "${XDG_CACHE_HOME:-$HOME/.cache}/zsh/instant-zsh.zsh" ] && source "${XDG_CACHE_HOME:-$HOME/.cache}/zsh/instant-zsh.zsh"
+# Options {{{
+autoload -Uz compinit colors && colors
+[ -f "${XDG_CACHE_HOME:-$HOME/.cache}/zinit/instant-zsh.zsh" ] && source "${XDG_CACHE_HOME:-$HOME/.cache}/zinit/instant-zsh.zsh"
 instant-zsh-pre "%B%{$fg[blue]%}[%{$fg[white]%}%n%{$fg[red]%}@%{$fg[white]%}%m%{$fg[blue]%}] %(?:%{$fg_bold[green]%} :%{$fg_bold[red]%}➜ )%{$fg[cyan]%}%c%{$reset_color%} "
+
+setopt auto_cd extendedglob nomatch menucomplete interactive_comments
+unsetopt BEEP
+zstyle ':completion:*' menu select
+zstyle ':completion:*' use-cache on
+zstyle ':completion:*' cache-path "${XDG_CACHE_HOME:-$HOME/.cache}/zinit/zcompcache"
+zle_highlight=('paste:none')
+fpath=(${XDG_CONFIG_HOME:-$HOME/.config}/zsh/functions $(brew --prefix)/share/zsh/site-functions $fpath)
+stty stop undef
+zmodload zsh/complist
+_comp_options+=(globdots)
+autoload -U up-line-or-beginning-search
+autoload -U down-line-or-beginning-search
+zle -N up-line-or-beginning-search
+zle -N down-line-or-beginning-search
+compinit -d "${XDG_CACHE_HOME:-$HOME/.cache}/zinit/zcompdump-$ZSH_VERSION"
 # }}}
 
-# Options {{{
-setopt auto_cd extendedglob nomatch menucomplete
-
-# History
+# History {{{
+export HISTFILE="${XDG_STATE_HOME:-$HOME/.local/state}/zsh/history"
 setopt extended_history       # record timestamp of command in HISTFILE
 setopt hist_expire_dups_first # delete duplicates first when HISTFILE size exceeds HISTSIZE
 setopt hist_ignore_dups       # ignore duplicated commands history list
@@ -28,12 +39,18 @@ setopt hist_ignore_space      # ignore commands that start with space
 setopt hist_verify            # show command with history expansion to user before running it
 setopt inc_append_history     # add commands to HISTFILE in order of execution
 setopt share_history          # share command history data
+
+HISTSIZE=50000
+SAVEHIST=10000
+
+bindkey -M vicmd 'j' history-substring-search-down
+bindkey -M vicmd 'k' history-substring-search-up
 # }}}
 
 # Plugins {{{
 declare -A ZINIT
 ZINIT[HOME_DIR]=${XDG_DATA_HOME:-$HOME/.local/share}/zinit
-ZINIT[ZCOMPDUMP_PATH]=${XDG_CACHE_HOME:-$HOME/.cache}/zsh/zcompdump-$ZSH_VERSION
+ZINIT[ZCOMPDUMP_PATH]=${XDG_CACHE_HOME:-$HOME/.cache}/zinit/zcompdump-$ZSH_VERSION
 ZINIT[BIN_DIR]=${ZINIT[HOME_DIR]}/bin
 ZINIT[PLUGINS_DIR]=${ZINIT[HOME_DIR]}/plugins
 ZINIT[COMPLETIONS_DIR]=${ZINIT[HOME_DIR]}/completions
@@ -78,39 +95,26 @@ zinit light MichaelAquilina/zsh-autoswitch-virtualenv
 #: }}}
 
 # Aliases {{{
-alias syncorg='syncfiles ~/documents/gtd nextcloud:Org'
+alias nb='newsboat'
 alias playlist-dl='youtube-dl --extract-audio --audio-format mp3 -w4 -o "%(playlist_index)s - %(title)s.%(ext)s"'
 alias stowit='stow -vt ~'
 alias unstow='stow -Dvt ~'
 alias abook='abook --datafile "${XDG_DATA_HOME:-$HOME/.local/share}/abook/addressbook"'
-alias smake='rm -f "config.h" && make'
 alias monerod='monerod --config-file "${XDG_CONFIG_HOME:-$HOME/.config}"/bitmonero/bitmonero.conf'
-alias transmission-cli='transmission-cli -w ~/.local/share/transmission'
-alias mg='em -s "term" -cte "(progn (magit-status) (delete-other-windows))"'
-alias em='~/.local/bin/scripts/em -s "term" -t -a ""'
+alias transmission-cli='transmission-cli -w "${XDG_DATA_HOME:-$HOME/.local/share}/transmission"'
 alias wget='wget --hsts-file="${XDG_CACHE_HOME:-$HOME/.cache}/wget-hsts"'
-[ "$(uname -n)" = "arch" ] && {
-  alias y='yay -Sy'
-  alias yr='yay -Rns'
-  alias snapshots='zfs list -t snapshot -S creation $(df --output=source ~ | tail -n +2)'
-  alias debloat="sudo pacman -Rns $(pacman -Qdtq | tr '\r\n' ' ') 2>/dev/null || echo 'No packages to debloat'"
-}
 
 alias zrc='${EDITOR:-nvim} "${XDG_CONFIG_HOME:-$HOME/.config}/zsh/.zshrc"'
-alias zfc='find "${XDG_CONFIG_HOME:-$HOME/.config}/zsh/functions/" -type f | fzf | xargs -0 ${EDITOR:-nvim}'
+alias zfc='find "${XDG_CONFIG_HOME:-$HOME/.config}/zsh/functions/" -type f | fzf | xargs -r ${EDITOR:-nvim}'
 
 alias q=exit
 alias rm='rm -i'
 alias cp='cp -i'
-alias jc='journalctl -xe'
-alias sc=systemctl
-alias ssc='sudo systemctl'
 alias mv='mv -i'
 alias mkdir='mkdir -p'
 alias wget='wget -c'
 alias path='echo -e ${PATH//:/\\n}'
 alias ports='netstat -tulanp'
-alias c='xclip -selection clipboard -in'
 alias ls='LC_COLLATE=C ls --group-directories-first --color'
 alias ll='ls -l'
 alias la='ls -A'
@@ -121,9 +125,26 @@ alias tempmail='ssh -t dylan@dylantjb.com "~/.local/bin/tempmail"'
 #: }}}
 
 # Functions {{{
+autoload -Uz ${XDG_CONFIG_HOME:-$HOME/.config}/zsh/autoload/*
 for i in ${XDG_CONFIG_HOME:-$HOME/.config}/zsh/functions/*; do
-    source "$i"
+  source "$i"
 done
+
+# Change cursor shape for different vi modes.
+zle-keymap-select () {
+    case $KEYMAP in
+        vicmd) echo -ne '\e[1 q';;      # block
+        viins|main) echo -ne '\e[5 q';; # beam
+    esac
+}
+zle -N zle-keymap-select
+zle-line-init() {
+    zle -K viins # initiate `vi insert` as keymap (can be removed if `bindkey -V` has been set elsewhere)
+    echo -ne "\e[5 q"
+}
+zle -N zle-line-init
+echo -ne '\e[5 q' # Use beam shape cursor on startup.
+preexec() { echo -ne '\e[5 q' ;} # Use beam shape cursor for each new prompt.
 #: }}}
 
 # Exports {{{
@@ -136,13 +157,5 @@ export MANPAGER='nvim +Man!'
 export MANWIDTH=999
 # }}}
 
-# History {{{
-HISTSIZE=50000
-SAVEHIST=10000
-
-bindkey -M vicmd 'j' history-substring-search-down
-bindkey -M vicmd 'k' history-substring-search-up
-
 instant-zsh-post
-#: }}}
 

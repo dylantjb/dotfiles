@@ -288,6 +288,6 @@
   (setq doom-theme 'doom-one
         doom-fallback-buffer-name "*dashboard*"))
 
-(when (equal (daemonp) "gui")
+(when (daemonp))
   (add-hook 'emacs-startup-hook #'my-daemon-setup)
-  (add-hook! 'server-after-make-frame-hook (switch-to-buffer doom-fallback-buffer-name)))
+  (add-hook! 'server-after-make-frame-hook (switch-to-buffer doom-fallback-buffer-name))
