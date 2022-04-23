@@ -1,4 +1,4 @@
-#!/bin/zsh
+#!/bin/sh
 
 autoload -Uz vcs_info
 autoload -U colors && colors
@@ -16,10 +16,10 @@ export VIRTUAL_ENV_DISABLE_PROMPT=1
 VENV="\$(venv_info)";
  
 +vi-git-untracked() {
-    if [[ $(git rev-parse --is-inside-work-tree 2> /dev/null) == 'true' ]] && \
-        git status --porcelain | grep '??' &> /dev/null ; then
-        hook_com[staged]+='!' # signify new files with a bang
-    fi
+  if [[ $(git rev-parse --is-inside-work-tree 2> /dev/null) == 'true' ]] && \
+    git status --porcelain | grep '??' &> /dev/null ; then
+    hook_com[staged]+='!' # signify new files with a bang
+  fi
 }
 zstyle ':vcs_info:*' check-for-changes true
 zstyle ':vcs_info:git:*' formats " %{$fg[blue]%}(%{$fg[red]%}%m%u%c%{$fg[yellow]%}%{$fg[magenta]%} %b%{$fg[blue]%})"

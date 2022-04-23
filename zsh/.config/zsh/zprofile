@@ -2,15 +2,20 @@
 # vim:fileencoding=utf-8:ft=conf:foldmethod=marker
 
 # Default programs {{{
-[ "$(uname)" = "Darwin" ] && {
-  for i in {coreutils,findutils,gnu-tar,gawk,gnutls,gnu-indent,gnu-getopt,grep}; do
-    PATH="/opt/homebrew/opt/$i/libexec/gnubin:$PATH"
-    MANPATH="/opt/homebrew/opt/$i/libexec/gnuman:$PATH"
-  done
-  eval "$(/opt/homebrew/bin/brew shellenv)"
-}
-export PATH="$PATH:${$(gfind ~/.local/bin ~/Library/Application\ Support/Coursier/bin -type d,l -printf %p:)%%:}"
-EDITOR=lvim VISUAL=lvim; export EDITOR VISUAL
+for i in {coreutils,findutils,gnu-tar,gawk,gnutls,gnu-indent,gnu-getopt,grep}; do
+  PATH="/opt/homebrew/opt/$i/libexec/gnubin:$PATH"
+  MANPATH="/opt/homebrew/opt/$i/libexec/gnuman:$PATH"
+done
+export HOMEBREW_PREFIX="/opt/homebrew"
+export HOMEBREW_CELLAR="/opt/homebrew/Cellar"
+export HOMEBREW_REPOSITORY="/opt/homebrew"
+export PATH="/usr/local/bin:/opt/homebrew/bin:/opt/homebrew/sbin:$PATH"
+export PATH="${$(gfind -L ~/.local/bin ~/Library/Application\ Support/Coursier/bin -type d -printf %p:)%%:}:$PATH"
+export MANPATH="/opt/homebrew/share/man${MANPATH+:$MANPATH}:"
+export INFOPATH="/opt/homebrew/share/info:${INFOPATH:-}"
+export EDITOR=nvim VISUAL=nvim
+export LDFLAGS="-L/opt/homebrew/opt/node@14/lib"
+export CPPFLAGS="-I/opt/homebrew/opt/node@14/include"
 export PAGER=less
 # }}}
 
@@ -19,8 +24,6 @@ export XDG_CACHE_HOME="$HOME/.cache"
 export XDG_CONFIG_HOME="$HOME/.config"
 export XDG_DATA_HOME="$HOME/.local/share"
 export XDG_STATE_HOME="$HOME/.local/state"
-export XDG_DOWNLOAD_DIR="$HOME/Downloads"
-export XDG_SCREENSHOTS_DIR="$HOME/Pictures/screenshots"
 
 export _JAVA_OPTIONS=-Djava.util.prefs.userRoot="${XDG_CONFIG_HOME:-$HOME/.config}/java"
 export ANDROID_HOME="${XDG_CONFIG_HOME:-$HOME/.config}/android"
@@ -28,24 +31,14 @@ export GNUPGHOME="${XDG_DATA_HOME:-$HOME/.local/share}/gnupg"
 export CARGO_HOME="${XDG_DATA_HOME:-$HOME/.local/share}/cargo"
 export NPM_CONFIG_USERCONFIG="${XDG_CONFIG_HOME:-$HOME/.config}/npm/npmrc"
 export LESSHISTFILE=-
+export WGETRC="${XDG_CONFIG_HOME:-$HOME/.config}/wgetrc"
 export GOPATH="${XDG_DATA_HOME:-$HOME/.local/share}/go"
-export MPD_HOST="${XDG_CONFIG_HOME:-$HOME/.config}/mpd/socket"
 export PYLINTHOME="$XDG_CACHE_HOME/pylint"
 export PASSWORD_STORE_DIR="${XDG_DATA_HOME:-$HOME/.local/share}/password-store"
-export SSH_AUTH_SOCK="$(gpgconf --list-dirs agent-ssh-socket)"
 export RCLONE_PASSWORD_COMMAND="pass rclone"
-# export VSCODE_PORTABLE="${XDG_DATA_HOME:-$HOME/.local/share}/vscode"
-# export WINEPREFIX="${XDG_DATA_HOME:-$HOME/.local/share}/wineprefixes/default"
+export VSCODE_PORTABLE="${XDG_DATA_HOME:-$HOME/.local/share}/vscode"
+export WINEPREFIX="${XDG_DATA_HOME:-$HOME/.local/share}/wineprefixes/default"
 export WORKON_HOME="${XDG_DATA_HOME:-$HOME/.local/share}/virtualenvs"
 export ZDOTDIR="${XDG_CONFIG_HOME:-$HOME/.config}/zsh"
 export HISTFILE="${XDG_STATE_HOME:-$HOME/.local/state}/zsh/history"
-# }}}
-
-# Homebrew {{{
-export HOMEBREW_PREFIX="/opt/homebrew";
-export HOMEBREW_CELLAR="/opt/homebrew/Cellar";
-export HOMEBREW_REPOSITORY="/opt/homebrew";
-export PATH="/opt/homebrew/bin:/opt/homebrew/sbin${PATH+:$PATH}";
-export MANPATH="/opt/homebrew/share/man${MANPATH+:$MANPATH}:";
-export INFOPATH="/opt/homebrew/share/info:${INFOPATH:-}";
 # }}}

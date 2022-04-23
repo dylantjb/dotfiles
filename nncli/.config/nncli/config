@@ -1,0 +1,28 @@
+[nncli]
+cfg_nn_username = dylan
+cfg_nn_password_eval = pass nextcloud
+cfg_nn_host = cloud.dylantjb.com
+
+; see http://urwid.org/manual/userinput.html for examples of more key
+; combinations
+kb_edit_note = space
+kb_page_down = ctrl f
+
+; note that values must not be quoted
+clr_note_focus_bg = light blue
+
+; if this editor config value is not provided, the $EDITOR env var will be
+; used instead
+; warning: if neither $EDITOR or cfg_editor is set, it will be impossible to
+; edit notes
+; cfg_editor = nvim
+
+; alternatively, {fname} and/or {line} are substituted with the filename and
+; current line number in nncli's pager.
+; If {fname} isn't supplied, the filename is simply appended.
+; examples:
+cfg_editor = nvim {fname} +{line}
+
+; this is also supported for the pager:
+cfg_pager = /opt/homebrew/share/nvim/runtime/macros/less.sh {fname} +{line}
+

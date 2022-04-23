@@ -1,6 +1,6 @@
 #!/bin/sh
 
-. ~/.local/share/virtualenvs/keats_downloader-????????/bin/activate
+. ~/.local/share/virtualenvs/keats_downloader-????/bin/activate
 
 cd ~/repos/keats_downloader || exit
 

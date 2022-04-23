@@ -18,6 +18,3 @@ rr() {
   fi
   rm -f -- "$temp_file"
 }
-
-# This binds Ctrl-O to ranger-cd:
-bindkey -s '^o' 'rr\n'

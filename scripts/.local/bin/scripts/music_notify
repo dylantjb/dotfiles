@@ -1,15 +1,11 @@
 #!/bin/sh
 
-# https://gist.github.com/jn64/8b412733667e30bf63bf9d4ba1852691
-# Send notification with album art when ncmpcpp plays a new song
-# execute_on_song_change must be set in ncmpcpp config
-
-music_home="$HOME/music"
-album="$(dirname "$(mpc --format '%file%' current)")"
+music_home="$HOME/Music"
+album="$(dirname "$(/opt/homebrew/bin/mpc --format '%file%' current)")"
 if [ -f "$music_home/$album/cover.jpg" ]; then 
   art="$music_home/$album/cover.jpg"
 elif [ -f "$(dirname "$music_home/$album")/cover.jpg" ]; then
   art="$(dirname "$music_home/$album")/cover.jpg"; else
-  art="/usr/share/icons/Papirus-Dark/48x48/devices/audio-headphones.svg"; fi
+  art=""; fi
 
-# dunstify -i "$art" "Now Playing" "$(mpc --format '%title% - %artist%' current)"
+/opt/homebrew/bin/terminal-notifier -title ncmpcpp -subtitle "Now Playing" -message "$(/opt/homebrew/bin/mpc --format '%title% - %artist%' current)" -contentImage "$art" -sender io.mpv

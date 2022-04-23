@@ -1,5 +1,0 @@
-#!/bin/sh
-
-file="$(mktemp)" && maim -Ds "$file.png"
-tesseract "$file.png" "$file" 2>/dev/null
-cat "$file.txt" | head -n -1 | xclip -sel clip
