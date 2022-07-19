@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+
+for i in {keyserver.ubuntu.com,pgp.mit.edu}; do gpg --keyserver "$i" --send-keys 0xCB460466; done
+gpg --export dylan | curl -T - https://keys.openpgp.org

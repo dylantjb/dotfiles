@@ -6,10 +6,12 @@ cfg_nn_host = cloud.dylantjb.com
 ; see http://urwid.org/manual/userinput.html for examples of more key
 ; combinations
 kb_edit_note = space
-kb_page_down = ctrl f
+kb_page_down = ctrl d
 
 ; note that values must not be quoted
-clr_note_focus_bg = light blue
+; clr_note_focus_bg = light blue
+clr_status_bar_fg = black
+clr_status_bar_bg = dark blue
 
 ; if this editor config value is not provided, the $EDITOR env var will be
 ; used instead

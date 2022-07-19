@@ -20,7 +20,7 @@ zstyle ':completion:*' matcher-list '' 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 
 zstyle ':completion:*' use-cache on
 zstyle ':completion:*' cache-path "$XDG_CACHE_HOME/zinit/zcompcache"
 zle_highlight=('paste:none')
-fpath=($XDG_CONFIG_HOME/zsh/functions $(brew --prefix)/share/zsh/site-functions $fpath)
+fpath=($XDG_CONFIG_HOME/zsh/functions $HOMEBREW_PREFIX/share/zsh/site-functions $fpath)
 stty stop undef
 zmodload zsh/complist
 _comp_options+=(globdots)
@@ -97,6 +97,7 @@ zinit light MichaelAquilina/zsh-autoswitch-virtualenv
 
 # Aliases {{{
 alias ng='[ -d ".git" ] && nvim +Neogit || echo "fatal: not a git repository (or any of the parent directories): .git"'
+alias nn='nncli -c ~/Library/Preferences/nncli'
 alias sbt='sbt -ivy "$XDG_DATA_HOME"/ivy2 -sbt-dir "$XDG_DATA_HOME"/sbt'
 alias python=python3
 alias playlist-dl='youtube-dl --extract-audio --audio-format mp3 -w4 -o "%(playlist_index)s - %(title)s.%(ext)s"'
@@ -114,13 +115,13 @@ alias zpc='$EDITOR "$XDG_CONFIG_HOME/zsh/zprofile"'
 alias zfc='find "$XDG_CONFIG_HOME/zsh/functions/" -type f | fzf | xargs -r $EDITOR'
 
 alias q=exit
-alias rm='rm -i'
+alias rm='rm -I'
 alias cp='cp -i'
 alias mv='mv -i'
 alias mkdir='mkdir -p'
 alias path='echo -e ${PATH//:/\\n}'
 alias ports='netstat -tulanp'
-alias ls='LC_COLLATE=C ls --group-directories-first --color -I ".DS_Store"'
+alias ls='LC_COLLATE=C ls --group-directories-first --color -I ".DS_Store" -I "\$RECYCLE.BIN" -I "desktop.ini" -I ".localized" -I ".userchain"'
 alias ll='ls -l'
 alias la='ls -A'
 alias grep='grep --color'
@@ -129,6 +130,7 @@ alias degit='rm -rf .git*'
 alias rmmail='ssh -p 64 -t dylan@dylantjb.com "~/.local/bin/rmmail"'
 alias mkmail='ssh -p 64 -t dylan@dylantjb.com "~/.local/bin/mkmail"'
 alias lsmail='ssh -p 64 -t dylan@dylantjb.com "~/.local/bin/catmail"'
+alias newmail='ssh -p 64 -t dylan@dylantjb.com "sudoedit /etc/aliases; sudo newaliases"'
 #: }}}
 
 # Functions {{{
@@ -146,19 +148,19 @@ bindkey -s '^o' 'rr\n'
 
 # Change cursor shape for different vi modes.
 zle-keymap-select () {
-    case $KEYMAP in
-        vicmd) echo -ne '\e[1 q';;      # block
-        viins|main) echo -ne '\e[5 q';; # beam
-    esac
+  case $KEYMAP in
+    vicmd) echo -ne '\e[2 q';;      # block
+    viins|main) echo -ne '\e[6 q';; # beam
+  esac
 }
 zle -N zle-keymap-select
 zle-line-init() {
-    zle -K viins # initiate `vi insert` as keymap (can be removed if `bindkey -V` has been set elsewhere)
-    echo -ne "\e[5 q"
+  zle -K viins
+  echo -ne "\e[6 q"
 }
 zle -N zle-line-init
-echo -ne '\e[5 q' # Use beam shape cursor on startup.
-preexec() { echo -ne '\e[5 q' ;} # Use beam shape cursor for each new prompt.
+echo -ne '\e[5 q'
+preexec() { echo -ne '\e[5 q' ;}
 #: }}}
 
 # Exports {{{
@@ -175,3 +177,5 @@ export MANWIDTH=999
 export SSH_AUTH_SOCK="$(gpgconf --list-dirs agent-ssh-socket)"
 
 instant-zsh-post
+
+

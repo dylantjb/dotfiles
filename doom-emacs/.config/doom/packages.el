@@ -8,7 +8,7 @@
 (package! org-gtd :recipe
   (:host github
    :repo "trevoke/org-gtd.el"
-   :branch "2.0.0"))
+   :branch "master"))
 (package! elcord)
 ;; (package! org-caldav :recipe
 ;;   (:host github
