@@ -2,6 +2,7 @@
 
 ncmpcpp_directory = "~/.config/ncmpcpp"
 lyrics_directory = "~/.local/share/lyrics"
+lyrics_fetchers = musixmatch, sing365, metrolyrics, justsomelyrics, jahlyrics, plyrics, tekstowo, zeneszoveg, internet
 mpd_music_dir = "~/Music"
 mpd_host = "localhost"
 mpd_port = "6600"

@@ -6,14 +6,13 @@ for i in {coreutils,findutils,gnu-tar,gawk,gnutls,gnu-indent,gnu-getopt,grep}; d
   PATH="/opt/homebrew/opt/$i/libexec/gnubin:$PATH"
   MANPATH="/opt/homebrew/opt/$i/libexec/gnuman:$PATH"
 done
+export EDITOR=nvim VISUAL=nvim PAGER=less
 export HOMEBREW_CELLAR="/opt/homebrew/Cellar"
 export HOMEBREW_PREFIX="/opt/homebrew" HOMEBREW_REPOSITORY="/opt/homebrew"
-export PATH="$HOME/Library/Application Support/Coursier/bin:/usr/local/bin:/opt/homebrew/bin:/opt/homebrew/sbin:$PATH"
-export PATH="${$(gfind -L ~/.local/bin -type d -printf %p:)%%:}:$PATH"
 export MANPATH="/opt/homebrew/share/man${MANPATH+:$MANPATH}:"
 export INFOPATH="/opt/homebrew/share/info:${INFOPATH:-}"
-export EDITOR=nvim VISUAL=nvim
-export PAGER=less
+export PATH="$HOME/Library/Application Support/Coursier/bin:/usr/local/bin:/opt/homebrew/bin:/opt/homebrew/sbin:$PATH"
+export PATH="${$(gfind -L ~/.local/bin -type d -printf %p:)%%:}:$PATH"
 # }}}
 
 # Home cleanup {{{
@@ -22,20 +21,20 @@ export XDG_CONFIG_HOME="$HOME/.config"
 export XDG_DATA_HOME="$HOME/.local/share"
 export XDG_STATE_HOME="$HOME/.local/state"
 
-export _JAVA_OPTIONS=-Djava.util.prefs.userRoot="${XDG_CONFIG_HOME:-$HOME/.config}/java"
-export ANDROID_HOME="${XDG_CONFIG_HOME:-$HOME/.config}/android"
-export CARGO_HOME="${XDG_DATA_HOME:-$HOME/.local/share}/cargo"
-export NPM_CONFIG_USERCONFIG="${XDG_CONFIG_HOME:-$HOME/.config}/npm/npmrc"
 export LESSHISTFILE=-
-export WGETRC="${XDG_CONFIG_HOME:-$HOME/.config}/wgetrc"
-export GOPATH="${XDG_DATA_HOME:-$HOME/.local/share}/go"
 export PYLINTHOME="$XDG_CACHE_HOME/pylint"
-export PASSWORD_STORE_DIR="${XDG_DATA_HOME:-$HOME/.local/share}/password-store"
 export RCLONE_PASSWORD_COMMAND="pass rclone"
-export VSCODE_PORTABLE="${XDG_DATA_HOME:-$HOME/.local/share}/vscode"
-export WINEPREFIX="${XDG_DATA_HOME:-$HOME/.local/share}/wineprefixes/default"
-export WORKON_HOME="${XDG_DATA_HOME:-$HOME/.local/share}/virtualenvs"
 export ZDOTDIR="${XDG_CONFIG_HOME:-$HOME/.config}/zsh"
+export GOPATH="${XDG_DATA_HOME:-$HOME/.local/share}/go"
+export WGETRC="${XDG_CONFIG_HOME:-$HOME/.config}/wgetrc"
+export CARGO_HOME="${XDG_DATA_HOME:-$HOME/.local/share}/cargo"
+export ANDROID_HOME="${XDG_CONFIG_HOME:-$HOME/.config}/android"
 export HISTFILE="${XDG_STATE_HOME:-$HOME/.local/state}/zsh/history"
+export VSCODE_PORTABLE="${XDG_DATA_HOME:-$HOME/.local/share}/vscode"
+export WORKON_HOME="${XDG_DATA_HOME:-$HOME/.local/share}/virtualenvs"
+export NPM_CONFIG_USERCONFIG="${XDG_CONFIG_HOME:-$HOME/.config}/npm/npmrc"
+export WINEPREFIX="${XDG_DATA_HOME:-$HOME/.local/share}/wineprefixes/default"
+export PASSWORD_STORE_DIR="${XDG_DATA_HOME:-$HOME/.local/share}/password-store"
+export _JAVA_OPTIONS=-Djava.util.prefs.userRoot="${XDG_CONFIG_HOME:-$HOME/.config}/java"
 # }}}
 

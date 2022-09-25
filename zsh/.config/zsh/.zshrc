@@ -10,17 +10,21 @@
 
 # Options {{{
 autoload -Uz compinit colors && colors
-[ -f "$XDG_CACHE_HOME/zinit/instant-zsh.zsh" ] && source "$XDG_CACHE_HOME/zinit/instant-zsh.zsh"
+[ -f "$XDG_CACHE_HOME/zinit/instant-zsh.zsh" ] && source "$XDG_CACHE_HOME/zinit/instant-zsh.zsh" || \
+  for f in "$XDG_CACHE_HOME/zinit/instant-zsh.zsh"; do mkdir -p "$(dirname "$f")";
+    curl -s https://gist.githubusercontent.com/romkatv/8b318a610dc302bdbe1487bb1847ad99/raw > "$f"
+    zcompile "$f" && source "$f"
+  done
 instant-zsh-pre "%B%{$fg[blue]%}[%{$fg[white]%}%n%{$fg[red]%}@%{$fg[white]%}%m%{$fg[blue]%}] %(?:%{$fg_bold[green]%} :%{$fg_bold[red]%}➜ )%{$fg[cyan]%}%c%{$reset_color%} "
 
-setopt auto_cd extendedglob nomatch menucomplete interactive_comments
 unsetopt BEEP
+setopt auto_cd extendedglob nomatch menucomplete interactive_comments
 zstyle ':completion:*' menu select
 zstyle ':completion:*' matcher-list '' 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
 zstyle ':completion:*' use-cache on
 zstyle ':completion:*' cache-path "$XDG_CACHE_HOME/zinit/zcompcache"
 zle_highlight=('paste:none')
-fpath=($XDG_CONFIG_HOME/zsh/functions $HOMEBREW_PREFIX/share/zsh/site-functions $fpath)
+fpath=($XDG_CONFIG_HOME/zsh/functions $XDG_DATA_HOME/zinit/completions $HOMEBREW_PREFIX/share/zsh/site-functions $fpath)
 stty stop undef
 zmodload zsh/complist
 _comp_options+=(globdots)
@@ -32,6 +36,7 @@ compinit -d "$XDG_CACHE_HOME/zinit/zcompdump-$ZSH_VERSION"
 # }}}
 
 # History {{{
+mkdir -p "$XDG_STATE_HOME/zsh"
 export HISTFILE="$XDG_STATE_HOME/zsh/history"
 setopt extended_history       # record timestamp of command in HISTFILE
 setopt hist_expire_dups_first # delete duplicates first when HISTFILE size exceeds HISTSIZE
@@ -78,6 +83,7 @@ zinit wait lucid for \
     atinit"ZINIT[COMPINIT_OPTS]=-C; zicompinit; zicdreplay" \
        zdharma-continuum/fast-syntax-highlighting \
     blockf \
+       sujit/zsh_completions \
        zsh-users/zsh-completions \
     atload"!_zsh_autosuggest_start" \
        zsh-users/zsh-autosuggestions
@@ -127,17 +133,12 @@ alias la='ls -A'
 alias grep='grep --color'
 alias lg=lazygit
 alias degit='rm -rf .git*'
-alias rmmail='ssh -p 64 -t dylan@dylantjb.com "~/.local/bin/rmmail"'
-alias mkmail='ssh -p 64 -t dylan@dylantjb.com "~/.local/bin/mkmail"'
-alias lsmail='ssh -p 64 -t dylan@dylantjb.com "~/.local/bin/catmail"'
-alias newmail='ssh -p 64 -t dylan@dylantjb.com "sudoedit /etc/aliases; sudo newaliases"'
+alias lsmail='ssh -p 64 dylan@dylantjb.com "sed 1,/temp/d /etc/aliases"'
+alias edmail='ssh -p 64 dylan@dylantjb.com "sudoedit /etc/aliases; sudo newaliases"'
 #: }}}
 
 # Functions {{{
 autoload -Uz $XDG_CONFIG_HOME/zsh/functions/*
-for i in $XDG_CONFIG_HOME/zsh/functions/*; do
-  source "$i"
-done
 
 compdef mkcd=mkdir
 compdef rcp=rsync
