@@ -111,6 +111,7 @@ alias stowit='stow -vt ~'
 alias sudoedit='sudo -e'
 alias unstow='stow -Dvt ~'
 alias abook='abook --datafile "$XDG_DATA_HOME/abook/addressbook"'
+alias mkvenv='mkvenv && pip install -q --upgrade --require-virtualenv pip pylint'
 alias ykoath='ykman oath accounts'
 alias monerod='monerod --config-file "$XDG_CONFIG_HOME"/bitmonero/bitmonero.conf'
 alias transmission-cli='transmission-cli -w $HOME/Downloads'
@@ -133,8 +134,8 @@ alias la='ls -A'
 alias grep='grep --color'
 alias lg=lazygit
 alias degit='rm -rf .git*'
-alias lsmail='ssh -p 64 dylan@dylantjb.com "sed 1,/temp/d /etc/aliases"'
-alias edmail='ssh -p 64 dylan@dylantjb.com "sudoedit /etc/aliases; sudo newaliases"'
+alias lsmail='ssh dylantjb "sed 1,/temp/d /etc/aliases"'
+alias deploy='hugo && rsync -avz --rsync-path="sudo rsync" --delete public/ dylantjb:/var/www/dylantjb.com'
 #: }}}
 
 # Functions {{{

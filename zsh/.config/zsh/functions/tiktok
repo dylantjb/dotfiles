@@ -1,0 +1,3 @@
+tiktok() {
+  yt-dlp "$1" -o - | ffmpeg -i pipe: "$(yt-dlp --get-title "$1").mp4" 
+}

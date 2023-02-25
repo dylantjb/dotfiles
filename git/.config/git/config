@@ -1,5 +1,8 @@
 [github]
 	user = dylantjb
+[user]
+	email = dylan@dylantjb.com
+	name = Dylan Barker
 [core]
 	pager = diff-so-fancy | less --tabs=4 -RFX
 [color]
@@ -16,15 +19,15 @@
 	old = red bold
 	new = green bold
 	whitespace = red reverse
-[user]
-	email = dylan@dylantjb.com
-	name = Dylan Barker
+[mergetool "nvimdiff4"]
+  # Like "nvimdiff", but always ignore $BASE.
+  cmd = nvim -f -d -c '$wincmd w' -c 'wincmd J' $LOCAL $REMOTE $MERGED 
 [merge]
-	tool = nvimdiff
+	tool = nvimdiff4
 	conflictstyle = diff3
-[mergetool]
-	prompt = false
 [init]
 	defaultBranch = main
+[tag]
+  gpgsign = true
 [commit]
 	gpgsign = true

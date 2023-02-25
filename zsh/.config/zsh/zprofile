@@ -11,8 +11,10 @@ export HOMEBREW_CELLAR="/opt/homebrew/Cellar"
 export HOMEBREW_PREFIX="/opt/homebrew" HOMEBREW_REPOSITORY="/opt/homebrew"
 export MANPATH="/opt/homebrew/share/man${MANPATH+:$MANPATH}:"
 export INFOPATH="/opt/homebrew/share/info:${INFOPATH:-}"
-export PATH="$HOME/Library/Application Support/Coursier/bin:/usr/local/bin:/opt/homebrew/bin:/opt/homebrew/sbin:$PATH"
+export PATH="$HOME/Library/Application Support/Coursier/bin:/usr/local/bin:/opt/homebrew/bin:/opt/homebrew/sbin:/opt/homebrew/opt/node@16/bin:$PATH"
 export PATH="${$(gfind -L ~/.local/bin -type d -printf %p:)%%:}:$PATH"
+export LDFLAGS="-L/opt/homebrew/opt/openssl/lib"
+export CPPFLAGS="-I/opt/homebrew/opt/openssl/include"
 # }}}
 
 # Home cleanup {{{
@@ -36,5 +38,6 @@ export NPM_CONFIG_USERCONFIG="${XDG_CONFIG_HOME:-$HOME/.config}/npm/npmrc"
 export WINEPREFIX="${XDG_DATA_HOME:-$HOME/.local/share}/wineprefixes/default"
 export PASSWORD_STORE_DIR="${XDG_DATA_HOME:-$HOME/.local/share}/password-store"
 export _JAVA_OPTIONS=-Djava.util.prefs.userRoot="${XDG_CONFIG_HOME:-$HOME/.config}/java"
+export SCALA_HOME=/opt/homebrew/opt/scala/idea
 # }}}
 
